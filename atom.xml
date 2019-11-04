@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Tan桑のBlog</title>
+  
+  <subtitle>见证一个图形程序员的成长！</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2019-11-04T12:14:03.497Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Leivie_Tan</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello Graphic World</title>
+    <link href="http://yoursite.com/2019/11/04/hello-world/"/>
+    <id>http://yoursite.com/2019/11/04/hello-world/</id>
+    <published>2019-11-04T01:56:27.000Z</published>
+    <updated>2019-11-04T12:14:03.497Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><a id="more"></a><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Basic Tips about CS or SE</title>
+    <link href="http://yoursite.com/2019/11/04/Tips/"/>
+    <id>http://yoursite.com/2019/11/04/Tips/</id>
+    <published>2019-11-04T01:56:27.000Z</published>
+    <updated>2019-11-04T12:14:10.543Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><ul><li>jpg不支持透明度，有损压缩的图像格式，有损压缩会使得原始图片数据质量下降，也使得其占用空间小，在网页应用中加速速度快。</li><li>png支持透明度，无视压缩的图像格式，能在保证不失真的情况下尽可能压缩图像文件的大小，因此图像质量高，在一些贴纸应用中大多采用png图片。</li></ul><a id="more"></a><ul><li>Markdown：一种使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使得普通文本具有一定的格式。<br>Markdown具有一系列的衍生版本，用于扩展Markdown功能（例如：表格，脚注，内嵌HTML等）</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Tips&quot;&gt;&lt;a href=&quot;#Tips&quot; class=&quot;headerlink&quot; title=&quot;Tips&quot;&gt;&lt;/a&gt;Tips&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;jpg不支持透明度，有损压缩的图像格式，有损压缩会使得原始图片数据质量下降，也使得其占用空间小，在网页应用中加速速度快。&lt;/li&gt;
+&lt;li&gt;png支持透明度，无视压缩的图像格式，能在保证不失真的情况下尽可能压缩图像文件的大小，因此图像质量高，在一些贴纸应用中大多采用png图片。&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="Computer Science" scheme="http://yoursite.com/categories/Computer-Science/"/>
+    
+      <category term="Basic Tips" scheme="http://yoursite.com/categories/Computer-Science/Basic-Tips/"/>
+    
+    
+      <category term="Tips" scheme="http://yoursite.com/tags/Tips/"/>
+    
+  </entry>
+  
+</feed>
