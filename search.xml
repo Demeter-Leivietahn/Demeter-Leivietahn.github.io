@@ -19,7 +19,7 @@
       
         <categories>
             
-            <category> Computer Science </category>
+            <category> Computer-Science </category>
             
             <category> Basic Tips </category>
             
@@ -29,6 +29,8 @@
         <tags>
             
             <tag> Tips </tag>
+            
+            <tag> Test </tag>
             
         </tags>
         
