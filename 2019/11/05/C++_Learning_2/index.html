@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     
     
-    <title>Basic Tips about CS or SE | Tan桑のBlog | 见证一个图形程序员的成长！</title>
+    <title>C++学习（二） | Tan桑のBlog | 见证一个图形程序员的成长！</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="Tips">
+    <meta name="keywords" content="Programming Language,C++">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
@@ -146,7 +146,7 @@
           <i class="icon icon-lg icon-navicon"></i>
         </a>
         <div class="flex-col header-title ellipsis">
-            <span>Basic Tips about CS or SE</span>
+            <span>C++学习（二）</span>
             
         </div>
         
@@ -159,15 +159,15 @@
 <header class="content-header post-header">
     <img src="/img/banner.jpg" class="header-bg">
     <div class="container fade-scale">
-        <h1 class="title">Basic Tips about CS or SE</h1>
+        <h1 class="title">C++学习（二）</h1>
         <h5 class="subtitle">
             
-                <time datetime="2019-11-04T01:56:27.000Z" itemprop="datePublished" class="page-time">
-  2019-11-04
+                <time datetime="2019-11-05T01:56:27.000Z" itemprop="datePublished" class="page-time">
+  2019-11-05
 </time>
 
 
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/Basic-Tips/">Basic Tips</a></li></ul></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/Programming-Language/">Programming Language</a></li></ul></li></ul>
 
             
         </h5>
@@ -192,15 +192,15 @@
 
 
 <div class="container body-wrap">
-    <article id="post-Tips"
+    <article id="post-C++_Learning_2"
   class="post-article article-type-post" itemprop="blogPost">
     <div class="post-card">
-        <h1 class="post-card-title">Basic Tips about CS or SE</h1>
+        <h1 class="post-card-title">C++学习（二）</h1>
         <div class="post-meta">
-            <time class="post-time" title="2019-11-04 09:56:27" datetime="2019-11-04T01:56:27.000Z"  itemprop="datePublished">2019-11-04</time>
+            <time class="post-time" title="2019-11-05 09:56:27" datetime="2019-11-05T01:56:27.000Z"  itemprop="datePublished">2019-11-05</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/Basic-Tips/">Basic Tips</a></li></ul></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/Programming-Language/">Programming Language</a></li></ul></li></ul>
 
 
 
@@ -213,42 +213,39 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             
-            <h3 id="1-HDR（High-Dynamic-Range）"><a href="#1-HDR（High-Dynamic-Range）" class="headerlink" title="1. HDR（High Dynamic Range）"></a>1. HDR（High Dynamic Range）</h3><ul>
-<li>相比普通的图像，可以提供更多的动态范围和图像细节，根据不同的曝光时间的LDR（Low Dynamic Range）图像，相对应每个曝光时间对应最佳细节的LDR图像来合成最终的HDR图像，能够更好的反映除真实环境中的视觉效果。<a id="more"></a></li>
-<li><ul>
-<li>简单来说，就是一张图片中尽可能的显示最亮和最暗的地方。</li>
-</ul>
+            <h1 id="1-C-重载操作符operator"><a href="#1-C-重载操作符operator" class="headerlink" title="1. C++重载操作符operator"></a>1. C++重载操作符operator</h1><h2 id="1-1-what："><a href="#1-1-what：" class="headerlink" title="1. 1 what："></a>1. 1 what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
+<h2 id="1-2-why"><a href="#1-2-why" class="headerlink" title="1.2 why:"></a>1.2 why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
+<h2 id="1-3-how-两种方式："><a href="#1-3-how-两种方式：" class="headerlink" title="1.3 how:两种方式："></a>1.3 how:两种方式：</h2><h3 id="1-3-1将操作符重载实现为类的成员函数"><a href="#1-3-1将操作符重载实现为类的成员函数" class="headerlink" title="1.3.1将操作符重载实现为类的成员函数"></a>1.3.1将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
+<blockquote>
+<p>//类结构中被声明的函数<br>bool operator==(const person&amp; ps) //person为自己定义的类<br>｛<br>        If（this-&gt;age == ps.age）{<br>           return true;<br>       }<br>       return false;<br>｝</p>
+</blockquote>
+<h3 id="1-3-2将操作符重载为非类的成员函数（即：全局函数）"><a href="#1-3-2将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="1.3.2将操作符重载为非类的成员函数（即：全局函数）"></a>1.3.2将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **</p>
+<blockquote>
+<p>//全局函数<br>bool operator==(person const &amp; p1,person const &amp; p2);<br>{<br>   if(p1.age==p2.age){<br>       return true;<br>   }<br>   return false;<br>}</p>
+</blockquote>
+<p>‘ 其中person的定义如下：’</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">	public :</span><br><span class="line">		int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="2-C-中修饰符-inline-表示内联函数"><a href="#2-C-中修饰符-inline-表示内联函数" class="headerlink" title="2.  C++中修饰符 inline,表示内联函数"></a>2.  C++中修饰符 inline,表示内联函数</h1><ul>
+<li><h2 id="2-1-what"><a href="#2-1-what" class="headerlink" title="2.1 what:"></a>2.1 what:</h2><p>修饰为内联函数</p>
 </li>
-<li>通过将拍出的几张不同曝光的照片，将每张照片曝光正常的部分保留，合成一张，就得到了一条了一张HDR图像。</li>
-</ul>
-<h3 id="2-HDR合成"><a href="#2-HDR合成" class="headerlink" title="2. HDR合成"></a>2. HDR合成</h3><h3 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h3><ul>
-<li>Unity中对于动态物体，例如人物等，使用Light Probe对于间接光照进行处理，Light Probe（采样点）对环境进行采样（发生在预处理阶段），在运行阶段，渲染器从邻近的采样点中取值，并对点进行插值处理。</li>
-</ul>
-<h3 id="4-计算机图形学（Computer-Graphics）和计算机视觉-Computer-Version"><a href="#4-计算机图形学（Computer-Graphics）和计算机视觉-Computer-Version" class="headerlink" title="4. 计算机图形学（Computer Graphics）和计算机视觉(Computer Version)"></a>4. 计算机图形学（Computer Graphics）和计算机视觉(Computer Version)</h3><ul>
-<li>计算机图形（Computer Graphics）和计算机视觉（Computer Vision）是一对孪生兄弟，二者互为逆过程。</li>
-<li><ul>
-<li>计算机图形是预先知道3D物体的形状、位置、材料构成，以及场景的灯光和相机，然后渲染出场景。</li>
-</ul>
+<li><h2 id="2-2-why"><a href="#2-2-why" class="headerlink" title="2.2 why:"></a>2.2 why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
 </li>
-<li>计算机视觉是已知拍到的图像，从中推断出有哪些物体，它们由什么材料制成，以及它们的3D位置和方向。</li>
-</ul>
-<h3 id="5-Mitsuba"><a href="#5-Mitsuba" class="headerlink" title="5. Mitsuba"></a>5. Mitsuba</h3><ul>
-<li>一个面向研究用的开源软件，基于PBRT(Physically based rendering technology) 根据几何光学的物理性质编程实现</li>
-<li>性能：实现了大多数常见的渲染算法</li>
-<li>鲁棒性（Robustness）:采用底层算法（underlying algorithm）</li>
-<li>可扩展性：可以并行计算，用大型计算簇实现与优化加速</li>
-<li>限制：对于光的波特性无法很好的表现</li>
-<li>极其模块化，它由一小组核心库和100多种不同的插件组成，这些插件实现了从材料和光源到完整渲染算法的功能。</li>
-<li>与其他开源渲染器相比，Mitsuba非常重视实验渲染技术，例如Metropolis LightTransport的路径配方和体积建模方法。 因此，对于那些想要尝试这种尚未进入主流渲染器的技术的人来说，它可能是真正感兴趣的，它也为这一领域的研究提供了坚实的基础。</li>
-</ul>
-<h3 id="6-Tips"><a href="#6-Tips" class="headerlink" title="6.Tips"></a>6.Tips</h3><ul>
-<li><p>jpg不支持透明度，有损压缩的图像格式，有损压缩会使得原始图片数据质量下降，也使得其占用空间小，在网页应用中加速速度快。</p>
-</li>
-<li><p>png支持透明度，无视压缩的图像格式，能在保证不失真的情况下尽可能压缩图像文件的大小，因此图像质量高，在一些贴纸应用中大多采用png图片。</p>
-</li>
-<li><p>Markdown：一种使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使得普通文本具有一定的格式。<br>Markdown具有一系列的衍生版本，用于扩展Markdown功能（例如：表格，脚注，内嵌HTML等）</p>
+<li><h2 id="2-3-how"><a href="#2-3-how" class="headerlink" title="2.3 how:"></a>2.3 how:</h2></li>
+<li><figure class="image-box">
+                <a rel=C++学习（二） href="wps1.jpg" title="[image]" data-fancybox="images"><img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure>
+
 </li>
 </ul>
+<p>inline使用限制：inline修饰的函数只适合于函数内部简单，没有包含复杂的逻辑结构，例如：while,switch，同时inline修饰的函数还不能自己调用自己。 </p>
+<p>建议inline函数的定义放置于头文件中</p>
+<p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">//定义于类结构之内的函数默认为内联函数</span><br><span class="line">void Foo(int x,int y)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//如果需要定义于类结构之外的内联函数</span><br><span class="line">inline void  A::Foo(int x,int y)&#123;&#125;</span><br><span class="line">//同时需要注意的是，inline必须于函数定义放置一起</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
 
         </div>
         
@@ -256,7 +253,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-11-05T04:47:44.062Z" itemprop="dateUpdated">2019-11-05 12:47:44</time>
+    Last updated: <time datetime="2019-11-05T04:43:13.446Z" itemprop="dateUpdated">2019-11-05 12:43:13</time>
 </span><br>
 
 
@@ -275,7 +272,7 @@
         
         <div class="post-footer">
             
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tips/" rel="tag">Tips</a></li></ul>
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Programming-Language/" rel="tag">Programming Language</a></li></ul>
 
             <div class="page-share-wrap">
     
@@ -284,7 +281,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/04/Tips/&title=《Basic Tips about CS or SE》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/05/C++_Learning_2/&title=《C++学习（二）》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -296,8 +293,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/04/Tips/&title=《Basic Tips about CS or SE》 — Tan桑のBlog&source=1. HDR（High Dynamic Range）
-相比普通的图像，可以提供更多的动态范围和图像细节，根据不同的曝光时间的LDR（Low Dynamic..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/05/C++_Learning_2/&title=《C++学习（二）》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -319,18 +315,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="prev">
-      <a href="/2019/11/05/PBRT_Learning_1/" id="post-prev" class="post-nav-link">
+      <a href="/2019/11/05/Matlab_Learning/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">PBRT（Chapter1）</h4>
+        <h4 class="title">Matlab相关</h4>
       </a>
     </div>
   
 
   
     <div class="next">
-      <a href="/2019/11/04/hello-world/" id="post-next" class="post-nav-link">
+      <a href="/2019/11/05/PBRT_Learning_1/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Hello Graphic World</h4>
+        <h4 class="title">PBRT（Chapter1）</h4>
       </a>
     </div>
   
@@ -342,7 +338,7 @@
         <aside class="post-widget">
             <nav class="post-toc-wrap" id="post-toc">
                 <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-HDR（High-Dynamic-Range）"><span class="post-toc-number">1.</span> <span class="post-toc-text">1. HDR（High Dynamic Range）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-HDR合成"><span class="post-toc-number">2.</span> <span class="post-toc-text">2. HDR合成</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3"><span class="post-toc-number">3.</span> <span class="post-toc-text">3.</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-计算机图形学（Computer-Graphics）和计算机视觉-Computer-Version"><span class="post-toc-number">4.</span> <span class="post-toc-text">4. 计算机图形学（Computer Graphics）和计算机视觉(Computer Version)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-Mitsuba"><span class="post-toc-number">5.</span> <span class="post-toc-text">5. Mitsuba</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-Tips"><span class="post-toc-number">6.</span> <span class="post-toc-text">6.Tips</span></a></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-C-重载操作符operator"><span class="post-toc-number">1.</span> <span class="post-toc-text">1. C++重载操作符operator</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-what："><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1. 1 what：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-why"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">1.2 why:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3-how-两种方式："><span class="post-toc-number">1.3.</span> <span class="post-toc-text">1.3 how:两种方式：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-1将操作符重载实现为类的成员函数"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">1.3.1将操作符重载实现为类的成员函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-2将操作符重载为非类的成员函数（即：全局函数）"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">1.3.2将操作符重载为非类的成员函数（即：全局函数）</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-C-中修饰符-inline-表示内联函数"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.  C++中修饰符 inline,表示内联函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-1-what"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">2.1 what:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-2-why"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.2 why:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-3-how"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">2.3 how:</span></a></li></ol></li></ol>
             </nav>
             <div class="toc-bar"><div>
         </aside>
@@ -412,7 +408,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/04/Tips/&title=《Basic Tips about CS or SE》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/05/C++_Learning_2/&title=《C++学习（二）》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -424,8 +420,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/04/Tips/&title=《Basic Tips about CS or SE》 — Tan桑のBlog&source=1. HDR（High Dynamic Range）
-相比普通的图像，可以提供更多的动态范围和图像细节，根据不同的曝光时间的LDR（Low Dynamic..." data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/05/C++_Learning_2/&title=《C++学习（二）》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -437,7 +432,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3aQW7DMAwF0dz/0i7QVYvGynyKIlxgtDIaV3reEBTJ1wuv63vd/f3nr3+f796527NhyZUrd5t7LRdBEEptzzefJFeu3EHuOngRXBf9g02uXLkP4xI6ga6f5cqV+7+4/ArE/0uuXLlP5vJkZX1MutvBu5pcuXI3uGnB9MTzwfquXLlyQ+4VrlrRpO10uXLljnDXaQo5YIdOkh7U75UrV+5hbroFCXN8mGP9wXLlyp3hkqIGPyZtu/JL0a+MTK5cuSPctF3aSyGnFDMsuXLllrhpQZMEqVrlM0ih5MqVe5hbG5/aSYBqiVFw05IrV24Tt9Zq5W0VMkiBJHLlyh3h8iYHZ6XhiY9tyZUrd4Zbu8CkIxrrQCZXrtxncntHLgglLZLKlSt3kvuhaRGOavEglZ4rV67cSW7x+1oHs/i4hly5cie5XcWR4jgFvmjJlSt3kssX6WjshLBiJ1auXLmt3P32ahr4yPt8B7ly5Z7jkuC1E7bSMa9gmkyuXLmHuTwdSdOjNCCi+q5cuXIfw60VTfilqzmQyZUrd5CbjmFxEAmFcuXKneSmwQVtHYY59KZcuXJHuGnBlH8GH9EggU+uXLkj3C96TmzDO34SwQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aQZLCMAwEwP3/p7MPSAEzVqAqTvtELVlw+yAkWX9/8TpO6/zuq+fPz5yff/VfFy8MDIzbMo63K9nW+09OviX53vdHiYGB8QRGsonk3TywzkMzBgYGxgUf/TatnIR1DAwMjHzrSeHabhQDAwNjUsQmAXTtOH5ai2NgYNyQkXfdf//6K/cbGBgYt2KsNesT6lpqeCwtDAyMvRlrBepa2Tlv230Yy8DAwNia0YbLeVaWl8H5IBoGBsaujEnSlgfBvHBda/lhYGA8h7HWy2qPYNLaK6pnDAyM7RhrAxBtmyz5tAT/sgrHwMDYlNEOQOTlaNuqa4ctil8PDAyMjRhJAte2w/Ke3yTpxMDA2JsxaXhNStzJ8FnRNcTAwNiC0Y4ytEMV86Rz0ijEwMDYg9EOSbQbai9E21QSAwPjOYy1abIJOA/fi8MWGBgYmzLa0NluIh/CGM2MYGBgbMdYK2KjIFi2xpIQ315jYGBg7MRIWvCTBG5ttCL/CwYGxnMYkyIzuQZowZfNjGBgYGzHqLPIEtkeVt7+w8DAeAKjncu46sqz7Z4tniUGBsZtGUe52svFSaOtaO1hYGBszZjfBs4bdu0BFb8kGBgYGzHaUjMvONcSwXwPo4oZAwPjhoy2oT9J4CZJ3odSFgMDAyPmtcnl2mUDBgYGRpGWDZpl+RXphyPDwMB4ACMfLW1TvW9cbWJgYDyN0SZqk4HUFpaEXQwMjK0Z/3kNIuBF+6OWAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

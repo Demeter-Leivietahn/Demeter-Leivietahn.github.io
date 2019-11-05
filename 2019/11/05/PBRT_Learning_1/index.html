@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>PBRT（Chapter1） | Tan桑のBlog | 见证一个图形程序员的成长！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="RayTracing,PBRT">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	false,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/head2.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Leivie_Tan</h5>
+          <a href="mailto:754050478@qq.com" target="_blank" rel="noopener" title="754050478@qq.com" class="mail">
+            
+              <span>7</span>
+            
+              <span>5</span>
+            
+              <span>4</span>
+            
+              <span>0</span>
+            
+              <span>5</span>
+            
+              <span>0</span>
+            
+              <span>4</span>
+            
+              <span>7</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/Demeter-Leivietahn" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT ME
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" target="_blank" rel="noopener" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>PBRT（Chapter1）</span>
+            
+        </div>
+        
+        <a href="javascript:;" target="_blank" rel="noopener" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">PBRT（Chapter1）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-05T01:56:27.000Z" itemprop="datePublished" class="page-time">
+  2019-11-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/RayTracing/">RayTracing</a></li></ul></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" target="_blank" rel="noopener" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-PBRT_Learning_1"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">PBRT（Chapter1）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-05 09:56:27" datetime="2019-11-05T01:56:27.000Z"  itemprop="datePublished">2019-11-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/RayTracing/">RayTracing</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
+<p>渲染是根据三维场景的描述生成图像的过程。显然，这是一个非常广泛的任务，有许多方法可以实现它。基于物理的技术试图模拟现实;也就是说，他们使用物理原理来模拟光和物质的相互作用。虽然基于物理的方法似乎是处理呈现的最明显的方法，但它只是在过去10年左右的实践中才被广泛采用。<br>学习基于PBRT-v3<br>友情链接：<br>（一）PBRT-v3在线电子书：<a href="http://www.pbr-book.org/3ed-2018/contents.html" target="_blank" rel="noopener">http://www.pbr-book.org/3ed-2018/contents.html</a><br>（二）实验室学长的PBRT-v3配置教程: <a href="https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/" target="_blank" rel="noopener">https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/</a></p>
+<h2 id="1-1-Literate-Programming-文学编程"><a href="#1-1-Literate-Programming-文学编程" class="headerlink" title="1.1 Literate Programming 文学编程"></a>1.1 Literate Programming 文学编程</h2><h2 id="1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><a href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法" class="headerlink" title="1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法"></a>1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</h2><h4 id="1-2-1-Camera相机"><a href="#1-2-1-Camera相机" class="headerlink" title="1.2.1 Camera相机"></a>1.2.1 Camera相机</h4><ul>
+<li><p>针孔相机<br>  胶片Film    针孔Pinhole   视见体Viewing Volume</p>
+<h4 id="1-2-2-Ray-Object-Intersection光线-对象相交"><a href="#1-2-2-Ray-Object-Intersection光线-对象相交" class="headerlink" title="1.2.2 Ray-Object Intersection光线-对象相交"></a>1.2.2 Ray-Object Intersection光线-对象相交</h4></li>
+<li><p>当相机生成一条光线时，renderer的首要任务是：确定与光线intersect的首个对象和相交的位置。This intersection point is the visible point along the ray, and we will want to simulate the intersection of light with the object at this point. </p>
+</li>
+<li><figure class="image-box">
+                <a rel=PBRT（Chapter1） href="1.png" title="[image]" data-fancybox="images"><img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure>
+<p>  给定光线r,o为光线源点，d表示方向向量，参数t的范围为0到无穷，通过t取不同的值可以得到光线上的任何一点。<br>  在交点的计算中，需测试光线与全部场景对象之间的相交结果，并选取与光线首次相交的对象。<br>  多数场景均由多个对象构成，蛮力进行相机计算将依次测试场景中的各个对象，并选取相交结果最小的t值，但这种方案的计算速度较为缓慢；还可以引入加速结构，并剔除一组对象，进行算法的加速。</p>
+</li>
+</ul>
+<h4 id="1-2-3-Light-Distribution光照分布"><a href="#1-2-3-Light-Distribution光照分布" class="headerlink" title="1.2.3 Light Distribution光照分布"></a>1.2.3 Light Distribution光照分布</h4><ul>
+<li><figure class="image-box">
+                <a rel=PBRT（Chapter1） href="2.png" title="[image]" data-fancybox="images"><img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure></li>
+<li>较大球体上某点处的能量将小于较小球体，其原因在于相同的光能分布于较大的面积上，特别的，对于半径为r的球体，其表面某点处的能量与1/r^2成比例。</li>
+<li>由于点光源采用各向均等方式辐射能量。因而两球体存储相同光能。</li>
+<li>对于球体表面面积微分dA,其上的光能能够表示为：<figure class="image-box">
+                <a rel=PBRT（Chapter1） href="3.png" title="[image]" data-fancybox="images"><img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure><br>其中Φ表示光源能量，θ为表面点法线与表面点和光源连线的夹角</li>
+<li><figure class="image-box">
+                <a rel=PBRT（Chapter1） href="4.png" title="[image]" data-fancybox="images"><img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure>
+
+
+</li>
+</ul>
+<h4 id="1-2-4Visibility-可见性"><a href="#1-2-4Visibility-可见性" class="headerlink" title="1.2.4Visibility 可见性"></a>1.2.4Visibility 可见性</h4><ul>
+<li>确定是否被遮挡（阴影）</li>
+<li>当着色点与光源之间没有遮挡时，着色点方可被“点亮”<br>确定是否被遮挡：</li>
+<li>1、着色点与光源之间的连线，指向光源——阴影光线（shaow rays）</li>
+<li>2、通过交点计算，算出参数t,确定阴影光线的交点，并通过t的值，确定遮挡关系</li>
+</ul>
+<h4 id="1-2-5表面散射-Surface-Scattering"><a href="#1-2-5表面散射-Surface-Scattering" class="headerlink" title="1.2.5表面散射 Surface Scattering"></a>1.2.5表面散射 Surface Scattering</h4><p>场景中的各对象的材质属性，描述了表面各点处的外观属性，材质通过BRDF定义（双向反射分布函数）</p>
+<ul>
+<li><figure class="image-box">
+                <a rel=PBRT（Chapter1） href="5.png" title="[image]" data-fancybox="images"><img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure>
+参数含义：</li>
+<li><figure class="image-box">
+                <a rel=PBRT（Chapter1） href="6.png" title="[image]" data-fancybox="images"><img src="6.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure>    
+<h4 id="1-2-6-Indirect-Light-Transport"><a href="#1-2-6-Indirect-Light-Transport" class="headerlink" title="1.2.6 Indirect Light Transport"></a>1.2.6 Indirect Light Transport</h4></li>
+<li><figure class="image-box">
+                <a rel=PBRT（Chapter1） href="7.png" title="[image]" data-fancybox="images"><img src="7.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure>
+
+
+
+
+
+</li>
+</ul>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-11-05T05:23:19.681Z" itemprop="dateUpdated">2019-11-05 13:23:19</time>
+</span><br>
+
+
+        
+        转载注明出处
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/head2.jpg" alt="Leivie_Tan">
+            Leivie_Tan
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PBRT/" rel="tag">PBRT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RayTracing/" rel="tag">RayTracing</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/05/PBRT_Learning_1/&title=《PBRT（Chapter1）》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/05/PBRT_Learning_1/&title=《PBRT（Chapter1）》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" target="_blank" rel="noopener" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/11/05/C++_Learning_2/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">C++学习（二）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/11/04/Tips/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Basic Tips about CS or SE</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PBRT-CHAPTER-1"><span class="post-toc-number">1.</span> <span class="post-toc-text">PBRT CHAPTER_1</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Introduction"><span class="post-toc-number">2.</span> <span class="post-toc-text">Introduction</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-Literate-Programming-文学编程"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1.1 Literate Programming 文学编程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-1-Camera相机"><span class="post-toc-number">2.2.0.1.</span> <span class="post-toc-text">1.2.1 Camera相机</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-2-Ray-Object-Intersection光线-对象相交"><span class="post-toc-number">2.2.0.2.</span> <span class="post-toc-text">1.2.2 Ray-Object Intersection光线-对象相交</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-3-Light-Distribution光照分布"><span class="post-toc-number">2.2.0.3.</span> <span class="post-toc-text">1.2.3 Light Distribution光照分布</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-4Visibility-可见性"><span class="post-toc-number">2.2.0.4.</span> <span class="post-toc-text">1.2.4Visibility 可见性</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-5表面散射-Surface-Scattering"><span class="post-toc-number">2.2.0.5.</span> <span class="post-toc-text">1.2.5表面散射 Surface Scattering</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-6-Indirect-Light-Transport"><span class="post-toc-number">2.2.0.6.</span> <span class="post-toc-text">1.2.6 Indirect Light Transport</span></a></li></ol></li></ol></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/Demeter-Leivietahn/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Leivie_Tan &copy; 2019
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" target="_blank" rel="noopener" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/05/PBRT_Learning_1/&title=《PBRT（Chapter1）》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/05/PBRT_Learning_1/&title=《PBRT（Chapter1）》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3awYrDMAyE4bz/S6ewp4U27szIhlr+cypLNvGXw2BZui75uv+u/7/fL/fOp7eM7yldMGDA2JZxD6/6gpRlue/98EwYMGAcwNBDdvyXLL7dZ8KAAQPG+GU6TIl1BQYDBgwYsxhuNI+3gDBgwICRFbHuZi57zvJaHAYMGBsy6mXnut/L+xswYMD4ecZtXsoWMDuM00P2w6pgwIDRmlEpILPt2vijuOlqdEFhwICxLSMbs8gWN/fQDQYMGKcx9GZANhLhFqj2wR8MGDBaM9wC0o1RN6zdUjasg2HAgLEVQw/c+p3Kct33woAB4wRG/UHu8IQ+QOYWwDBgwDiNoWwBs8TLjuSUxicMGDC6MrIxCyMEC/+ll7UwYMA4geEOsFbiVR8IswMXBgwYTRnrtnfKQVu9DL7cXIcBA8aGDPcIPovdyliYPTMCAwaMdgy96VjaqMkfYsnIBQwYMFowZg1pZXE5bdgCBgwYrRl65FXKTv0JCuZLJxYGDBiNGEqwuhs7fZgsOxF8rMVhwIBxJEMJOz2m643Sx2fCgAGjNSNrZBo1cXQkl60QBgwYXRn1I7Ns8kG/x2hewoABoymjVDqa7YQVjQEbAwMGjG0Zesi6ixjvRusNBqmqhgEDRiOGHrL6ob/7mdzy9ct0GwwYMI5kZONi7slfaWsIAwYMGGarMhsp0wtpGDBgnMbIhieycQp3UygFOgwYMFozZg1JTGgxRmENAwaM1owXV/PMUnY6gmAAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = 'Tan桑のBlog';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)咦!又好了!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+
+    
+</body>
+</html>
