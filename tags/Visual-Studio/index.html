@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     
-    <title>关于ME | Tan桑のBlog | 见证一个图形程序员的成长！</title>
+    <title>Tags: Visual Studio | Tan桑のBlog | 见证一个图形程序员的成长！</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="keywords" content="">
@@ -15,7 +15,7 @@
     <script type="text/javascript">
         // Data Center
         var DC = {
-            reward:	true,
+            reward:	false,
             lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
             v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
             g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
@@ -120,14 +120,14 @@
               </a>
             </li>
         
-            <li class="">
+            <li class=" active">
               <a href="/tags"  >
                 <i class="icon icon-lg icon-tags"></i>
                 标签
               </a>
             </li>
         
-            <li class=" active">
+            <li class="">
               <a href="/about"  >
                 <i class="icon icon-lg icon-user"></i>
                 ABOUT ME
@@ -146,7 +146,7 @@
           <i class="icon icon-lg icon-navicon"></i>
         </a>
         <div class="flex-col header-title ellipsis">
-            <span>关于ME</span>
+            <span>Tags: Visual Studio</span>
             
         </div>
         
@@ -156,16 +156,49 @@
         
     </div>
 </header>
-<header class="content-header page-header">
+<header class="content-header tags-header">
     <img src="/img/banner.jpg" class="header-bg">
     <div class="container fade-scale">
-        <h1 class="title">关于ME</h1>
+        <h1 class="title">Tags: Visual Studio</h1>
         <h5 class="subtitle">
             
         </h5>
         
     </div>
     
+<div class="tabs-bar container">
+    <nav class="tags-list">
+        <a href="/tags" style="-webkit-order:-1;order:-1" class="tags-list-item waves-effect waves-button waves-light
+            ">All</a>
+        
+            <a href="/tags/Programming-Language/" backup-style="-webkit-order:2;order:2" class="tags-list-item waves-effect waves-button waves-light">Programming Language</a>
+            
+        
+            <a href="/tags/C/" backup-style="-webkit-order:3;order:3" class="tags-list-item waves-effect waves-button waves-light">C++</a>
+            
+        
+            <a href="/tags/RayTracing/" backup-style="-webkit-order:4;order:4" class="tags-list-item waves-effect waves-button waves-light">RayTracing</a>
+            
+        
+            <a href="/tags/PBRT/" backup-style="-webkit-order:5;order:5" class="tags-list-item waves-effect waves-button waves-light">PBRT</a>
+            
+        
+            <a href="/tags/Tips/" backup-style="-webkit-order:6;order:6" class="tags-list-item waves-effect waves-button waves-light">Tips</a>
+            
+        
+            <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" backup-style="-webkit-order:0;order:0" class="tags-list-item waves-effect waves-button waves-light">开发工具</a>
+            
+        
+            <a href="/tags/Visual-Studio/" backup-style="-webkit-order:1;order:1" class="tags-list-item waves-effect waves-button waves-light active">Visual Studio</a>
+            
+        
+    </nav>
+    <!-- PC show more-->
+    <div class="tags-list-more">
+        <a href="javascript:;" target="_blank" rel="noopener" class="action tags-list-item waves-effect waves-circle waves-light"><i class="icon icon-ellipsis-h"></i></a>
+    </div>
+</div>
+
 
 </header>
 
@@ -182,113 +215,47 @@
     <div id="local-search-result"></div>
 </div>
 
-
-<div class="container body-wrap ">
-    <article class="page-article fade" itemprop="blogPage">
-        <div class="post-content page-content" id="page-content" itemprop="pageContent">
-            
-            <blockquote>
-<p>一期一会<br>いちごいちえ</p>
-</blockquote>
-<p>Tan桑，SDU SE undergraduate 大四狗<br>保研之后正在自学Render相关<br>目前的研究方向是离线渲染相关<br>努力成为一名可靠的图形程序员</p>
-<p>本博客纯个人学习使用，如有不正确的地方，欢迎斧正<br>邮箱：<a href="mailto:754050478@qq.com" target="_blank" rel="noopener">754050478@qq.com</a></p>
-<h1 id="这是一个时间轴"><a href="#这是一个时间轴" class="headerlink" title="这是一个时间轴"></a><strong>这是一个时间轴</strong></h1><div class="timeline">
-<h5 id="2019"><a href="#2019" class="headerlink" title="2019"></a>2019</h5><div class="item">
-<h6 id="11月5日"><a href="#11月5日" class="headerlink" title="11月5日"></a>11月5日</h6><p>Blog迁移</p>
-</div>
-<div class="item">
-<h6 id="11月4日"><a href="#11月4日" class="headerlink" title="11月4日"></a>11月4日</h6><p>Blog搭建。</p>
-</div>
-</div>
-
-        </div>
-        
-            <div class="page-reward">
-    <a id="rewardBtn" href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
-</div>
-
-        
-        
-        <div class="card page-about-me flex-row">
-            <a href="/" class="avatar waves-effect waves-circle waves-light"><img src="/img/head2.jpg"></a>
-            <div class="content flex-col">
-                <p><strong>Leivie_Tan</strong></p>
-                <p><em>见证一个图形程序员的成长！</em></p>
-                <p></p>
-            </div>
-            <div class="page-share-wrap">
+<div class="container body-wrap fade">
     
+            <div class="waterfall">
+                
+                <div class="waterfall-item">
+  <article class="article-card archive-article">
+    <div class="post-meta">
+      <time class="post-time" title="2019-11-04 09:56:27" datetime="2019-11-04T01:56:27.000Z"  itemprop="datePublished">2019-11-04</time>
 
-<div class="page-share" id="pageShare">
-    <ul class="reset share-icons">
       
-      <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/about/&title=《关于ME》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
-          <i class="icon icon-weibo"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
-          <i class="icon icon-weixin"></i>
-        </a>
-      </li>
-      
-      <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/about/&title=《关于ME》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
-          <i class="icon icon-qq"></i>
-        </a>
-      </li>
-      
-    </ul>
- </div>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li></ul>
 
 
 
-    <a href="javascript:;" target="_blank" rel="noopener" id="shareFab" class="page-share-fab waves-effect waves-circle">
-        <i class="icon icon-share-alt icon-lg"></i>
-    </a>
-</div>
-
-        </div>
-        
-        
-        <div class="card">   
-           
-
-
-        </div>
-        
-    </article>
-    
-        <div id="reward" class="page-modal reward-lay">
-    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
-    <h3 class="reward-title">
-        <i class="icon icon-quote-left"></i>
-        我们一起来让这个世界有趣一点
-        <i class="icon icon-quote-right"></i>
-    </h3>
-    <div class="reward-content">
-        
-        <div class="reward-code">
-            <img id="rewardCode" src="/img/reward-wechat.png" alt="打赏二维码">
-        </div>
-        
-        <label class="reward-toggle">
-            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="/img/reward-wechat.png" data-alipay="/img/reward-alipay.jpg">
-            <div class="reward-toggle-ctrol">
-                <span class="reward-toggle-item wechat">微信</span>
-                <span class="reward-toggle-label"></span>
-                <span class="reward-toggle-item alipay">支付宝</span>
-            </div>
-        </label>
-        
     </div>
-</div>
+    
+
+
+  
+    <h3 class="post-title " itemprop="name">
+      <a class="post-title-link" href="/2019/11/04/Basic_Software_Use_VS/">VS使用及错误合集</a>
+    </h3>
+  
+
+
 
     
+    <div class="post-footer">
+        
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Visual-Studio/" rel="tag">Visual Studio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" rel="tag">开发工具</a></li></ul>
+
+    </div>
+    
+  </article>
 </div>
+        
+            </div>
+        
+    
+</div>
+
 
     </main>
     <footer class="footer ">
@@ -350,7 +317,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/about/&title=《关于ME》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/tags/Visual-Studio/&title=Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -362,7 +329,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/about/&title=《关于ME》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/tags/Visual-Studio/&title=Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -374,7 +341,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAAAAAAZai4+AAABWUlEQVR42u3a0QqDMBBEUf//py30qdC6zuyq0MzNUykGj4KbZJJtk9v+bke/P1vd9+IGC9ZCrL1s39covfTHOHwkWLAiWUpRqK+sKfq9YMGC1Rue68EYFixY97HqAgELFqwey534KkR3qg0LVjJrHiT1Jsq351uwYP0Jazebu2TtNViw0lj1Bom+KNX/UUIoWLDSWPpAOyki9Vv5cV9YsMJY7qfulgA39oUFK5M1iY3cibUxtMOCBeuR7c+TyTQsWGEsPcCdx7X6wT5YsNJYvaFUP4qnHzuQJs2wYAWwlKWsfiihF/LCgpXJcj9yJVTqHeU56QUL1tKs3saJe2M9roIFK5M1yXCuWu5OygosWCux3KKgLF/dvlJdgQUrgOUWBf2ResExLFiwehHSPBRuFghYsCJZ+ganGzmNCgQsWEuw3BLgbqW4gzcsWGms+VrSDW2baRYsWGuyXjhEnKT5Uw4+AAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxElEQVR42u3aQY6DMAwF0N7/0ozU1UgV8O0Qi8XLqkpL+sLCsp18PvE4vuNs5vg3zmZ+53+/fWzg4uIuc4/LccZNNnO2wvX2braEi4s7yL1GJL9JYk6ymZv1cXFxX8a9TnTy5GbpdeDi4r6Mu7tYwsXFfRs3KX7yRZN1ttdquLi4C9xqYNrxeWN/FxcXt8g9FkayZq89evqPuLi4I9wkfenFljxUlZ/CxcXdzM2bF7005bpYqjZhcXFxZ7hPhZvkmkVCjNoxuLi4I9y8aKm2TnpNkKjQwsXF3cztHXbmLZI8FJavbOLi4m7jVlOZpEAqx9G4cMLFxZ3krrQ+kwZH9apW1DzFxcXdwK22R3vRcaUJi4uLO8+tFj9JYOrNl69f4OLijnDzgmfpz1pFES4u7jx35XgjAa00X3rXxXBxcXdze8TkmGSl4YKLizvDrT6Wc5vv6dqGi4u7jdsrYJLLl9X0KHoKFxd3hNuLfDk3L41wcXHfxs2DVzUZWnl/NyfDuLi4I9w80OQJUK/suYm4uLi4r+T2jkh74RIXF/f93CTpScqk3gUvXFzceW4vcXn2kDVpv+Li4s5wZxqmT6VBuLi4m7l/Sx4u5Zo24b8AAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

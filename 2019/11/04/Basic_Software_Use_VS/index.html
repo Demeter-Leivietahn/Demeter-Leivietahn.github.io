@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     
     
-    <title>关于ME | Tan桑のBlog | 见证一个图形程序员的成长！</title>
+    <title>VS使用及错误合集 | Tan桑のBlog | 见证一个图形程序员的成长！</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="">
+    <meta name="keywords" content="开发工具,Visual Studio">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
@@ -15,7 +15,7 @@
     <script type="text/javascript">
         // Data Center
         var DC = {
-            reward:	true,
+            reward:	false,
             lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
             v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
             g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
@@ -127,7 +127,7 @@
               </a>
             </li>
         
-            <li class=" active">
+            <li class="">
               <a href="/about"  >
                 <i class="icon icon-lg icon-user"></i>
                 ABOUT ME
@@ -146,7 +146,7 @@
           <i class="icon icon-lg icon-navicon"></i>
         </a>
         <div class="flex-col header-title ellipsis">
-            <span>关于ME</span>
+            <span>VS使用及错误合集</span>
             
         </div>
         
@@ -156,11 +156,19 @@
         
     </div>
 </header>
-<header class="content-header page-header">
+<header class="content-header post-header">
     <img src="/img/banner.jpg" class="header-bg">
     <div class="container fade-scale">
-        <h1 class="title">关于ME</h1>
+        <h1 class="title">VS使用及错误合集</h1>
         <h5 class="subtitle">
+            
+                <time datetime="2019-11-04T01:56:27.000Z" itemprop="datePublished" class="page-time">
+  2019-11-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li></ul>
+
             
         </h5>
         
@@ -183,39 +191,102 @@
 </div>
 
 
-<div class="container body-wrap ">
-    <article class="page-article fade" itemprop="blogPage">
-        <div class="post-content page-content" id="page-content" itemprop="pageContent">
+<div class="container body-wrap">
+    <article id="post-Basic_Software_Use_VS"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">VS使用及错误合集</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-04 09:56:27" datetime="2019-11-04T01:56:27.000Z"  itemprop="datePublished">2019-11-04</time>
+
             
-            <blockquote>
-<p>一期一会<br>いちごいちえ</p>
-</blockquote>
-<p>Tan桑，SDU SE undergraduate 大四狗<br>保研之后正在自学Render相关<br>目前的研究方向是离线渲染相关<br>努力成为一名可靠的图形程序员</p>
-<p>本博客纯个人学习使用，如有不正确的地方，欢迎斧正<br>邮箱：<a href="mailto:754050478@qq.com" target="_blank" rel="noopener">754050478@qq.com</a></p>
-<h1 id="这是一个时间轴"><a href="#这是一个时间轴" class="headerlink" title="这是一个时间轴"></a><strong>这是一个时间轴</strong></h1><div class="timeline">
-<h5 id="2019"><a href="#2019" class="headerlink" title="2019"></a>2019</h5><div class="item">
-<h6 id="11月5日"><a href="#11月5日" class="headerlink" title="11月5日"></a>11月5日</h6><p>Blog迁移</p>
-</div>
-<div class="item">
-<h6 id="11月4日"><a href="#11月4日" class="headerlink" title="11月4日"></a>11月4日</h6><p>Blog搭建。</p>
-</div>
-</div>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h1 id="1-错误合集"><a href="#1-错误合集" class="headerlink" title="1.错误合集"></a>1.错误合集</h1><hr>
+<h3 id="1-1-ErrorLINK2019无法解析的外部符号-WinMain-16"><a href="#1-1-ErrorLINK2019无法解析的外部符号-WinMain-16" class="headerlink" title="1.1 .ErrorLINK2019无法解析的外部符号_WinMain@16"></a>1.1 .ErrorLINK2019无法解析的外部符号_WinMain@16</h3><ul>
+<li>原因：无法找到适当的程序入口函数，其中Windows程序和控制台程序Console的入口程序不一致，应该在项目配置信息中选择适当预处理器以及链接器中合适的子系统。</li>
+</ul>
+<ul>
+<li><figure class="image-box">
+                <a rel=VS使用及错误合集 href="VS1.png" title="[image]" data-fancybox="images"><img src="VS1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure>
+</li>
+<li><p>解决：</p>
+</li>
+</ul>
+<ul>
+<li><figure class="image-box">
+                <a rel=VS使用及错误合集 href="VS2.png" title="[image]" data-fancybox="images"><img src="VS2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure>
+
+
+</li>
+</ul>
+<h1 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h1><hr>
+<ul>
+<li>Ctrl+Shift+B：生成解决方案，形成可执行文件。</li>
+<li>生成可执行文件后有两种形式，其中一种是调试，一种是直接执行不调试</li>
+<li>(F5或Alt+F5)在调试程序过程中，若遇到断点，会停止在断点处，等待继续运行的指令，当程序运行完毕后不会直接退出，而会暂停程序。</li>
+<li>(Ctrl+F5)直接执行程序（不调试），完全忽略断点，程序运行完毕后直接结束程序。</li>
+</ul>
+<hr>
+<h2 id="在VS2017中安装配置OpenGL教程："><a href="#在VS2017中安装配置OpenGL教程：" class="headerlink" title="在VS2017中安装配置OpenGL教程："></a>在VS2017中安装配置OpenGL教程：</h2><p><a href="http://www.cnblogs.com/flylinmu/p/7823019.html" target="_blank" rel="noopener">http://www.cnblogs.com/flylinmu/p/7823019.html</a></p>
+<p>注意：</p>
+<ul>
+<li><p>（1）.在VS中对于项目进行属性配置时，右键点击解决方案中的项目名称，选择“属性配置”。</p>
+</li>
+<li><p>（2）.在VS2017中新建一个Windows控制台项目时，会自动生成一个pch.h文件，项目将其默认为预编译头文件，当项目较大时，可以在pch.h头文件中加入大量的宏定义，便于后期的维护更新，但是当项目较小时，可以在项目配置中，选择C/C++,将预编译头省略。</p>
+</li>
+<li><p>相关博客：<br><a href="http://www.blog.csdn.net/weixin_43074474/article/details/89520392" target="_blank" rel="noopener">http://www.blog.csdn.net/weixin_43074474/article/details/89520392</a></p>
+</li>
+</ul>
+<hr>
+<h2 id="VS快捷键"><a href="#VS快捷键" class="headerlink" title="VS快捷键"></a>VS快捷键</h2><ul>
+<li>Alt+→：代码提示代码</li>
+<li>注释代码：Ctrl+K选中后再C</li>
+<li>取消注释代码：Ctrl+K选中后再U</li>
+</ul>
 
         </div>
         
-            <div class="page-reward">
-    <a id="rewardBtn" href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
-</div>
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-11-05T08:27:28.683Z" itemprop="dateUpdated">2019-11-05 16:27:28</time>
+</span><br>
+
 
         
+        转载注明出处
         
-        <div class="card page-about-me flex-row">
-            <a href="/" class="avatar waves-effect waves-circle waves-light"><img src="/img/head2.jpg"></a>
-            <div class="content flex-col">
-                <p><strong>Leivie_Tan</strong></p>
-                <p><em>见证一个图形程序员的成长！</em></p>
-                <p></p>
-            </div>
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/head2.jpg" alt="Leivie_Tan">
+            Leivie_Tan
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Visual-Studio/" rel="tag">Visual Studio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" rel="tag">开发工具</a></li></ul>
+
             <div class="page-share-wrap">
     
 
@@ -223,7 +294,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/about/&title=《关于ME》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/04/Basic_Software_Use_VS/&title=《VS使用及错误合集》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -235,7 +306,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/about/&title=《关于ME》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/04/Basic_Software_Use_VS/&title=《VS使用及错误合集》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -252,42 +323,35 @@
 
         </div>
         
-        
-        <div class="card">   
-           
-
-
-        </div>
-        
-    </article>
-    
-        <div id="reward" class="page-modal reward-lay">
-    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
-    <h3 class="reward-title">
-        <i class="icon icon-quote-left"></i>
-        我们一起来让这个世界有趣一点
-        <i class="icon icon-quote-right"></i>
-    </h3>
-    <div class="reward-content">
-        
-        <div class="reward-code">
-            <img id="rewardCode" src="/img/reward-wechat.png" alt="打赏二维码">
-        </div>
-        
-        <label class="reward-toggle">
-            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="/img/reward-wechat.png" data-alipay="/img/reward-alipay.jpg">
-            <div class="reward-toggle-ctrol">
-                <span class="reward-toggle-item wechat">微信</span>
-                <span class="reward-toggle-label"></span>
-                <span class="reward-toggle-item alipay">支付宝</span>
-            </div>
-        </label>
-        
     </div>
-</div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/11/04/Basic_Software_Use/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">开发工具推荐及相关使用</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
 
     
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-错误合集"><span class="post-toc-number">1.</span> <span class="post-toc-text">1.错误合集</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-ErrorLINK2019无法解析的外部符号-WinMain-16"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">1.1 .ErrorLINK2019无法解析的外部符号_WinMain@16</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-使用"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#在VS2017中安装配置OpenGL教程："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">在VS2017中安装配置OpenGL教程：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#VS快捷键"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">VS快捷键</span></a></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
 </div>
 
     </main>
@@ -350,7 +414,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/about/&title=《关于ME》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/04/Basic_Software_Use_VS/&title=《VS使用及错误合集》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -362,7 +426,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/about/&title=《关于ME》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/04/Basic_Software_Use_VS/&title=《VS使用及错误合集》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -374,7 +438,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAAAAAAZai4+AAABWUlEQVR42u3a0QqDMBBEUf//py30qdC6zuyq0MzNUykGj4KbZJJtk9v+bke/P1vd9+IGC9ZCrL1s39covfTHOHwkWLAiWUpRqK+sKfq9YMGC1Rue68EYFixY97HqAgELFqwey534KkR3qg0LVjJrHiT1Jsq351uwYP0Jazebu2TtNViw0lj1Bom+KNX/UUIoWLDSWPpAOyki9Vv5cV9YsMJY7qfulgA39oUFK5M1iY3cibUxtMOCBeuR7c+TyTQsWGEsPcCdx7X6wT5YsNJYvaFUP4qnHzuQJs2wYAWwlKWsfiihF/LCgpXJcj9yJVTqHeU56QUL1tKs3saJe2M9roIFK5M1yXCuWu5OygosWCux3KKgLF/dvlJdgQUrgOUWBf2ResExLFiwehHSPBRuFghYsCJZ+ganGzmNCgQsWEuw3BLgbqW4gzcsWGms+VrSDW2baRYsWGuyXjhEnKT5Uw4+AAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACOUlEQVR42u3aQW7DMAwF0dz/0i7QVYEg7nxSRitqtArS2NbzgiVFvl54Xd/r/vPPb95/8/79p7++/2bZkiFDxraM63bx7RLM/ashr+Djc2XIkHEAox9k00hIwGRvMmTIkLF2K/dXyZAhQ8bTAbdTgvKUVIYMGSczeEgNCkscxNNAL0OGjNMYqxoDT3z+g/6GDBky/hnjKq00HawVscF+ZMiQMZpBmpGkPVkbm+BDGCgQy5AhYzTj/jKyubR8TUNzcE8ZMmSMY/ANdUi1a4N/AzJkyDiAQYrMNHEkW6klkR8DrgwZMkYzOo/kgxfkDrw8XvzmZMiQsQmjdshVC6Y8NSQFtgwZMmYz0lKW14zpdtP2gAwZMmSQ5I+nmLzlkAb0V7otGTJkbMjoJGfpnAMH8y4AamHKkCFjKIMcmaVH/GkIJq817prKkCFjQwY/V48HIHBiVxu5kCFDxjmM/mBWOkbWv/MvwxYyZMgYx+gkdvzgLB07q91NhgwZsxnBwdaio7damcrbCTJkyJjHqCkvvPjBXKttIEOGjGMYtQN9ngjWCubg0E2GDBlDGa38EYfg2nFeGldlyJAxj3GFK2181upp8gqKWaoMGTI2ZKRhLh3F4KlhmlzWgrUMGTL2ZfRTuk7boBNwZciQcRqDB750W8+VrzJkyJDx3ChYbbQiyF5lyJBxMINvgiR5aXKJOhsyZMgYzSBFbG14gtyNP2VBB1WGDBkbMtLGANl0LRDzEnpBf0OGDBl7ML4AXBIi4IeuTVgAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
