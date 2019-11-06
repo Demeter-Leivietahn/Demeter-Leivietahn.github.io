@@ -3,118 +3,6 @@
   
     
     <entry>
-      <title><![CDATA[C++学习（二）]]></title>
-      <url>/2019/11/05/C++_Learning_2/</url>
-      <content type="html"><![CDATA[<h1 id="1-C-重载操作符operator"><a href="#1-C-重载操作符operator" class="headerlink" title="1. C++重载操作符operator"></a>1. C++重载操作符operator</h1><h2 id="1-1-what："><a href="#1-1-what：" class="headerlink" title="1. 1 what："></a>1. 1 what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
-<h2 id="1-2-why"><a href="#1-2-why" class="headerlink" title="1.2 why:"></a>1.2 why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
-<h2 id="1-3-how-两种方式："><a href="#1-3-how-两种方式：" class="headerlink" title="1.3 how:两种方式："></a>1.3 how:两种方式：</h2><h3 id="1-3-1将操作符重载实现为类的成员函数"><a href="#1-3-1将操作符重载实现为类的成员函数" class="headerlink" title="1.3.1将操作符重载实现为类的成员函数"></a>1.3.1将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
-<blockquote>
-<p>//类结构中被声明的函数<br>bool operator==(const person&amp; ps) //person为自己定义的类<br>｛<br>        If（this-&gt;age == ps.age）{<br>           return true;<br>       }<br>       return false;<br>｝</p>
-</blockquote>
-<h3 id="1-3-2将操作符重载为非类的成员函数（即：全局函数）"><a href="#1-3-2将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="1.3.2将操作符重载为非类的成员函数（即：全局函数）"></a>1.3.2将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **</p>
-<blockquote>
-<p>//全局函数<br>bool operator==(person const &amp; p1,person const &amp; p2);<br>{<br>   if(p1.age==p2.age){<br>       return true;<br>   }<br>   return false;<br>}</p>
-</blockquote>
-<p>‘ 其中person的定义如下：’</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">	public :</span><br><span class="line">		int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="2-C-中修饰符-inline-表示内联函数"><a href="#2-C-中修饰符-inline-表示内联函数" class="headerlink" title="2.  C++中修饰符 inline,表示内联函数"></a>2.  C++中修饰符 inline,表示内联函数</h1><ul>
-<li><h2 id="2-1-what"><a href="#2-1-what" class="headerlink" title="2.1 what:"></a>2.1 what:</h2><p>修饰为内联函数</p>
-</li>
-<li><h2 id="2-2-why"><a href="#2-2-why" class="headerlink" title="2.2 why:"></a>2.2 why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
-</li>
-<li><h2 id="2-3-how"><a href="#2-3-how" class="headerlink" title="2.3 how:"></a>2.3 how:</h2></li>
-<li><figure class="image-box">
-                <img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-</li>
-</ul>
-<p>inline使用限制：inline修饰的函数只适合于函数内部简单，没有包含复杂的逻辑结构，例如：while,switch，同时inline修饰的函数还不能自己调用自己。 </p>
-<p>建议inline函数的定义放置于头文件中</p>
-<p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">//定义于类结构之内的函数默认为内联函数</span><br><span class="line">void Foo(int x,int y)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//如果需要定义于类结构之外的内联函数</span><br><span class="line">inline void  A::Foo(int x,int y)&#123;&#125;</span><br><span class="line">//同时需要注意的是，inline必须于函数定义放置一起</span><br></pre></td></tr></table></figure>
-
-
-
-<hr>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> Programming Language </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Programming Language </tag>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Matlab相关]]></title>
-      <url>/2019/11/05/Matlab_Learning/</url>
-      <content type="html"><![CDATA[<h1 id="Matlab学习"><a href="#Matlab学习" class="headerlink" title="Matlab学习"></a>Matlab学习</h1><h3 id="1-dir-使用"><a href="#1-dir-使用" class="headerlink" title="1. dir()使用"></a>1. dir()使用</h3><p>dir函数可以有调用方式</p>
-<ul>
-<li><p>dir(‘.’) 列出当前目录下所有子文件夹和文件</p>
-</li>
-<li><p>dir(‘G:\Matlab’) 列出指定目录下所有子文件夹和文件</p>
-</li>
-<li><p>dir(‘*.m’) 列出当前目录下符合正则表达式的文件夹和文件</p>
-</li>
-<li><p>得到的为结构体数组每个元素都是如下形式的结构体</p>
-<pre><code>name  -- filename
-date  -- modification date
-bytes  -- number of bytes allocated to the file
-isdir  -- 1 if name is a directory and 0 if not
-datenum -- modification date as a MATLAB serial date number</code></pre><p> 分别为文件名,修改日期,大小,是否为目录,Matlab特定的修改日期</p>
-<p>可以提取出文件名以作读取和保存用.</p>
-</li>
-</ul>
-<h3 id="2-exist-使用"><a href="#2-exist-使用" class="headerlink" title="2. exist()使用"></a>2. exist()使用</h3><ul>
-<li>判断某个变量，函数，类，文件夹等参数是否存在。</li>
-<li>A=exists(“name”,”kind”)，name可以是变量，函数，类，文件夹等</li>
-<li>返回值的含义如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0 不存在则返回值 </span><br><span class="line">1 name 可以是变量名，如果存在，返回值 </span><br><span class="line">2 函数名、m 文件名，存在则返回值 </span><br><span class="line">3 mex 文件、dll 文件，存在则返回值</span><br><span class="line">4 内嵌的函数，存在则返回值 5 p码文件 ， 存在则返回值 </span><br><span class="line">6 目录，存在则返回值 </span><br><span class="line">7 路径，存在则返回值 </span><br><span class="line">8 Java class，存在则返回值</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<h3 id="3-for循环"><a href="#3-for循环" class="headerlink" title="3. for循环"></a>3. for循环</h3><ul>
-<li>for k=1:10  正序遍历</li>
-<li>for k=10:-1:1 倒序遍历，从10到1，每次递减-1</li>
-</ul>
-<h3 id="4-strrep-使用"><a href="#4-strrep-使用" class="headerlink" title="4.strrep()使用"></a>4.strrep()使用</h3><ul>
-<li>查找并替换函数</li>
-<li>strrep(A,B,C); 在A中查找B并替换为C</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> Programming Language </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Programming Language </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[C++学习（一）]]></title>
       <url>/2019/11/05/C++_Learning_1/</url>
       <content type="html"><![CDATA[<h3 id="1-使用-ifdef和-pragam-once两种方式避免一个文件被include多次"><a href="#1-使用-ifdef和-pragam-once两种方式避免一个文件被include多次" class="headerlink" title="1. 使用#ifdef和#pragam once两种方式避免一个文件被include多次"></a>1. 使用#ifdef和#pragam once两种方式避免一个文件被include多次</h3><p><em>(不要拼措了，是pragam，不是program)</em></p>
@@ -535,7 +423,6 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
 </li>
 </ul>
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=501468332&auto=1&height=32"></iframe>
-
 ]]></content>
       
         <categories>
@@ -552,6 +439,118 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
             <tag> RayTracing </tag>
             
             <tag> PBRT </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[C++学习（二）]]></title>
+      <url>/2019/11/05/C++_Learning_2/</url>
+      <content type="html"><![CDATA[<h1 id="1-C-重载操作符operator"><a href="#1-C-重载操作符operator" class="headerlink" title="1. C++重载操作符operator"></a>1. C++重载操作符operator</h1><h2 id="1-1-what："><a href="#1-1-what：" class="headerlink" title="1. 1 what："></a>1. 1 what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
+<h2 id="1-2-why"><a href="#1-2-why" class="headerlink" title="1.2 why:"></a>1.2 why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
+<h2 id="1-3-how-两种方式："><a href="#1-3-how-两种方式：" class="headerlink" title="1.3 how:两种方式："></a>1.3 how:两种方式：</h2><h3 id="1-3-1将操作符重载实现为类的成员函数"><a href="#1-3-1将操作符重载实现为类的成员函数" class="headerlink" title="1.3.1将操作符重载实现为类的成员函数"></a>1.3.1将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
+<blockquote>
+<p>//类结构中被声明的函数<br>bool operator==(const person&amp; ps) //person为自己定义的类<br>｛<br>        If（this-&gt;age == ps.age）{<br>           return true;<br>       }<br>       return false;<br>｝</p>
+</blockquote>
+<h3 id="1-3-2将操作符重载为非类的成员函数（即：全局函数）"><a href="#1-3-2将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="1.3.2将操作符重载为非类的成员函数（即：全局函数）"></a>1.3.2将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **</p>
+<blockquote>
+<p>//全局函数<br>bool operator==(person const &amp; p1,person const &amp; p2);<br>{<br>   if(p1.age==p2.age){<br>       return true;<br>   }<br>   return false;<br>}</p>
+</blockquote>
+<p>‘ 其中person的定义如下：’</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">	public :</span><br><span class="line">		int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="2-C-中修饰符-inline-表示内联函数"><a href="#2-C-中修饰符-inline-表示内联函数" class="headerlink" title="2.  C++中修饰符 inline,表示内联函数"></a>2.  C++中修饰符 inline,表示内联函数</h1><ul>
+<li><h2 id="2-1-what"><a href="#2-1-what" class="headerlink" title="2.1 what:"></a>2.1 what:</h2><p>修饰为内联函数</p>
+</li>
+<li><h2 id="2-2-why"><a href="#2-2-why" class="headerlink" title="2.2 why:"></a>2.2 why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
+</li>
+<li><h2 id="2-3-how"><a href="#2-3-how" class="headerlink" title="2.3 how:"></a>2.3 how:</h2></li>
+<li><figure class="image-box">
+                <img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<p>inline使用限制：inline修饰的函数只适合于函数内部简单，没有包含复杂的逻辑结构，例如：while,switch，同时inline修饰的函数还不能自己调用自己。 </p>
+<p>建议inline函数的定义放置于头文件中</p>
+<p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">//定义于类结构之内的函数默认为内联函数</span><br><span class="line">void Foo(int x,int y)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//如果需要定义于类结构之外的内联函数</span><br><span class="line">inline void  A::Foo(int x,int y)&#123;&#125;</span><br><span class="line">//同时需要注意的是，inline必须于函数定义放置一起</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> Programming Language </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Programming Language </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Matlab相关]]></title>
+      <url>/2019/11/05/Matlab_Learning/</url>
+      <content type="html"><![CDATA[<h1 id="Matlab学习"><a href="#Matlab学习" class="headerlink" title="Matlab学习"></a>Matlab学习</h1><h3 id="1-dir-使用"><a href="#1-dir-使用" class="headerlink" title="1. dir()使用"></a>1. dir()使用</h3><p>dir函数可以有调用方式</p>
+<ul>
+<li><p>dir(‘.’) 列出当前目录下所有子文件夹和文件</p>
+</li>
+<li><p>dir(‘G:\Matlab’) 列出指定目录下所有子文件夹和文件</p>
+</li>
+<li><p>dir(‘*.m’) 列出当前目录下符合正则表达式的文件夹和文件</p>
+</li>
+<li><p>得到的为结构体数组每个元素都是如下形式的结构体</p>
+<pre><code>name  -- filename
+date  -- modification date
+bytes  -- number of bytes allocated to the file
+isdir  -- 1 if name is a directory and 0 if not
+datenum -- modification date as a MATLAB serial date number</code></pre><p> 分别为文件名,修改日期,大小,是否为目录,Matlab特定的修改日期</p>
+<p>可以提取出文件名以作读取和保存用.</p>
+</li>
+</ul>
+<h3 id="2-exist-使用"><a href="#2-exist-使用" class="headerlink" title="2. exist()使用"></a>2. exist()使用</h3><ul>
+<li>判断某个变量，函数，类，文件夹等参数是否存在。</li>
+<li>A=exists(“name”,”kind”)，name可以是变量，函数，类，文件夹等</li>
+<li>返回值的含义如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0 不存在则返回值 </span><br><span class="line">1 name 可以是变量名，如果存在，返回值 </span><br><span class="line">2 函数名、m 文件名，存在则返回值 </span><br><span class="line">3 mex 文件、dll 文件，存在则返回值</span><br><span class="line">4 内嵌的函数，存在则返回值 5 p码文件 ， 存在则返回值 </span><br><span class="line">6 目录，存在则返回值 </span><br><span class="line">7 路径，存在则返回值 </span><br><span class="line">8 Java class，存在则返回值</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h3 id="3-for循环"><a href="#3-for循环" class="headerlink" title="3. for循环"></a>3. for循环</h3><ul>
+<li>for k=1:10  正序遍历</li>
+<li>for k=10:-1:1 倒序遍历，从10到1，每次递减-1</li>
+</ul>
+<h3 id="4-strrep-使用"><a href="#4-strrep-使用" class="headerlink" title="4.strrep()使用"></a>4.strrep()使用</h3><ul>
+<li>查找并替换函数</li>
+<li>strrep(A,B,C); 在A中查找B并替换为C</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> Programming Language </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Programming Language </tag>
             
         </tags>
         
