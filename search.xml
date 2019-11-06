@@ -3,6 +3,146 @@
   
     
     <entry>
+      <title><![CDATA[PBRT（Chapter1）]]></title>
+      <url>/2019/11/05/PBRT_Learning_1/</url>
+      <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
+<p>渲染是根据三维场景的描述生成图像的过程。显然，这是一个非常广泛的任务，有许多方法可以实现它。基于物理的技术试图模拟现实;也就是说，他们使用物理原理来模拟光和物质的相互作用。虽然基于物理的方法似乎是处理呈现的最明显的方法，但它只是在过去10年左右的实践中才被广泛采用。<br>学习基于PBRT-v3<br>友情链接：<br>（一）PBRT-v3在线电子书：<a href="http://www.pbr-book.org/3ed-2018/contents.html" target="_blank" rel="noopener">http://www.pbr-book.org/3ed-2018/contents.html</a><br>（二）实验室学长的PBRT-v3配置教程: <a href="https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/" target="_blank" rel="noopener">https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/</a></p>
+<h2 id="1-1-Literate-Programming-文学编程"><a href="#1-1-Literate-Programming-文学编程" class="headerlink" title="1.1 Literate Programming 文学编程"></a>1.1 Literate Programming 文学编程</h2><h2 id="1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><a href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法" class="headerlink" title="1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法"></a>1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</h2><h4 id="1-2-1-Camera相机"><a href="#1-2-1-Camera相机" class="headerlink" title="1.2.1 Camera相机"></a>1.2.1 Camera相机</h4><ul>
+<li><p>针孔相机<br>  胶片Film    针孔Pinhole   视见体Viewing Volume</p>
+<h4 id="1-2-2-Ray-Object-Intersection光线-对象相交"><a href="#1-2-2-Ray-Object-Intersection光线-对象相交" class="headerlink" title="1.2.2 Ray-Object Intersection光线-对象相交"></a>1.2.2 Ray-Object Intersection光线-对象相交</h4></li>
+<li><p>当相机生成一条光线时，renderer的首要任务是：确定与光线intersect的首个对象和相交的位置。This intersection point is the visible point along the ray, and we will want to simulate the intersection of light with the object at this point. </p>
+</li>
+<li><figure class="image-box">
+                <img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+<p>  给定光线r,o为光线源点，d表示方向向量，参数t的范围为0到无穷，通过t取不同的值可以得到光线上的任何一点。<br>  在交点的计算中，需测试光线与全部场景对象之间的相交结果，并选取与光线首次相交的对象。<br>  多数场景均由多个对象构成，蛮力进行相机计算将依次测试场景中的各个对象，并选取相交结果最小的t值，但这种方案的计算速度较为缓慢；还可以引入加速结构，并剔除一组对象，进行算法的加速。</p>
+</li>
+</ul>
+<h4 id="1-2-3-Light-Distribution光照分布"><a href="#1-2-3-Light-Distribution光照分布" class="headerlink" title="1.2.3 Light Distribution光照分布"></a>1.2.3 Light Distribution光照分布</h4><ul>
+<li><figure class="image-box">
+                <img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure></li>
+<li>较大球体上某点处的能量将小于较小球体，其原因在于相同的光能分布于较大的面积上，特别的，对于半径为r的球体，其表面某点处的能量与1/r^2成比例。</li>
+<li>由于点光源采用各向均等方式辐射能量。因而两球体存储相同光能。</li>
+<li>对于球体表面面积微分dA,其上的光能能够表示为：<figure class="image-box">
+                <img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure><br>其中Φ表示光源能量，θ为表面点法线与表面点和光源连线的夹角</li>
+<li><figure class="image-box">
+                <img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+
+</li>
+</ul>
+<h4 id="1-2-4Visibility-可见性"><a href="#1-2-4Visibility-可见性" class="headerlink" title="1.2.4Visibility 可见性"></a>1.2.4Visibility 可见性</h4><ul>
+<li>确定是否被遮挡（阴影）</li>
+<li>当着色点与光源之间没有遮挡时，着色点方可被“点亮”<br>确定是否被遮挡：</li>
+<li>1、着色点与光源之间的连线，指向光源——阴影光线（shaow rays）</li>
+<li>2、通过交点计算，算出参数t,确定阴影光线的交点，并通过t的值，确定遮挡关系</li>
+</ul>
+<h4 id="1-2-5表面散射-Surface-Scattering"><a href="#1-2-5表面散射-Surface-Scattering" class="headerlink" title="1.2.5表面散射 Surface Scattering"></a>1.2.5表面散射 Surface Scattering</h4><p>场景中的各对象的材质属性，描述了表面各点处的外观属性，材质通过BRDF定义（双向反射分布函数）</p>
+<ul>
+<li><figure class="image-box">
+                <img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+参数含义：</li>
+<li><figure class="image-box">
+                <img src="6.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>    
+<h4 id="1-2-6-Indirect-Light-Transport"><a href="#1-2-6-Indirect-Light-Transport" class="headerlink" title="1.2.6 Indirect Light Transport"></a>1.2.6 Indirect Light Transport</h4></li>
+<li><figure class="image-box">
+                <img src="7.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=501468332&auto=1&height=32"></iframe>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> RayTracing </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> RayTracing </tag>
+            
+            <tag> PBRT </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[C++学习（二）]]></title>
+      <url>/2019/11/05/C++_Learning_2/</url>
+      <content type="html"><![CDATA[<h1 id="1-C-重载操作符operator"><a href="#1-C-重载操作符operator" class="headerlink" title="1. C++重载操作符operator"></a>1. C++重载操作符operator</h1><h2 id="1-1-what："><a href="#1-1-what：" class="headerlink" title="1. 1 what："></a>1. 1 what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
+<h2 id="1-2-why"><a href="#1-2-why" class="headerlink" title="1.2 why:"></a>1.2 why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
+<h2 id="1-3-how-两种方式："><a href="#1-3-how-两种方式：" class="headerlink" title="1.3 how:两种方式："></a>1.3 how:两种方式：</h2><h3 id="1-3-1将操作符重载实现为类的成员函数"><a href="#1-3-1将操作符重载实现为类的成员函数" class="headerlink" title="1.3.1将操作符重载实现为类的成员函数"></a>1.3.1将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
+<blockquote>
+<p>//类结构中被声明的函数<br>bool operator==(const person&amp; ps) //person为自己定义的类<br>｛<br>        If（this-&gt;age == ps.age）{<br>           return true;<br>       }<br>       return false;<br>｝</p>
+</blockquote>
+<h3 id="1-3-2将操作符重载为非类的成员函数（即：全局函数）"><a href="#1-3-2将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="1.3.2将操作符重载为非类的成员函数（即：全局函数）"></a>1.3.2将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **</p>
+<blockquote>
+<p>//全局函数<br>bool operator==(person const &amp; p1,person const &amp; p2);<br>{<br>   if(p1.age==p2.age){<br>       return true;<br>   }<br>   return false;<br>}</p>
+</blockquote>
+<p>‘ 其中person的定义如下：’</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">	public :</span><br><span class="line">		int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="2-C-中修饰符-inline-表示内联函数"><a href="#2-C-中修饰符-inline-表示内联函数" class="headerlink" title="2.  C++中修饰符 inline,表示内联函数"></a>2.  C++中修饰符 inline,表示内联函数</h1><ul>
+<li><h2 id="2-1-what"><a href="#2-1-what" class="headerlink" title="2.1 what:"></a>2.1 what:</h2><p>修饰为内联函数</p>
+</li>
+<li><h2 id="2-2-why"><a href="#2-2-why" class="headerlink" title="2.2 why:"></a>2.2 why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
+</li>
+<li><h2 id="2-3-how"><a href="#2-3-how" class="headerlink" title="2.3 how:"></a>2.3 how:</h2></li>
+<li><figure class="image-box">
+                <img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<p>inline使用限制：inline修饰的函数只适合于函数内部简单，没有包含复杂的逻辑结构，例如：while,switch，同时inline修饰的函数还不能自己调用自己。 </p>
+<p>建议inline函数的定义放置于头文件中</p>
+<p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">//定义于类结构之内的函数默认为内联函数</span><br><span class="line">void Foo(int x,int y)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//如果需要定义于类结构之外的内联函数</span><br><span class="line">inline void  A::Foo(int x,int y)&#123;&#125;</span><br><span class="line">//同时需要注意的是，inline必须于函数定义放置一起</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> Programming Language </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Programming Language </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C++学习（一）]]></title>
       <url>/2019/11/05/C++_Learning_1/</url>
       <content type="html"><![CDATA[<h3 id="1-使用-ifdef和-pragam-once两种方式避免一个文件被include多次"><a href="#1-使用-ifdef和-pragam-once两种方式避免一个文件被include多次" class="headerlink" title="1. 使用#ifdef和#pragam once两种方式避免一个文件被include多次"></a>1. 使用#ifdef和#pragam once两种方式避免一个文件被include多次</h3><p><em>(不要拼措了，是pragam，不是program)</em></p>
@@ -362,146 +502,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[PBRT（Chapter1）]]></title>
-      <url>/2019/11/05/PBRT_Learning_1/</url>
-      <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
-<p>渲染是根据三维场景的描述生成图像的过程。显然，这是一个非常广泛的任务，有许多方法可以实现它。基于物理的技术试图模拟现实;也就是说，他们使用物理原理来模拟光和物质的相互作用。虽然基于物理的方法似乎是处理呈现的最明显的方法，但它只是在过去10年左右的实践中才被广泛采用。<br>学习基于PBRT-v3<br>友情链接：<br>（一）PBRT-v3在线电子书：<a href="http://www.pbr-book.org/3ed-2018/contents.html" target="_blank" rel="noopener">http://www.pbr-book.org/3ed-2018/contents.html</a><br>（二）实验室学长的PBRT-v3配置教程: <a href="https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/" target="_blank" rel="noopener">https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/</a></p>
-<h2 id="1-1-Literate-Programming-文学编程"><a href="#1-1-Literate-Programming-文学编程" class="headerlink" title="1.1 Literate Programming 文学编程"></a>1.1 Literate Programming 文学编程</h2><h2 id="1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><a href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法" class="headerlink" title="1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法"></a>1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</h2><h4 id="1-2-1-Camera相机"><a href="#1-2-1-Camera相机" class="headerlink" title="1.2.1 Camera相机"></a>1.2.1 Camera相机</h4><ul>
-<li><p>针孔相机<br>  胶片Film    针孔Pinhole   视见体Viewing Volume</p>
-<h4 id="1-2-2-Ray-Object-Intersection光线-对象相交"><a href="#1-2-2-Ray-Object-Intersection光线-对象相交" class="headerlink" title="1.2.2 Ray-Object Intersection光线-对象相交"></a>1.2.2 Ray-Object Intersection光线-对象相交</h4></li>
-<li><p>当相机生成一条光线时，renderer的首要任务是：确定与光线intersect的首个对象和相交的位置。This intersection point is the visible point along the ray, and we will want to simulate the intersection of light with the object at this point. </p>
-</li>
-<li><figure class="image-box">
-                <img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-<p>  给定光线r,o为光线源点，d表示方向向量，参数t的范围为0到无穷，通过t取不同的值可以得到光线上的任何一点。<br>  在交点的计算中，需测试光线与全部场景对象之间的相交结果，并选取与光线首次相交的对象。<br>  多数场景均由多个对象构成，蛮力进行相机计算将依次测试场景中的各个对象，并选取相交结果最小的t值，但这种方案的计算速度较为缓慢；还可以引入加速结构，并剔除一组对象，进行算法的加速。</p>
-</li>
-</ul>
-<h4 id="1-2-3-Light-Distribution光照分布"><a href="#1-2-3-Light-Distribution光照分布" class="headerlink" title="1.2.3 Light Distribution光照分布"></a>1.2.3 Light Distribution光照分布</h4><ul>
-<li><figure class="image-box">
-                <img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure></li>
-<li>较大球体上某点处的能量将小于较小球体，其原因在于相同的光能分布于较大的面积上，特别的，对于半径为r的球体，其表面某点处的能量与1/r^2成比例。</li>
-<li>由于点光源采用各向均等方式辐射能量。因而两球体存储相同光能。</li>
-<li>对于球体表面面积微分dA,其上的光能能够表示为：<figure class="image-box">
-                <img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure><br>其中Φ表示光源能量，θ为表面点法线与表面点和光源连线的夹角</li>
-<li><figure class="image-box">
-                <img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-
-</li>
-</ul>
-<h4 id="1-2-4Visibility-可见性"><a href="#1-2-4Visibility-可见性" class="headerlink" title="1.2.4Visibility 可见性"></a>1.2.4Visibility 可见性</h4><ul>
-<li>确定是否被遮挡（阴影）</li>
-<li>当着色点与光源之间没有遮挡时，着色点方可被“点亮”<br>确定是否被遮挡：</li>
-<li>1、着色点与光源之间的连线，指向光源——阴影光线（shaow rays）</li>
-<li>2、通过交点计算，算出参数t,确定阴影光线的交点，并通过t的值，确定遮挡关系</li>
-</ul>
-<h4 id="1-2-5表面散射-Surface-Scattering"><a href="#1-2-5表面散射-Surface-Scattering" class="headerlink" title="1.2.5表面散射 Surface Scattering"></a>1.2.5表面散射 Surface Scattering</h4><p>场景中的各对象的材质属性，描述了表面各点处的外观属性，材质通过BRDF定义（双向反射分布函数）</p>
-<ul>
-<li><figure class="image-box">
-                <img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-参数含义：</li>
-<li><figure class="image-box">
-                <img src="6.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>    
-<h4 id="1-2-6-Indirect-Light-Transport"><a href="#1-2-6-Indirect-Light-Transport" class="headerlink" title="1.2.6 Indirect Light Transport"></a>1.2.6 Indirect Light Transport</h4></li>
-<li><figure class="image-box">
-                <img src="7.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-</li>
-</ul>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=501468332&auto=1&height=32"></iframe>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> RayTracing </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> RayTracing </tag>
-            
-            <tag> PBRT </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[C++学习（二）]]></title>
-      <url>/2019/11/05/C++_Learning_2/</url>
-      <content type="html"><![CDATA[<h1 id="1-C-重载操作符operator"><a href="#1-C-重载操作符operator" class="headerlink" title="1. C++重载操作符operator"></a>1. C++重载操作符operator</h1><h2 id="1-1-what："><a href="#1-1-what：" class="headerlink" title="1. 1 what："></a>1. 1 what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
-<h2 id="1-2-why"><a href="#1-2-why" class="headerlink" title="1.2 why:"></a>1.2 why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
-<h2 id="1-3-how-两种方式："><a href="#1-3-how-两种方式：" class="headerlink" title="1.3 how:两种方式："></a>1.3 how:两种方式：</h2><h3 id="1-3-1将操作符重载实现为类的成员函数"><a href="#1-3-1将操作符重载实现为类的成员函数" class="headerlink" title="1.3.1将操作符重载实现为类的成员函数"></a>1.3.1将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
-<blockquote>
-<p>//类结构中被声明的函数<br>bool operator==(const person&amp; ps) //person为自己定义的类<br>｛<br>        If（this-&gt;age == ps.age）{<br>           return true;<br>       }<br>       return false;<br>｝</p>
-</blockquote>
-<h3 id="1-3-2将操作符重载为非类的成员函数（即：全局函数）"><a href="#1-3-2将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="1.3.2将操作符重载为非类的成员函数（即：全局函数）"></a>1.3.2将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **</p>
-<blockquote>
-<p>//全局函数<br>bool operator==(person const &amp; p1,person const &amp; p2);<br>{<br>   if(p1.age==p2.age){<br>       return true;<br>   }<br>   return false;<br>}</p>
-</blockquote>
-<p>‘ 其中person的定义如下：’</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">	public :</span><br><span class="line">		int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="2-C-中修饰符-inline-表示内联函数"><a href="#2-C-中修饰符-inline-表示内联函数" class="headerlink" title="2.  C++中修饰符 inline,表示内联函数"></a>2.  C++中修饰符 inline,表示内联函数</h1><ul>
-<li><h2 id="2-1-what"><a href="#2-1-what" class="headerlink" title="2.1 what:"></a>2.1 what:</h2><p>修饰为内联函数</p>
-</li>
-<li><h2 id="2-2-why"><a href="#2-2-why" class="headerlink" title="2.2 why:"></a>2.2 why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
-</li>
-<li><h2 id="2-3-how"><a href="#2-3-how" class="headerlink" title="2.3 how:"></a>2.3 how:</h2></li>
-<li><figure class="image-box">
-                <img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-</li>
-</ul>
-<p>inline使用限制：inline修饰的函数只适合于函数内部简单，没有包含复杂的逻辑结构，例如：while,switch，同时inline修饰的函数还不能自己调用自己。 </p>
-<p>建议inline函数的定义放置于头文件中</p>
-<p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">//定义于类结构之内的函数默认为内联函数</span><br><span class="line">void Foo(int x,int y)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//如果需要定义于类结构之外的内联函数</span><br><span class="line">inline void  A::Foo(int x,int y)&#123;&#125;</span><br><span class="line">//同时需要注意的是，inline必须于函数定义放置一起</span><br></pre></td></tr></table></figure>
-
-
-
-<hr>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> Programming Language </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Programming Language </tag>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Matlab相关]]></title>
       <url>/2019/11/05/Matlab_Learning/</url>
       <content type="html"><![CDATA[<h1 id="Matlab学习"><a href="#Matlab学习" class="headerlink" title="Matlab学习"></a>Matlab学习</h1><h3 id="1-dir-使用"><a href="#1-dir-使用" class="headerlink" title="1. dir()使用"></a>1. dir()使用</h3><p>dir函数可以有调用方式</p>
@@ -551,64 +551,6 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
         <tags>
             
             <tag> Programming Language </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[开发工具推荐及相关使用]]></title>
-      <url>/2019/11/04/Basic_Software_Use/</url>
-      <content type="html"><![CDATA[<h1 id="开发工具及使用"><a href="#开发工具及使用" class="headerlink" title="开发工具及使用"></a>开发工具及使用</h1><p>+++</p>
-<h3 id="1-listary"><a href="#1-listary" class="headerlink" title="1. listary"></a>1. listary</h3><ul>
-<li>双击Ctrl全局搜索</li>
-<li>在文件管理器中双击空白处进行列表呼出</li>
-</ul>
-<h3 id="2-cmd"><a href="#2-cmd" class="headerlink" title="2.cmd"></a>2.cmd</h3><ul>
-<li>在当前文件目录的显示栏下输入 cmd ,即可在当前路径下打开命令行</li>
-</ul>
-<h3 id="3-stb-image简单图像库"><a href="#3-stb-image简单图像库" class="headerlink" title="3,stb_image简单图像库"></a>3,stb_image简单图像库</h3><ul>
-<li><p>重点关注三个头文件</p>
-</li>
-<li><figure class="image-box">
-                <img src="1570780034511.png.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-</li>
-</ul>
-<h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
-<li>Shift+F10:鼠标右键快捷键</li>
-<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
-</ul>
-<h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
-<li>可集成到VS或者Unity3D中</li>
-</ul>
-<h3 id="6-Typora"><a href="#6-Typora" class="headerlink" title="6. Typora"></a>6. Typora</h3><ul>
-<li>Ctrl+/：源代码模式进入或者退出</li>
-</ul>
-<h3 id="7-Visual-Studio-Code"><a href="#7-Visual-Studio-Code" class="headerlink" title="7. Visual Studio Code"></a>7. Visual Studio Code</h3><ul>
-<li>Ctrl+Shift+P:调出主命令框</li>
-<li>Ctrl +K选中后，再按V：预览markdown效果</li>
-</ul>
-<h3 id="8-Scons"><a href="#8-Scons" class="headerlink" title="8. Scons"></a>8. Scons</h3><ul>
-<li>基于python的软件构建工具</li>
-</ul>
-<h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发工具 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Tips </tag>
-            
-            <tag> 开发工具 </tag>
             
         </tags>
         
@@ -674,9 +616,67 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
         
         <tags>
             
+            <tag> Visual Studio </tag>
+            
             <tag> 开发工具 </tag>
             
-            <tag> Visual Studio </tag>
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[开发工具推荐及相关使用]]></title>
+      <url>/2019/11/04/Basic_Software_Use/</url>
+      <content type="html"><![CDATA[<h1 id="开发工具及使用"><a href="#开发工具及使用" class="headerlink" title="开发工具及使用"></a>开发工具及使用</h1><p>+++</p>
+<h3 id="1-listary"><a href="#1-listary" class="headerlink" title="1. listary"></a>1. listary</h3><ul>
+<li>双击Ctrl全局搜索</li>
+<li>在文件管理器中双击空白处进行列表呼出</li>
+</ul>
+<h3 id="2-cmd"><a href="#2-cmd" class="headerlink" title="2.cmd"></a>2.cmd</h3><ul>
+<li>在当前文件目录的显示栏下输入 cmd ,即可在当前路径下打开命令行</li>
+</ul>
+<h3 id="3-stb-image简单图像库"><a href="#3-stb-image简单图像库" class="headerlink" title="3,stb_image简单图像库"></a>3,stb_image简单图像库</h3><ul>
+<li><p>重点关注三个头文件</p>
+</li>
+<li><figure class="image-box">
+                <img src="1570780034511.png.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
+<li>Shift+F10:鼠标右键快捷键</li>
+<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
+</ul>
+<h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
+<li>可集成到VS或者Unity3D中</li>
+</ul>
+<h3 id="6-Typora"><a href="#6-Typora" class="headerlink" title="6. Typora"></a>6. Typora</h3><ul>
+<li>Ctrl+/：源代码模式进入或者退出</li>
+</ul>
+<h3 id="7-Visual-Studio-Code"><a href="#7-Visual-Studio-Code" class="headerlink" title="7. Visual Studio Code"></a>7. Visual Studio Code</h3><ul>
+<li>Ctrl+Shift+P:调出主命令框</li>
+<li>Ctrl +K选中后，再按V：预览markdown效果</li>
+</ul>
+<h3 id="8-Scons"><a href="#8-Scons" class="headerlink" title="8. Scons"></a>8. Scons</h3><ul>
+<li>基于python的软件构建工具</li>
+</ul>
+<h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发工具 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 开发工具 </tag>
+            
+            <tag> Tips </tag>
             
         </tags>
         
