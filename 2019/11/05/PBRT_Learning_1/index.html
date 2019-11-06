@@ -12,13 +12,15 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
     
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
     <script type="text/javascript">
         // Data Center
         var DC = {
-            reward:	false,
+            reward:	true,
             lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
             v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
-            g: JSON.parse('{"enable":false,"lazy":true,"owner":"codefine","repo":"gitment","oauth":{"client_id":null,"client_secret":null},"perPage":10}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"Demeter-Leivietahn","repo":"gitment","oauth":{"client_id":"823e39665f3e408cad61","client_secret":"2da69d5327a26f6898d5cd0c5f67854b79ac57ef"},"perPage":10}'),
             d: JSON.parse('{"app_id":null}')
         };
     </script>
@@ -209,11 +211,21 @@
             
 
 
+<span class="post-comments-counter" id="/2019/11/05/PBRT_Learning_1/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2019/11/05/PBRT_Learning_1/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
             
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             
-            <h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
+            <h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
 <p>渲染是根据三维场景的描述生成图像的过程。显然，这是一个非常广泛的任务，有许多方法可以实现它。基于物理的技术试图模拟现实;也就是说，他们使用物理原理来模拟光和物质的相互作用。虽然基于物理的方法似乎是处理呈现的最明显的方法，但它只是在过去10年左右的实践中才被广泛采用。<br>学习基于PBRT-v3<br>友情链接：<br>（一）PBRT-v3在线电子书：<a href="http://www.pbr-book.org/3ed-2018/contents.html" target="_blank" rel="noopener">http://www.pbr-book.org/3ed-2018/contents.html</a><br>（二）实验室学长的PBRT-v3配置教程: <a href="https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/" target="_blank" rel="noopener">https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/</a></p>
 <h2 id="1-1-Literate-Programming-文学编程"><a href="#1-1-Literate-Programming-文学编程" class="headerlink" title="1.1 Literate Programming 文学编程"></a>1.1 Literate Programming 文学编程</h2><h2 id="1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><a href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法" class="headerlink" title="1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法"></a>1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</h2><h4 id="1-2-1-Camera相机"><a href="#1-2-1-Camera相机" class="headerlink" title="1.2.1 Camera相机"></a>1.2.1 Camera相机</h4><ul>
 <li><p>针孔相机<br>  胶片Film    针孔Pinhole   视见体Viewing Volume</p>
@@ -269,12 +281,10 @@
                 <p>[image]</p>
             </figure>
 
-
-
-
-
 </li>
 </ul>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=501468332&auto=1&height=32"></iframe>
+
 
         </div>
         
@@ -282,7 +292,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-11-05T05:23:19.681Z" itemprop="dateUpdated">2019-11-05 13:23:19</time>
+    Last updated: <time datetime="2019-11-06T13:15:06.673Z" itemprop="dateUpdated">2019-11-06 21:15:06</time>
 </span><br>
 
 
@@ -298,6 +308,12 @@
     </footer>
 </blockquote>
 
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
         
         <div class="post-footer">
             
@@ -339,23 +355,35 @@
 
         </div>
         
+            
+
+
+      
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+
+        
     </div>
     
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="prev">
-      <a href="/2019/11/05/Matlab_Learning/" id="post-prev" class="post-nav-link">
+      <a href="/2019/11/05/C++_Learning_1/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Matlab相关</h4>
+        <h4 class="title">C++学习（一）</h4>
       </a>
     </div>
   
 
   
     <div class="next">
-      <a href="/2019/11/05/C++_Learning_1/" id="post-next" class="post-nav-link">
+      <a href="/2019/11/04/Basic_Software_Use/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">C++学习（一）</h4>
+        <h4 class="title">开发工具推荐及相关使用</h4>
       </a>
     </div>
   
@@ -367,13 +395,40 @@
         <aside class="post-widget">
             <nav class="post-toc-wrap" id="post-toc">
                 <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PBRT-CHAPTER-1"><span class="post-toc-number">1.</span> <span class="post-toc-text">PBRT CHAPTER_1</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Introduction"><span class="post-toc-number">2.</span> <span class="post-toc-text">Introduction</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-Literate-Programming-文学编程"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1.1 Literate Programming 文学编程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-1-Camera相机"><span class="post-toc-number">2.2.0.1.</span> <span class="post-toc-text">1.2.1 Camera相机</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-2-Ray-Object-Intersection光线-对象相交"><span class="post-toc-number">2.2.0.2.</span> <span class="post-toc-text">1.2.2 Ray-Object Intersection光线-对象相交</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-3-Light-Distribution光照分布"><span class="post-toc-number">2.2.0.3.</span> <span class="post-toc-text">1.2.3 Light Distribution光照分布</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-4Visibility-可见性"><span class="post-toc-number">2.2.0.4.</span> <span class="post-toc-text">1.2.4Visibility 可见性</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-5表面散射-Surface-Scattering"><span class="post-toc-number">2.2.0.5.</span> <span class="post-toc-text">1.2.5表面散射 Surface Scattering</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-6-Indirect-Light-Transport"><span class="post-toc-number">2.2.0.6.</span> <span class="post-toc-text">1.2.6 Indirect Light Transport</span></a></li></ol></li></ol></li></ol></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PBRT-CHAPTER-1"><span class="post-toc-number">1.</span> <span class="post-toc-text">PBRT CHAPTER_1</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Introduction"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Introduction</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-Literate-Programming-文学编程"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">1.1 Literate Programming 文学编程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-1-Camera相机"><span class="post-toc-number">1.3.0.1.</span> <span class="post-toc-text">1.2.1 Camera相机</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-2-Ray-Object-Intersection光线-对象相交"><span class="post-toc-number">1.3.0.2.</span> <span class="post-toc-text">1.2.2 Ray-Object Intersection光线-对象相交</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-3-Light-Distribution光照分布"><span class="post-toc-number">1.3.0.3.</span> <span class="post-toc-text">1.2.3 Light Distribution光照分布</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-4Visibility-可见性"><span class="post-toc-number">1.3.0.4.</span> <span class="post-toc-text">1.2.4Visibility 可见性</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-5表面散射-Surface-Scattering"><span class="post-toc-number">1.3.0.5.</span> <span class="post-toc-text">1.2.5表面散射 Surface Scattering</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-6-Indirect-Light-Transport"><span class="post-toc-number">1.3.0.6.</span> <span class="post-toc-text">1.2.6 Indirect Light Transport</span></a></li></ol></li></ol></li></ol></li></ol>
             </nav>
             <div class="toc-bar"><div>
         </aside>
     
 </article>
 
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.png" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
 
 </div>
 
@@ -501,6 +556,9 @@
 
 
     
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
     
 
 

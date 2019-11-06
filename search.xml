@@ -115,92 +115,6 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
     </entry>
     
     <entry>
-      <title><![CDATA[PBRT（Chapter1）]]></title>
-      <url>/2019/11/05/PBRT_Learning_1/</url>
-      <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
-<p>渲染是根据三维场景的描述生成图像的过程。显然，这是一个非常广泛的任务，有许多方法可以实现它。基于物理的技术试图模拟现实;也就是说，他们使用物理原理来模拟光和物质的相互作用。虽然基于物理的方法似乎是处理呈现的最明显的方法，但它只是在过去10年左右的实践中才被广泛采用。<br>学习基于PBRT-v3<br>友情链接：<br>（一）PBRT-v3在线电子书：<a href="http://www.pbr-book.org/3ed-2018/contents.html" target="_blank" rel="noopener">http://www.pbr-book.org/3ed-2018/contents.html</a><br>（二）实验室学长的PBRT-v3配置教程: <a href="https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/" target="_blank" rel="noopener">https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/</a></p>
-<h2 id="1-1-Literate-Programming-文学编程"><a href="#1-1-Literate-Programming-文学编程" class="headerlink" title="1.1 Literate Programming 文学编程"></a>1.1 Literate Programming 文学编程</h2><h2 id="1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><a href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法" class="headerlink" title="1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法"></a>1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</h2><h4 id="1-2-1-Camera相机"><a href="#1-2-1-Camera相机" class="headerlink" title="1.2.1 Camera相机"></a>1.2.1 Camera相机</h4><ul>
-<li><p>针孔相机<br>  胶片Film    针孔Pinhole   视见体Viewing Volume</p>
-<h4 id="1-2-2-Ray-Object-Intersection光线-对象相交"><a href="#1-2-2-Ray-Object-Intersection光线-对象相交" class="headerlink" title="1.2.2 Ray-Object Intersection光线-对象相交"></a>1.2.2 Ray-Object Intersection光线-对象相交</h4></li>
-<li><p>当相机生成一条光线时，renderer的首要任务是：确定与光线intersect的首个对象和相交的位置。This intersection point is the visible point along the ray, and we will want to simulate the intersection of light with the object at this point. </p>
-</li>
-<li><figure class="image-box">
-                <img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-<p>  给定光线r,o为光线源点，d表示方向向量，参数t的范围为0到无穷，通过t取不同的值可以得到光线上的任何一点。<br>  在交点的计算中，需测试光线与全部场景对象之间的相交结果，并选取与光线首次相交的对象。<br>  多数场景均由多个对象构成，蛮力进行相机计算将依次测试场景中的各个对象，并选取相交结果最小的t值，但这种方案的计算速度较为缓慢；还可以引入加速结构，并剔除一组对象，进行算法的加速。</p>
-</li>
-</ul>
-<h4 id="1-2-3-Light-Distribution光照分布"><a href="#1-2-3-Light-Distribution光照分布" class="headerlink" title="1.2.3 Light Distribution光照分布"></a>1.2.3 Light Distribution光照分布</h4><ul>
-<li><figure class="image-box">
-                <img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure></li>
-<li>较大球体上某点处的能量将小于较小球体，其原因在于相同的光能分布于较大的面积上，特别的，对于半径为r的球体，其表面某点处的能量与1/r^2成比例。</li>
-<li>由于点光源采用各向均等方式辐射能量。因而两球体存储相同光能。</li>
-<li>对于球体表面面积微分dA,其上的光能能够表示为：<figure class="image-box">
-                <img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure><br>其中Φ表示光源能量，θ为表面点法线与表面点和光源连线的夹角</li>
-<li><figure class="image-box">
-                <img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-
-</li>
-</ul>
-<h4 id="1-2-4Visibility-可见性"><a href="#1-2-4Visibility-可见性" class="headerlink" title="1.2.4Visibility 可见性"></a>1.2.4Visibility 可见性</h4><ul>
-<li>确定是否被遮挡（阴影）</li>
-<li>当着色点与光源之间没有遮挡时，着色点方可被“点亮”<br>确定是否被遮挡：</li>
-<li>1、着色点与光源之间的连线，指向光源——阴影光线（shaow rays）</li>
-<li>2、通过交点计算，算出参数t,确定阴影光线的交点，并通过t的值，确定遮挡关系</li>
-</ul>
-<h4 id="1-2-5表面散射-Surface-Scattering"><a href="#1-2-5表面散射-Surface-Scattering" class="headerlink" title="1.2.5表面散射 Surface Scattering"></a>1.2.5表面散射 Surface Scattering</h4><p>场景中的各对象的材质属性，描述了表面各点处的外观属性，材质通过BRDF定义（双向反射分布函数）</p>
-<ul>
-<li><figure class="image-box">
-                <img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-参数含义：</li>
-<li><figure class="image-box">
-                <img src="6.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>    
-<h4 id="1-2-6-Indirect-Light-Transport"><a href="#1-2-6-Indirect-Light-Transport" class="headerlink" title="1.2.6 Indirect Light Transport"></a>1.2.6 Indirect Light Transport</h4></li>
-<li><figure class="image-box">
-                <img src="7.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-
-
-
-
-</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> RayTracing </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> RayTracing </tag>
-            
-            <tag> PBRT </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[C++学习（一）]]></title>
       <url>/2019/11/05/C++_Learning_1/</url>
       <content type="html"><![CDATA[<h3 id="1-使用-ifdef和-pragam-once两种方式避免一个文件被include多次"><a href="#1-使用-ifdef和-pragam-once两种方式避免一个文件被include多次" class="headerlink" title="1. 使用#ifdef和#pragam once两种方式避免一个文件被include多次"></a>1. 使用#ifdef和#pragam once两种方式避免一个文件被include多次</h3><p><em>(不要拼措了，是pragam，不是program)</em></p>
@@ -560,89 +474,86 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
     </entry>
     
     <entry>
-      <title><![CDATA[Basic Tips about CS or SE]]></title>
-      <url>/2019/11/04/Tips/</url>
-      <content type="html"><![CDATA[<h3 id="1-HDR（High-Dynamic-Range）"><a href="#1-HDR（High-Dynamic-Range）" class="headerlink" title="1. HDR（High Dynamic Range）"></a>1. HDR（High Dynamic Range）</h3><ul>
-<li>相比普通的图像，可以提供更多的动态范围和图像细节，根据不同的曝光时间的LDR（Low Dynamic Range）图像，相对应每个曝光时间对应最佳细节的LDR图像来合成最终的HDR图像，能够更好的反映除真实环境中的视觉效果。<a id="more"></a></li>
-<li><ul>
-<li>简单来说，就是一张图片中尽可能的显示最亮和最暗的地方。</li>
-</ul>
+      <title><![CDATA[PBRT（Chapter1）]]></title>
+      <url>/2019/11/05/PBRT_Learning_1/</url>
+      <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
+<p>渲染是根据三维场景的描述生成图像的过程。显然，这是一个非常广泛的任务，有许多方法可以实现它。基于物理的技术试图模拟现实;也就是说，他们使用物理原理来模拟光和物质的相互作用。虽然基于物理的方法似乎是处理呈现的最明显的方法，但它只是在过去10年左右的实践中才被广泛采用。<br>学习基于PBRT-v3<br>友情链接：<br>（一）PBRT-v3在线电子书：<a href="http://www.pbr-book.org/3ed-2018/contents.html" target="_blank" rel="noopener">http://www.pbr-book.org/3ed-2018/contents.html</a><br>（二）实验室学长的PBRT-v3配置教程: <a href="https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/" target="_blank" rel="noopener">https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/</a></p>
+<h2 id="1-1-Literate-Programming-文学编程"><a href="#1-1-Literate-Programming-文学编程" class="headerlink" title="1.1 Literate Programming 文学编程"></a>1.1 Literate Programming 文学编程</h2><h2 id="1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><a href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法" class="headerlink" title="1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法"></a>1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</h2><h4 id="1-2-1-Camera相机"><a href="#1-2-1-Camera相机" class="headerlink" title="1.2.1 Camera相机"></a>1.2.1 Camera相机</h4><ul>
+<li><p>针孔相机<br>  胶片Film    针孔Pinhole   视见体Viewing Volume</p>
+<h4 id="1-2-2-Ray-Object-Intersection光线-对象相交"><a href="#1-2-2-Ray-Object-Intersection光线-对象相交" class="headerlink" title="1.2.2 Ray-Object Intersection光线-对象相交"></a>1.2.2 Ray-Object Intersection光线-对象相交</h4></li>
+<li><p>当相机生成一条光线时，renderer的首要任务是：确定与光线intersect的首个对象和相交的位置。This intersection point is the visible point along the ray, and we will want to simulate the intersection of light with the object at this point. </p>
 </li>
-<li>通过将拍出的几张不同曝光的照片，将每张照片曝光正常的部分保留，合成一张，就得到了一条了一张HDR图像。</li>
-</ul>
-<h3 id="2-HDR合成"><a href="#2-HDR合成" class="headerlink" title="2. HDR合成"></a>2. HDR合成</h3><h3 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h3><ul>
-<li>Unity中对于动态物体，例如人物等，使用Light Probe对于间接光照进行处理，Light Probe（采样点）对环境进行采样（发生在预处理阶段），在运行阶段，渲染器从邻近的采样点中取值，并对点进行插值处理。</li>
-</ul>
-<h3 id="4-计算机图形学（Computer-Graphics）和计算机视觉-Computer-Version"><a href="#4-计算机图形学（Computer-Graphics）和计算机视觉-Computer-Version" class="headerlink" title="4. 计算机图形学（Computer Graphics）和计算机视觉(Computer Version)"></a>4. 计算机图形学（Computer Graphics）和计算机视觉(Computer Version)</h3><ul>
-<li>计算机图形（Computer Graphics）和计算机视觉（Computer Vision）是一对孪生兄弟，二者互为逆过程。</li>
-<li><ul>
-<li>计算机图形是预先知道3D物体的形状、位置、材料构成，以及场景的灯光和相机，然后渲染出场景。</li>
-</ul>
-</li>
-<li>计算机视觉是已知拍到的图像，从中推断出有哪些物体，它们由什么材料制成，以及它们的3D位置和方向。</li>
-</ul>
-<h3 id="5-Mitsuba"><a href="#5-Mitsuba" class="headerlink" title="5. Mitsuba"></a>5. Mitsuba</h3><ul>
-<li>一个面向研究用的开源软件，基于PBRT(Physically based rendering technology) 根据几何光学的物理性质编程实现</li>
-<li>性能：实现了大多数常见的渲染算法</li>
-<li>鲁棒性（Robustness）:采用底层算法（underlying algorithm）</li>
-<li>可扩展性：可以并行计算，用大型计算簇实现与优化加速</li>
-<li>限制：对于光的波特性无法很好的表现</li>
-<li>极其模块化，它由一小组核心库和100多种不同的插件组成，这些插件实现了从材料和光源到完整渲染算法的功能。</li>
-<li>与其他开源渲染器相比，Mitsuba非常重视实验渲染技术，例如Metropolis LightTransport的路径配方和体积建模方法。 因此，对于那些想要尝试这种尚未进入主流渲染器的技术的人来说，它可能是真正感兴趣的，它也为这一领域的研究提供了坚实的基础。</li>
-</ul>
-<h3 id="6-Tips"><a href="#6-Tips" class="headerlink" title="6.Tips"></a>6.Tips</h3><ul>
-<li><p>jpg不支持透明度，有损压缩的图像格式，有损压缩会使得原始图片数据质量下降，也使得其占用空间小，在网页应用中加速速度快。</p>
-</li>
-<li><p>png支持透明度，无视压缩的图像格式，能在保证不失真的情况下尽可能压缩图像文件的大小，因此图像质量高，在一些贴纸应用中大多采用png图片。</p>
-</li>
-<li><p>Markdown：一种使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使得普通文本具有一定的格式。<br>Markdown具有一系列的衍生版本，用于扩展Markdown功能（例如：表格，脚注，内嵌HTML等）</p>
+<li><figure class="image-box">
+                <img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+<p>  给定光线r,o为光线源点，d表示方向向量，参数t的范围为0到无穷，通过t取不同的值可以得到光线上的任何一点。<br>  在交点的计算中，需测试光线与全部场景对象之间的相交结果，并选取与光线首次相交的对象。<br>  多数场景均由多个对象构成，蛮力进行相机计算将依次测试场景中的各个对象，并选取相交结果最小的t值，但这种方案的计算速度较为缓慢；还可以引入加速结构，并剔除一组对象，进行算法的加速。</p>
 </li>
 </ul>
+<h4 id="1-2-3-Light-Distribution光照分布"><a href="#1-2-3-Light-Distribution光照分布" class="headerlink" title="1.2.3 Light Distribution光照分布"></a>1.2.3 Light Distribution光照分布</h4><ul>
+<li><figure class="image-box">
+                <img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure></li>
+<li>较大球体上某点处的能量将小于较小球体，其原因在于相同的光能分布于较大的面积上，特别的，对于半径为r的球体，其表面某点处的能量与1/r^2成比例。</li>
+<li>由于点光源采用各向均等方式辐射能量。因而两球体存储相同光能。</li>
+<li>对于球体表面面积微分dA,其上的光能能够表示为：<figure class="image-box">
+                <img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure><br>其中Φ表示光源能量，θ为表面点法线与表面点和光源连线的夹角</li>
+<li><figure class="image-box">
+                <img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+
+</li>
+</ul>
+<h4 id="1-2-4Visibility-可见性"><a href="#1-2-4Visibility-可见性" class="headerlink" title="1.2.4Visibility 可见性"></a>1.2.4Visibility 可见性</h4><ul>
+<li>确定是否被遮挡（阴影）</li>
+<li>当着色点与光源之间没有遮挡时，着色点方可被“点亮”<br>确定是否被遮挡：</li>
+<li>1、着色点与光源之间的连线，指向光源——阴影光线（shaow rays）</li>
+<li>2、通过交点计算，算出参数t,确定阴影光线的交点，并通过t的值，确定遮挡关系</li>
+</ul>
+<h4 id="1-2-5表面散射-Surface-Scattering"><a href="#1-2-5表面散射-Surface-Scattering" class="headerlink" title="1.2.5表面散射 Surface Scattering"></a>1.2.5表面散射 Surface Scattering</h4><p>场景中的各对象的材质属性，描述了表面各点处的外观属性，材质通过BRDF定义（双向反射分布函数）</p>
+<ul>
+<li><figure class="image-box">
+                <img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+参数含义：</li>
+<li><figure class="image-box">
+                <img src="6.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>    
+<h4 id="1-2-6-Indirect-Light-Transport"><a href="#1-2-6-Indirect-Light-Transport" class="headerlink" title="1.2.6 Indirect Light Transport"></a>1.2.6 Indirect Light Transport</h4></li>
+<li><figure class="image-box">
+                <img src="7.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=501468332&auto=1&height=32"></iframe>
+
 ]]></content>
       
         <categories>
             
             <category> Computer-Science </category>
             
-            <category> Basic Tips </category>
+            <category> RayTracing </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> Tips </tag>
+            <tag> RayTracing </tag>
+            
+            <tag> PBRT </tag>
             
         </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Hello Graphic World]]></title>
-      <url>/2019/11/04/hello-world/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<a id="more"></a>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-<h3 id="创建新的分页"><a href="#创建新的分页" class="headerlink" title="创建新的分页"></a>创建新的分页</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page XXX</span><br></pre></td></tr></table></figure>
-<h3 id="创建新的博文"><a href="#创建新的博文" class="headerlink" title="创建新的博文"></a>创建新的博文</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new XXX</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>使用图像资源的相对路径的话，需要在yml文件中设置，并且在_posts文件中创建一个与博文名称一致的文件夹，并将图像资源放置其中。</li>
-</ul>
-]]></content>
-      
         
     </entry>
     
@@ -669,8 +580,7 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
 </ul>
 <h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
 <li>Shift+F10:鼠标右键快捷键</li>
-<li></li>
-<li></li>
+<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
 </ul>
 <h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
 <li>可集成到VS或者Unity3D中</li>
@@ -770,6 +680,93 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
             <tag> Visual Studio </tag>
             
         </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Basic Tips about CS or SE]]></title>
+      <url>/2019/11/04/Tips/</url>
+      <content type="html"><![CDATA[<h3 id="1-HDR（High-Dynamic-Range）"><a href="#1-HDR（High-Dynamic-Range）" class="headerlink" title="1. HDR（High Dynamic Range）"></a>1. HDR（High Dynamic Range）</h3><ul>
+<li>相比普通的图像，可以提供更多的动态范围和图像细节，根据不同的曝光时间的LDR（Low Dynamic Range）图像，相对应每个曝光时间对应最佳细节的LDR图像来合成最终的HDR图像，能够更好的反映除真实环境中的视觉效果。<a id="more"></a></li>
+<li><ul>
+<li>简单来说，就是一张图片中尽可能的显示最亮和最暗的地方。</li>
+</ul>
+</li>
+<li>通过将拍出的几张不同曝光的照片，将每张照片曝光正常的部分保留，合成一张，就得到了一条了一张HDR图像。</li>
+</ul>
+<h3 id="2-HDR合成"><a href="#2-HDR合成" class="headerlink" title="2. HDR合成"></a>2. HDR合成</h3><h3 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h3><ul>
+<li>Unity中对于动态物体，例如人物等，使用Light Probe对于间接光照进行处理，Light Probe（采样点）对环境进行采样（发生在预处理阶段），在运行阶段，渲染器从邻近的采样点中取值，并对点进行插值处理。</li>
+</ul>
+<h3 id="4-计算机图形学（Computer-Graphics）和计算机视觉-Computer-Version"><a href="#4-计算机图形学（Computer-Graphics）和计算机视觉-Computer-Version" class="headerlink" title="4. 计算机图形学（Computer Graphics）和计算机视觉(Computer Version)"></a>4. 计算机图形学（Computer Graphics）和计算机视觉(Computer Version)</h3><ul>
+<li>计算机图形（Computer Graphics）和计算机视觉（Computer Vision）是一对孪生兄弟，二者互为逆过程。</li>
+<li><ul>
+<li>计算机图形是预先知道3D物体的形状、位置、材料构成，以及场景的灯光和相机，然后渲染出场景。</li>
+</ul>
+</li>
+<li>计算机视觉是已知拍到的图像，从中推断出有哪些物体，它们由什么材料制成，以及它们的3D位置和方向。</li>
+</ul>
+<h3 id="5-Mitsuba"><a href="#5-Mitsuba" class="headerlink" title="5. Mitsuba"></a>5. Mitsuba</h3><ul>
+<li>一个面向研究用的开源软件，基于PBRT(Physically based rendering technology) 根据几何光学的物理性质编程实现</li>
+<li>性能：实现了大多数常见的渲染算法</li>
+<li>鲁棒性（Robustness）:采用底层算法（underlying algorithm）</li>
+<li>可扩展性：可以并行计算，用大型计算簇实现与优化加速</li>
+<li>限制：对于光的波特性无法很好的表现</li>
+<li>极其模块化，它由一小组核心库和100多种不同的插件组成，这些插件实现了从材料和光源到完整渲染算法的功能。</li>
+<li>与其他开源渲染器相比，Mitsuba非常重视实验渲染技术，例如Metropolis LightTransport的路径配方和体积建模方法。 因此，对于那些想要尝试这种尚未进入主流渲染器的技术的人来说，它可能是真正感兴趣的，它也为这一领域的研究提供了坚实的基础。</li>
+</ul>
+<h3 id="6-Tips"><a href="#6-Tips" class="headerlink" title="6.Tips"></a>6.Tips</h3><ul>
+<li><p>jpg不支持透明度，有损压缩的图像格式，有损压缩会使得原始图片数据质量下降，也使得其占用空间小，在网页应用中加速速度快。</p>
+</li>
+<li><p>png支持透明度，无视压缩的图像格式，能在保证不失真的情况下尽可能压缩图像文件的大小，因此图像质量高，在一些贴纸应用中大多采用png图片。</p>
+</li>
+<li><p>Markdown：一种使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使得普通文本具有一定的格式。<br>Markdown具有一系列的衍生版本，用于扩展Markdown功能（例如：表格，脚注，内嵌HTML等）</p>
+</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> Basic Tips </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Tips </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hello Graphic World]]></title>
+      <url>/2019/11/04/hello-world/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h3 id="创建新的分页"><a href="#创建新的分页" class="headerlink" title="创建新的分页"></a>创建新的分页</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page XXX</span><br></pre></td></tr></table></figure>
+<h3 id="创建新的博文"><a href="#创建新的博文" class="headerlink" title="创建新的博文"></a>创建新的博文</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new XXX</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用图像资源的相对路径的话，需要在yml文件中设置，并且在_posts文件中创建一个与博文名称一致的文件夹，并将图像资源放置其中。</li>
+</ul>
+]]></content>
+      
         
     </entry>
     
