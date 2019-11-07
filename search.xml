@@ -3,6 +3,188 @@
   
     
     <entry>
+      <title><![CDATA[全局光照（总览）]]></title>
+      <url>/2019/11/05/GI_1/</url>
+      <content type="html"><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><ul>
+<li>全局光照，(Global Illumination,简称 GI), 或被称为Indirect Illumination, 间接光照，是指既考虑场景中直接来自光源的光照（Direct Light）又考虑经过场景中其他物体反射后的光照（Indirect Light）的一种渲染技术。使用全局光照能够有效地增强场景的真实感。</li>
+</ul>
+<p>即可以理解为：全局光照 = 直接光照(Direct Light) + 间接光照(Indirect Light)<br>下面是直接光照和全局光照的对比</p>
+<p>@column-2{</p>
+<p>@card{</p>
+<figure class="image-box">
+                <img src="1.jpg" alt="[sorry,图片挂了]" title="[直接光照]" class="justify-small">
+                <p>[直接光照]</p>
+            </figure>
+
+<p>}</p>
+<p>@card{</p>
+<figure class="image-box">
+                <img src="2.jpg" alt="[sorry,图片挂了]" title="[全局光照]" class="justify-small">
+                <p>[全局光照]</p>
+            </figure>
+
+<p>}</p>
+<p>}</p>
+<p><strong>全局光照技术历程</strong></p>
+<ul>
+<li><p>光线投射 Ray Casting<br>其具体思路是从每一个像素射出一条射线，然后找到最接近的物体挡住射线的路径，而视平面上每个像素的颜色取决于从可见光表面产生的亮度。</p>
+</li>
+<li><p>光线追踪 Ray Tracing<br>Turner Whitted在光线投射的基础上，加入光与物体表面的交互，让光线在物体表面沿着反射，折射以及散射方式上继续传播，直到与光源相交。<br>这一方法后来也被称为经典光线跟踪方法、递归式光线追踪（Recursive Ray Tracing）方法，或 Whitted-style 光线跟踪方法。</p>
+</li>
+<li><p>分布式光线追踪 Distributed Ray Tracing<br>Cook于1984年引入蒙特卡洛方法（Monte Carlo method）到光线跟踪领域，将经典的光线跟踪方法扩展为分布式光线跟踪算法，又称为随机光线追踪。<br>可以模拟更多的效果，如金属光泽、软阴影、景深（ Depthof Field）、运动模糊等等。</p>
+</li>
+<li><p>渲染方程 The Rendering Equation<br>Kajiya于1986年建立了渲染方程的相关理论，使用它来解释光能传输的产生的各种现象。这一方程描述了场景中光能传输达到稳定状态以后，物体表面某个点在某个方向上的辐射率（Radiance）与入射辐射亮度等的关系。<br>可以将渲染方程理解为全局光照算法的基础，随后出现的很多全局光照的算法，都是以渲染方程为基础，对其进行简化的求解，以达到优化性能的目的。渲染方程根据光的物理学原理，以及能量守恒定律，完美地描述了光能在场景中的传播。很多真实感渲染技术都是对它的一个近似。</p>
+</li>
+<li><p>路径追踪 Path Tracing<br>根据渲染方程， Kajiya 提出的路径追踪方法是第一个无偏（Unbiased）的渲染方法。<br>路径追踪的基本思想是从视点发出一条光线，光线与物体表面相交时根据表面的材质属性继续采样一个方向，发出另一条光线，如此迭代，直到光线打到光源上（或逃逸出场景），然后用蒙特卡洛的方法，计算其贡献，作为像素的颜色值。而使用蒙特卡洛方法对积分的求解是无偏的，只要时间足够长，最终图像能收敛到一个正确的结果。</p>
+</li>
+<li><p>双向路径追踪 Bidirectional Path Tracing<br>基本思想是同时从视点、光源打出射线，经过若干次反弹后，将视点子路径（ eye path） 和光源子路径（ light path） 上的顶点连接起来（连接时需要测试可见性），以快速产生很多路径。<br>这种方法能够产生一些传统路径追踪难以采样到的光路，所以能够很有效地降低噪声。<br>进一步的， [Veach 1997]将渲染方程改写成对路径积分的形式，允许多种路径采样的方法来求解该积分。</p>
+</li>
+<li><p>梅特波利斯光照传输 Metropolis Light Transport 简称MLT<br>路径追踪（ Path Tracing）中一个核心问题就是怎样去尽可能多的采样一些贡献大的路径，而该方法可以自适应的生成贡献大的路径，简单来说它会避开贡献小的路径，而在贡献大的路径附近做更多局部的探索，通过特殊的变异方法，生成一些新的路径，这些局部的路径的贡献往往也很高。<br>与双向路径追踪相比， MLT 更加鲁棒，能处理各种复杂的场景。<br>比如说整个场景只通过门缝透进来的间接光照亮，此时传统的路径追踪方法因为难以采样到透过门缝的这样的特殊路径而产生非常大的噪声。</p>
+</li>
+</ul>
+<p><strong>回到光线追踪（Ray Tracing）上:</strong><br>上面我们说到Ray Tracing是三维计算机图形学中的特殊渲染方法，跟踪从眼睛发出的光线而不是光源发出的光线。<br>通过这样一项技术得到的结果有着更好的光线效果，例如对于反射和折射有着更准确的模拟效果，并且效率非常高，追求高质量图像时常采用这样的方式。<br>Ray Tracing的缺点就是性能，它所需要的计算量非常巨大。<br>传统的RayTracing并不一定是真实效果图像，只有在非常近似或者完全实现渲染方程时，才能实现真正的真实效果图像。由于渲染方程描述了每个光束的物理效果，所以实现渲染方程可以得到真正的真实效果，但是，考虑到所需要的计算资源，这通常是无法实现的。于是，所有可以实现的渲染模型都必须是渲染方程的近似，而光线跟踪就不一定是最为可行的方法。包括光子映射在内的一些方法，都是依据光线跟踪实现一部分算法，但是可以得到更好的效果。</p>
+<p><strong>再讲到路径追踪（Path Tracing）上：</strong><br>简单来说，路径追踪 = 光线追踪+ 蒙特卡洛方法。</p>
+<p><strong>我们再来总结一下Ray Casting，Ray Tracing，PathTracing这三者的区别</strong></p>
+<ul>
+<li>Ray Casting：其它就是ray tracing的第一步，发射光线，与物体相交。</li>
+<li>Ray Tracing：这其实是个框架，而不是个方法。符合这个框架的都叫raytracing。这个框架就是从视点发射ray，与物体相交就根据规则反射、折射或吸收。遇到光源或者走太远就停住。一般来说运算量不小。</li>
+<li>Path Tracing：是ray tracing + 蒙特卡洛法。在相交后会选一个随机方向继续跟踪，并根据BRDF计算颜色。运算量也不小。还有一些小分类，比如Bidirectional path tracing。</li>
+</ul>
+<p><strong>最后我们来学习一下AO</strong><br>AO是Ambient Occlusion的简称，是全局光照明的一种近似替代品，<br>可以产生重要的视觉明暗效果，通过描绘物体之间由于遮挡而产生的阴影， 能够更好地捕捉到场景中的细节，可以解决漏光，阴影漂浮等问题，改善场景中角落、锯齿、裂缝等细小物体阴影不清。<br>AO最常用的方法是SSAO，UE4中的AO即是采用这种方案</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> RayTracing </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> RayTracing </tag>
+            
+            <tag> PBRT </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[C++学习（二）]]></title>
+      <url>/2019/11/05/C++_Learning_2/</url>
+      <content type="html"><![CDATA[<h1 id="1-C-重载操作符operator"><a href="#1-C-重载操作符operator" class="headerlink" title="1. C++重载操作符operator"></a>1. C++重载操作符operator</h1><h2 id="1-1-what："><a href="#1-1-what：" class="headerlink" title="1. 1 what："></a>1. 1 what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
+<h2 id="1-2-why"><a href="#1-2-why" class="headerlink" title="1.2 why:"></a>1.2 why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
+<h2 id="1-3-how-两种方式："><a href="#1-3-how-两种方式：" class="headerlink" title="1.3 how:两种方式："></a>1.3 how:两种方式：</h2><h3 id="1-3-1将操作符重载实现为类的成员函数"><a href="#1-3-1将操作符重载实现为类的成员函数" class="headerlink" title="1.3.1将操作符重载实现为类的成员函数"></a>1.3.1将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
+<blockquote>
+<p>//类结构中被声明的函数<br>bool operator==(const person&amp; ps) //person为自己定义的类<br>｛<br>        If（this-&gt;age == ps.age）{<br>           return true;<br>       }<br>       return false;<br>｝</p>
+</blockquote>
+<h3 id="1-3-2将操作符重载为非类的成员函数（即：全局函数）"><a href="#1-3-2将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="1.3.2将操作符重载为非类的成员函数（即：全局函数）"></a>1.3.2将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **</p>
+<blockquote>
+<p>//全局函数<br>bool operator==(person const &amp; p1,person const &amp; p2);<br>{<br>   if(p1.age==p2.age){<br>       return true;<br>   }<br>   return false;<br>}</p>
+</blockquote>
+<p>‘ 其中person的定义如下：’</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">	public :</span><br><span class="line">		int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="2-C-中修饰符-inline-表示内联函数"><a href="#2-C-中修饰符-inline-表示内联函数" class="headerlink" title="2.  C++中修饰符 inline,表示内联函数"></a>2.  C++中修饰符 inline,表示内联函数</h1><ul>
+<li><h2 id="2-1-what"><a href="#2-1-what" class="headerlink" title="2.1 what:"></a>2.1 what:</h2><p>修饰为内联函数</p>
+</li>
+<li><h2 id="2-2-why"><a href="#2-2-why" class="headerlink" title="2.2 why:"></a>2.2 why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
+</li>
+<li><h2 id="2-3-how"><a href="#2-3-how" class="headerlink" title="2.3 how:"></a>2.3 how:</h2></li>
+<li><figure class="image-box">
+                <img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<p>inline使用限制：inline修饰的函数只适合于函数内部简单，没有包含复杂的逻辑结构，例如：while,switch，同时inline修饰的函数还不能自己调用自己。 </p>
+<p>建议inline函数的定义放置于头文件中</p>
+<p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">//定义于类结构之内的函数默认为内联函数</span><br><span class="line">void Foo(int x,int y)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//如果需要定义于类结构之外的内联函数</span><br><span class="line">inline void  A::Foo(int x,int y)&#123;&#125;</span><br><span class="line">//同时需要注意的是，inline必须于函数定义放置一起</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> Programming Language </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Programming Language </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Matlab相关]]></title>
+      <url>/2019/11/05/Matlab_Learning/</url>
+      <content type="html"><![CDATA[<h1 id="Matlab学习"><a href="#Matlab学习" class="headerlink" title="Matlab学习"></a>Matlab学习</h1><h3 id="1-dir-使用"><a href="#1-dir-使用" class="headerlink" title="1. dir()使用"></a>1. dir()使用</h3><p>dir函数可以有调用方式</p>
+<ul>
+<li><p>dir(‘.’) 列出当前目录下所有子文件夹和文件</p>
+</li>
+<li><p>dir(‘G:\Matlab’) 列出指定目录下所有子文件夹和文件</p>
+</li>
+<li><p>dir(‘*.m’) 列出当前目录下符合正则表达式的文件夹和文件</p>
+</li>
+<li><p>得到的为结构体数组每个元素都是如下形式的结构体</p>
+<pre><code>name  -- filename
+date  -- modification date
+bytes  -- number of bytes allocated to the file
+isdir  -- 1 if name is a directory and 0 if not
+datenum -- modification date as a MATLAB serial date number</code></pre><p> 分别为文件名,修改日期,大小,是否为目录,Matlab特定的修改日期</p>
+<p>可以提取出文件名以作读取和保存用.</p>
+</li>
+</ul>
+<h3 id="2-exist-使用"><a href="#2-exist-使用" class="headerlink" title="2. exist()使用"></a>2. exist()使用</h3><ul>
+<li>判断某个变量，函数，类，文件夹等参数是否存在。</li>
+<li>A=exists(“name”,”kind”)，name可以是变量，函数，类，文件夹等</li>
+<li>返回值的含义如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0 不存在则返回值 </span><br><span class="line">1 name 可以是变量名，如果存在，返回值 </span><br><span class="line">2 函数名、m 文件名，存在则返回值 </span><br><span class="line">3 mex 文件、dll 文件，存在则返回值</span><br><span class="line">4 内嵌的函数，存在则返回值 5 p码文件 ， 存在则返回值 </span><br><span class="line">6 目录，存在则返回值 </span><br><span class="line">7 路径，存在则返回值 </span><br><span class="line">8 Java class，存在则返回值</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h3 id="3-for循环"><a href="#3-for循环" class="headerlink" title="3. for循环"></a>3. for循环</h3><ul>
+<li>for k=1:10  正序遍历</li>
+<li>for k=10:-1:1 倒序遍历，从10到1，每次递减-1</li>
+</ul>
+<h3 id="4-strrep-使用"><a href="#4-strrep-使用" class="headerlink" title="4.strrep()使用"></a>4.strrep()使用</h3><ul>
+<li>查找并替换函数</li>
+<li>strrep(A,B,C); 在A中查找B并替换为C</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> Programming Language </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Programming Language </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C++学习（一）]]></title>
       <url>/2019/11/05/C++_Learning_1/</url>
       <content type="html"><![CDATA[<h3 id="1-使用-ifdef和-pragam-once两种方式避免一个文件被include多次"><a href="#1-使用-ifdef和-pragam-once两种方式避免一个文件被include多次" class="headerlink" title="1. 使用#ifdef和#pragam once两种方式避免一个文件被include多次"></a>1. 使用#ifdef和#pragam once两种方式避免一个文件被include多次</h3><p><em>(不要拼措了，是pragam，不是program)</em></p>
@@ -362,118 +544,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[C++学习（二）]]></title>
-      <url>/2019/11/05/C++_Learning_2/</url>
-      <content type="html"><![CDATA[<h1 id="1-C-重载操作符operator"><a href="#1-C-重载操作符operator" class="headerlink" title="1. C++重载操作符operator"></a>1. C++重载操作符operator</h1><h2 id="1-1-what："><a href="#1-1-what：" class="headerlink" title="1. 1 what："></a>1. 1 what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
-<h2 id="1-2-why"><a href="#1-2-why" class="headerlink" title="1.2 why:"></a>1.2 why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
-<h2 id="1-3-how-两种方式："><a href="#1-3-how-两种方式：" class="headerlink" title="1.3 how:两种方式："></a>1.3 how:两种方式：</h2><h3 id="1-3-1将操作符重载实现为类的成员函数"><a href="#1-3-1将操作符重载实现为类的成员函数" class="headerlink" title="1.3.1将操作符重载实现为类的成员函数"></a>1.3.1将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
-<blockquote>
-<p>//类结构中被声明的函数<br>bool operator==(const person&amp; ps) //person为自己定义的类<br>｛<br>        If（this-&gt;age == ps.age）{<br>           return true;<br>       }<br>       return false;<br>｝</p>
-</blockquote>
-<h3 id="1-3-2将操作符重载为非类的成员函数（即：全局函数）"><a href="#1-3-2将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="1.3.2将操作符重载为非类的成员函数（即：全局函数）"></a>1.3.2将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **</p>
-<blockquote>
-<p>//全局函数<br>bool operator==(person const &amp; p1,person const &amp; p2);<br>{<br>   if(p1.age==p2.age){<br>       return true;<br>   }<br>   return false;<br>}</p>
-</blockquote>
-<p>‘ 其中person的定义如下：’</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">	public :</span><br><span class="line">		int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="2-C-中修饰符-inline-表示内联函数"><a href="#2-C-中修饰符-inline-表示内联函数" class="headerlink" title="2.  C++中修饰符 inline,表示内联函数"></a>2.  C++中修饰符 inline,表示内联函数</h1><ul>
-<li><h2 id="2-1-what"><a href="#2-1-what" class="headerlink" title="2.1 what:"></a>2.1 what:</h2><p>修饰为内联函数</p>
-</li>
-<li><h2 id="2-2-why"><a href="#2-2-why" class="headerlink" title="2.2 why:"></a>2.2 why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
-</li>
-<li><h2 id="2-3-how"><a href="#2-3-how" class="headerlink" title="2.3 how:"></a>2.3 how:</h2></li>
-<li><figure class="image-box">
-                <img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-</li>
-</ul>
-<p>inline使用限制：inline修饰的函数只适合于函数内部简单，没有包含复杂的逻辑结构，例如：while,switch，同时inline修饰的函数还不能自己调用自己。 </p>
-<p>建议inline函数的定义放置于头文件中</p>
-<p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">//定义于类结构之内的函数默认为内联函数</span><br><span class="line">void Foo(int x,int y)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//如果需要定义于类结构之外的内联函数</span><br><span class="line">inline void  A::Foo(int x,int y)&#123;&#125;</span><br><span class="line">//同时需要注意的是，inline必须于函数定义放置一起</span><br></pre></td></tr></table></figure>
-
-
-
-<hr>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> Programming Language </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Programming Language </tag>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Matlab相关]]></title>
-      <url>/2019/11/05/Matlab_Learning/</url>
-      <content type="html"><![CDATA[<h1 id="Matlab学习"><a href="#Matlab学习" class="headerlink" title="Matlab学习"></a>Matlab学习</h1><h3 id="1-dir-使用"><a href="#1-dir-使用" class="headerlink" title="1. dir()使用"></a>1. dir()使用</h3><p>dir函数可以有调用方式</p>
-<ul>
-<li><p>dir(‘.’) 列出当前目录下所有子文件夹和文件</p>
-</li>
-<li><p>dir(‘G:\Matlab’) 列出指定目录下所有子文件夹和文件</p>
-</li>
-<li><p>dir(‘*.m’) 列出当前目录下符合正则表达式的文件夹和文件</p>
-</li>
-<li><p>得到的为结构体数组每个元素都是如下形式的结构体</p>
-<pre><code>name  -- filename
-date  -- modification date
-bytes  -- number of bytes allocated to the file
-isdir  -- 1 if name is a directory and 0 if not
-datenum -- modification date as a MATLAB serial date number</code></pre><p> 分别为文件名,修改日期,大小,是否为目录,Matlab特定的修改日期</p>
-<p>可以提取出文件名以作读取和保存用.</p>
-</li>
-</ul>
-<h3 id="2-exist-使用"><a href="#2-exist-使用" class="headerlink" title="2. exist()使用"></a>2. exist()使用</h3><ul>
-<li>判断某个变量，函数，类，文件夹等参数是否存在。</li>
-<li>A=exists(“name”,”kind”)，name可以是变量，函数，类，文件夹等</li>
-<li>返回值的含义如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0 不存在则返回值 </span><br><span class="line">1 name 可以是变量名，如果存在，返回值 </span><br><span class="line">2 函数名、m 文件名，存在则返回值 </span><br><span class="line">3 mex 文件、dll 文件，存在则返回值</span><br><span class="line">4 内嵌的函数，存在则返回值 5 p码文件 ， 存在则返回值 </span><br><span class="line">6 目录，存在则返回值 </span><br><span class="line">7 路径，存在则返回值 </span><br><span class="line">8 Java class，存在则返回值</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<h3 id="3-for循环"><a href="#3-for循环" class="headerlink" title="3. for循环"></a>3. for循环</h3><ul>
-<li>for k=1:10  正序遍历</li>
-<li>for k=10:-1:1 倒序遍历，从10到1，每次递减-1</li>
-</ul>
-<h3 id="4-strrep-使用"><a href="#4-strrep-使用" class="headerlink" title="4.strrep()使用"></a>4.strrep()使用</h3><ul>
-<li>查找并替换函数</li>
-<li>strrep(A,B,C); 在A中查找B并替换为C</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> Programming Language </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Programming Language </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[PBRT（Chapter1）]]></title>
       <url>/2019/11/05/PBRT_Learning_1/</url>
       <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><p>*Introduction<br>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
@@ -616,101 +686,6 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
     </entry>
     
     <entry>
-      <title><![CDATA[全局光照（总览）]]></title>
-      <url>/2019/11/05/GI_1/</url>
-      <content type="html"><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><ul>
-<li>全局光照，(Global Illumination,简称 GI), 或被称为Indirect Illumination, 间接光照，是指既考虑场景中直接来自光源的光照（Direct Light）又考虑经过场景中其他物体反射后的光照（Indirect Light）的一种渲染技术。使用全局光照能够有效地增强场景的真实感。</li>
-</ul>
-<p>即可以理解为：全局光照 = 直接光照(Direct Light) + 间接光照(Indirect Light)<br>下面是直接光照和全局光照的对比</p>
-<figure class="image-box">
-                <img src="1.jpg" alt="[sorry,图片挂了]" title="[直接光照]" class="justify-small">
-                <p>[直接光照]</p>
-            </figure>
-
-<figure class="image-box">
-                <img src="2.jpg" alt="[sorry,图片挂了]" title="[全局光照]" class="justify-small">
-                <p>[全局光照]</p>
-            </figure>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> RayTracing </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> RayTracing </tag>
-            
-            <tag> PBRT </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[开发工具推荐及相关使用]]></title>
-      <url>/2019/11/04/Basic_Software_Use/</url>
-      <content type="html"><![CDATA[<h1 id="开发工具及使用"><a href="#开发工具及使用" class="headerlink" title="开发工具及使用"></a>开发工具及使用</h1><p>+++</p>
-<h3 id="1-listary"><a href="#1-listary" class="headerlink" title="1. listary"></a>1. listary</h3><ul>
-<li>双击Ctrl全局搜索</li>
-<li>在文件管理器中双击空白处进行列表呼出</li>
-</ul>
-<h3 id="2-cmd"><a href="#2-cmd" class="headerlink" title="2.cmd"></a>2.cmd</h3><ul>
-<li>在当前文件目录的显示栏下输入 cmd ,即可在当前路径下打开命令行</li>
-</ul>
-<h3 id="3-stb-image简单图像库"><a href="#3-stb-image简单图像库" class="headerlink" title="3,stb_image简单图像库"></a>3,stb_image简单图像库</h3><ul>
-<li><p>重点关注三个头文件</p>
-</li>
-<li><figure class="image-box">
-                <img src="1570780034511.png.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-</li>
-</ul>
-<h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
-<li>Shift+F10:鼠标右键快捷键</li>
-<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
-</ul>
-<h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
-<li>可集成到VS或者Unity3D中</li>
-</ul>
-<h3 id="6-Typora"><a href="#6-Typora" class="headerlink" title="6. Typora"></a>6. Typora</h3><ul>
-<li>Ctrl+/：源代码模式进入或者退出</li>
-</ul>
-<h3 id="7-Visual-Studio-Code"><a href="#7-Visual-Studio-Code" class="headerlink" title="7. Visual Studio Code"></a>7. Visual Studio Code</h3><ul>
-<li>Ctrl+Shift+P:调出主命令框</li>
-<li>Ctrl +K选中后，再按V：预览markdown效果</li>
-</ul>
-<h3 id="8-Scons"><a href="#8-Scons" class="headerlink" title="8. Scons"></a>8. Scons</h3><ul>
-<li>基于python的软件构建工具</li>
-</ul>
-<h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发工具 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Tips </tag>
-            
-            <tag> 开发工具 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[VS使用及错误合集]]></title>
       <url>/2019/11/04/Basic_Software_Use_VS/</url>
       <content type="html"><![CDATA[<h1 id="1-错误合集"><a href="#1-错误合集" class="headerlink" title="1.错误合集"></a>1.错误合集</h1><hr>
@@ -770,9 +745,67 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
         
         <tags>
             
+            <tag> Visual Studio </tag>
+            
             <tag> 开发工具 </tag>
             
-            <tag> Visual Studio </tag>
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[开发工具推荐及相关使用]]></title>
+      <url>/2019/11/04/Basic_Software_Use/</url>
+      <content type="html"><![CDATA[<h1 id="开发工具及使用"><a href="#开发工具及使用" class="headerlink" title="开发工具及使用"></a>开发工具及使用</h1><p>+++</p>
+<h3 id="1-listary"><a href="#1-listary" class="headerlink" title="1. listary"></a>1. listary</h3><ul>
+<li>双击Ctrl全局搜索</li>
+<li>在文件管理器中双击空白处进行列表呼出</li>
+</ul>
+<h3 id="2-cmd"><a href="#2-cmd" class="headerlink" title="2.cmd"></a>2.cmd</h3><ul>
+<li>在当前文件目录的显示栏下输入 cmd ,即可在当前路径下打开命令行</li>
+</ul>
+<h3 id="3-stb-image简单图像库"><a href="#3-stb-image简单图像库" class="headerlink" title="3,stb_image简单图像库"></a>3,stb_image简单图像库</h3><ul>
+<li><p>重点关注三个头文件</p>
+</li>
+<li><figure class="image-box">
+                <img src="1570780034511.png.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
+<li>Shift+F10:鼠标右键快捷键</li>
+<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
+</ul>
+<h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
+<li>可集成到VS或者Unity3D中</li>
+</ul>
+<h3 id="6-Typora"><a href="#6-Typora" class="headerlink" title="6. Typora"></a>6. Typora</h3><ul>
+<li>Ctrl+/：源代码模式进入或者退出</li>
+</ul>
+<h3 id="7-Visual-Studio-Code"><a href="#7-Visual-Studio-Code" class="headerlink" title="7. Visual Studio Code"></a>7. Visual Studio Code</h3><ul>
+<li>Ctrl+Shift+P:调出主命令框</li>
+<li>Ctrl +K选中后，再按V：预览markdown效果</li>
+</ul>
+<h3 id="8-Scons"><a href="#8-Scons" class="headerlink" title="8. Scons"></a>8. Scons</h3><ul>
+<li>基于python的软件构建工具</li>
+</ul>
+<h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发工具 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 开发工具 </tag>
+            
+            <tag> Tips </tag>
             
         </tags>
         
