@@ -224,14 +224,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">	public :</span><br><span class="line">		int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h1 id="C-中修饰符-inline-表示内联函数"><a href="#C-中修饰符-inline-表示内联函数" class="headerlink" title="C++中修饰符 inline,表示内联函数"></a>C++中修饰符 inline,表示内联函数</h1><h2 id="what"><a href="#what" class="headerlink" title="what:"></a>what:</h2><p>修饰为内联函数</p>
 <h2 id="why-1"><a href="#why-1" class="headerlink" title="why:"></a>why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
-<h2 id="how"><a href="#how" class="headerlink" title="how:"></a>how:</h2><ul>
-<li><figure class="image-box">
+<h2 id="how"><a href="#how" class="headerlink" title="how:"></a>how:</h2><figure class="image-box">
                 <a rel=C++学习（二） href="wps1.jpg" title="[image]" data-fancybox="images"><img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
                 <p>[image]</p>
             </figure>
 
-</li>
-</ul>
 <p>inline使用限制：inline修饰的函数只适合于函数内部简单，没有包含复杂的逻辑结构，例如：while,switch，同时inline修饰的函数还不能自己调用自己。 </p>
 <p>建议inline函数的定义放置于头文件中</p>
 <p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
@@ -239,10 +236,9 @@
 
 <hr>
 <h1 id="C-头文件和实现函数分别写什么："><a href="#C-头文件和实现函数分别写什么：" class="headerlink" title="C++头文件和实现函数分别写什么："></a>C++头文件和实现函数分别写什么：</h1><h2 id="概览："><a href="#概览：" class="headerlink" title="概览："></a>概览：</h2><figure class="image-box">
-                <a rel=C++学习（二） href="C:\Users\Render\AppData\Roaming\Typora\typora-user-images\image-20191110133905131.png" title="image-20191110133905131" data-fancybox="images"><img src="C:\Users\Render\AppData\Roaming\Typora\typora-user-images\image-20191110133905131.png" alt="image-20191110133905131" title="" class=""></a>
-                <p>image-20191110133905131</p>
+                <a rel=C++学习（二） href="image-20191110133905131.png" title="[图表]" data-fancybox="images"><img src="image-20191110133905131.png" alt="[sorry,图片挂了]" title="[图表]" class="[samll]"></a>
+                <p>[图表]</p>
             </figure>
-
 <h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><p>头文件的所有内容，都必须包含在<br>#ifndef {Filename}<br>#define {Filename}<br>//{Content of head file}<br>#endif<br><em>这样才能保证头文件被多个其他文件引用(include)时，内部的数据不会被多次定义而造成错误</em></p>
 <h2 id="inline限定符"><a href="#inline限定符" class="headerlink" title="inline限定符"></a>inline限定符</h2><ul>
 <li>在头文件中，可以对函数用inline限定符来告知编译器，这段函数非常的简单，可以直接嵌入到调用定义之处。</li>
@@ -289,7 +285,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-11-10T07:58:02.614Z" itemprop="dateUpdated">2019-11-10 15:58:02</time>
+    Last updated: <time datetime="2019-11-10T12:46:03.904Z" itemprop="dateUpdated">2019-11-10 20:46:03</time>
 </span><br>
 
 

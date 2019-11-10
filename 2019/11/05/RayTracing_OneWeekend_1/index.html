@@ -240,6 +240,29 @@
 <li>this：指向被调用对象的指针。</li>
 <li>*this：由于函数定义的函数返回是引用类型，即返回的不是值或者指针，而是对象本身。所以，此处需要return *this来返回对象本身，而不是return this（返回的是指针）。</li>
 </ul>
+<h1 id="如何使用RayTracing-画第一张图"><a href="#如何使用RayTracing-画第一张图" class="headerlink" title="如何使用RayTracing 画第一张图"></a>如何使用RayTracing 画第一张图</h1><p>ray类(ray.h)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#ifndef RAY_H</span><br><span class="line">#define RAY_H</span><br><span class="line">#include &quot;vec3.h&quot;</span><br><span class="line">class ray&#123;</span><br><span class="line">    public:</span><br><span class="line">        ray() &#123;&#125;</span><br><span class="line">        ray(const vec3&amp; a, const vec3&amp; b) &#123; A = a; B = b; &#125;</span><br><span class="line">        vec3 orgin() const     &#123; return A; &#125;</span><br><span class="line">        vec3 direction() const &#123; return B; &#125;</span><br><span class="line">        vec3 point_at_parameter(float t) const &#123; return A + t*B; &#125;</span><br><span class="line">		//已知t时，可以获得光线上该点的坐标（向量）</span><br><span class="line">        vec3 A;</span><br><span class="line">        vec3 B;</span><br><span class="line">&#125;;</span><br><span class="line">#endif // RAY_H</span><br></pre></td></tr></table></figure>
+<p>ray类中其实主要是定义两个向量：<br>起点向量（坐标）A和方向向量B。<br>从ray的方程R(t)=A+t*B可以得知A，B两个向量即可决定一条光线。<br>main.cpp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">#define STB_IMAGE_IMPLEMENTATION</span><br><span class="line">#include &quot;stb_image.h&quot;</span><br><span class="line">#define STB_IMAGE_WRITE_IMPLEMENTATION</span><br><span class="line">#include &quot;stb_image_write.h&quot;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &quot;ray.h&quot;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">vec3 color(const ray&amp;r)&#123;</span><br><span class="line">	//对方向向量进行标准化。</span><br><span class="line">	vec3 unit_direction = unit_vector(r.direction());</span><br><span class="line">	//标准化之后的y值在[-1,1]中 y+1在[0,2]中0.5*(y+1)在[0,1]中</span><br><span class="line">	float t = 0.5*(unit_direction.y() + 1.0);</span><br><span class="line">	//linear-blend 线性混合</span><br><span class="line">	//t=0时，color=vec3(1,1,1)，乘以255后对应的RGB为（255，255，255）		</span><br><span class="line">	//t=1时，color=vec3(0,0.4,0)，乘以255后对应的RGB为（0，102，0）</span><br><span class="line">	//如上两个颜色分别对应着白色和深绿色</span><br><span class="line">	//画面颜色=(1-t)*白色+ t*深绿色，即画面颜色为白色和深绿色（沿着Y方向）的线性插值的结果。</span><br><span class="line">	//如果要换成X或者Z方向，将上面的.y()改成.x()或者.z()即可。若要换其他颜色，设置对应的RGB值即可。</span><br><span class="line">	return (1.0 - t)*vec3(1.0, 1.0, 1.0)+t*vec3(0,0.4,0);//表征颜色的三维向量(rgb) (0,0.4,0)为深绿色</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	int nx = 1980;</span><br><span class="line">	int ny = 1080;</span><br><span class="line">	int channel = 3;//RGB三通道</span><br><span class="line">	//字符数组保存图像数据</span><br><span class="line">	unsigned char *data = new unsigned char[nx*ny*channel];s</span><br><span class="line">	//camera相关数据</span><br><span class="line">	vec3 lower_left_corner(-2.0, -1.0, -1.0); // 左下角</span><br><span class="line">	vec3 horizontal(4.0, 0.0, 0.0); // 横轴</span><br><span class="line">	vec3 vertical(0.0, 2.0, 0.0); // 竖轴</span><br><span class="line">	vec3 origin(0.0, 0.0, 0.0); // eye	</span><br><span class="line">	for (int j = ny - 1; j &gt;= 0; j--)&#123;</span><br><span class="line">		for (int i = 0; i &lt; nx; i++)&#123;</span><br><span class="line">			float u = float(i) / float(nx);</span><br><span class="line">			float v = float(j) / float(ny);</span><br><span class="line">				/*由画面中每个像素点在画面中的相对位置?每个像素点对应的光线的方向向量?从而确定画面的范围/大小。（完成第一步）*/</span><br><span class="line">			ray r(origin, lower_left_corner + u*horizontal + v*vertical);</span><br><span class="line">			//根据光线对每一个像素点上色。（完成第二步）</span><br><span class="line">			vec3 col = color(r);</span><br><span class="line">			//写入图像数据</span><br><span class="line">			data[(ny - j - 1)*nx * 3 + 3 * i] = int(255 * col[0]);</span><br><span class="line">			data[(ny - j - 1)*nx * 3 + 3 * i+1] = int(255 * col[1]);</span><br><span class="line">			data[(ny - j - 1)*nx * 3 + 3 * i+2] = int(255 * col[2]);</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; (ny - j)/float(ny)*100.0f &lt;&lt; &quot;%\n&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	stbi_write_png(&quot;Render_Chapter3_test.png&quot;,nx,ny,channel,data,0);</span><br><span class="line">	cout &lt;&lt; &quot;完成渲染&quot;;</span><br><span class="line">	system(&quot;PAUSE&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原理分析：<br>光线起点（也就是eye或者camera）固定的情况下，光线的方向向量的变动范围即形成光线束。光线束即是eye或者camera看到画面。<br>也就意味着：方向向量的变动范围决定着所能看到画面的范围。<br>另外，光线中每个光子的频率（颜色）决定这画面的内容。</p>
+<p>所以，如果我们要通过光线追踪来画图的话，只需要做两件事情：<br>第一步：<strong>确定光线的方向向量的活动范围函数，从而确定画面的范围、大小（一条光线对应这画面上的一个像素点）。</strong><br>第二步：<strong>对每一条光线（像素点）设置颜色，（高质量图的每个像素点上可能对应多个采样）从而确定画面上的内容。</strong></p>
+<p>如下图，光线的起点为（0，0，0），要求在黑框内作图（即光线和黑框平面的交点落在黑框内）</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（一） href="image-20191110203344058.png" title="[image]" data-fancybox="images"><img src="image-20191110203344058.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure>
+<p>同时我们需要对相机和人眼进行设置：<br>camera.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//camera类构造函数中进行初始化</span><br><span class="line">lower_left_corner = vec3(-2.0, -1.0, -1.0); // 左下角</span><br><span class="line">		horizontal = vec3(4.0, 0.0, 0.0); // 横轴</span><br><span class="line">		vertical = vec3(0.0, 2.0, 0.0); // 竖轴</span><br><span class="line">		origin = vec3(0.0, 0.0, 0.0); // eye</span><br></pre></td></tr></table></figure>
+<p>由上图可得：交点坐标可以表示为向量：lower_left_corner + u<em>horizontal + v</em>vertical<br>故可以通过camera类中的get_ray函数（传入u,v）得到光线</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ray get_ray(float u, float v) &#123; </span><br><span class="line">return ray(origin, lower_left_corner + u*horizontal + v*vertical); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于：<br>光线的方向向量=交点向量-起点向量<br>且起点为原点，所以方向向量=交点向量。<br>（而方向向量由u,v决定）<br><strong>每个交点的u，v的值即为该像素点在整个画面中的位置。</strong></p>
+<p>结果展示：（白色、深绿色沿着Y轴线性插值）</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（一） href="Render_Chapter3_test.png" title="[结果展示]" data-fancybox="images"><img src="Render_Chapter3_test.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]"></a>
+                <p>[结果展示]</p>
+            </figure>
+
+
 
         </div>
         
@@ -247,7 +270,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-11-10T08:36:58.329Z" itemprop="dateUpdated">2019-11-10 16:36:58</time>
+    Last updated: <time datetime="2019-11-10T13:04:35.235Z" itemprop="dateUpdated">2019-11-10 21:04:35</time>
 </span><br>
 
 
@@ -315,18 +338,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="prev">
-      <a href="/2019/11/05/PBRT_Learning_1/" id="post-prev" class="post-nav-link">
+      <a href="/2019/11/05/C++_Learning_1/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">PBRT（Chapter1）</h4>
+        <h4 class="title">C++学习（一）</h4>
       </a>
     </div>
   
 
   
     <div class="next">
-      <a href="/2019/11/04/Basic_Software_Use/" id="post-next" class="post-nav-link">
+      <a href="/2019/11/05/GI_1/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">开发工具推荐及相关使用</h4>
+        <h4 class="title">全局光照（总览）</h4>
       </a>
     </div>
   
@@ -338,7 +361,7 @@
         <aside class="post-widget">
             <nav class="post-toc-wrap" id="post-toc">
                 <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#vec3类解读"><span class="post-toc-number">1.</span> <span class="post-toc-text">vec3类解读</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类体内"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">类体内</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类体外："><span class="post-toc-number">1.2.</span> <span class="post-toc-text">类体外：</span></a></li></ol></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#vec3类解读"><span class="post-toc-number">1.</span> <span class="post-toc-text">vec3类解读</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类体内"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">类体内</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类体外："><span class="post-toc-number">1.2.</span> <span class="post-toc-text">类体外：</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何使用RayTracing-画第一张图"><span class="post-toc-number">2.</span> <span class="post-toc-text">如何使用RayTracing 画第一张图</span></a></li></ol>
             </nav>
             <div class="toc-bar"><div>
         </aside>
