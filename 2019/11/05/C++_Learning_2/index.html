@@ -213,24 +213,18 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             
-            <h1 id="1-C-重载操作符operator"><a href="#1-C-重载操作符operator" class="headerlink" title="1. C++重载操作符operator"></a>1. C++重载操作符operator</h1><h2 id="1-1-what："><a href="#1-1-what：" class="headerlink" title="1. 1 what："></a>1. 1 what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
-<h2 id="1-2-why"><a href="#1-2-why" class="headerlink" title="1.2 why:"></a>1.2 why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
-<h2 id="1-3-how-两种方式："><a href="#1-3-how-两种方式：" class="headerlink" title="1.3 how:两种方式："></a>1.3 how:两种方式：</h2><h3 id="1-3-1将操作符重载实现为类的成员函数"><a href="#1-3-1将操作符重载实现为类的成员函数" class="headerlink" title="1.3.1将操作符重载实现为类的成员函数"></a>1.3.1将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
-<blockquote>
-<p>//类结构中被声明的函数<br>bool operator==(const person&amp; ps) //person为自己定义的类<br>｛<br>        If（this-&gt;age == ps.age）{<br>           return true;<br>       }<br>       return false;<br>｝</p>
-</blockquote>
-<h3 id="1-3-2将操作符重载为非类的成员函数（即：全局函数）"><a href="#1-3-2将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="1.3.2将操作符重载为非类的成员函数（即：全局函数）"></a>1.3.2将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **</p>
-<blockquote>
-<p>//全局函数<br>bool operator==(person const &amp; p1,person const &amp; p2);<br>{<br>   if(p1.age==p2.age){<br>       return true;<br>   }<br>   return false;<br>}</p>
-</blockquote>
+            <p>参考资料：CSDN 图形跟班 相关博客</p>
+<h1 id="C-重载操作符operator"><a href="#C-重载操作符operator" class="headerlink" title="C++重载操作符operator"></a>C++重载操作符operator</h1><h2 id="what："><a href="#what：" class="headerlink" title="what："></a>what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
+<h2 id="why"><a href="#why" class="headerlink" title="why:"></a>why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
+<h2 id="how-两种方式："><a href="#how-两种方式：" class="headerlink" title="how:两种方式："></a>how:两种方式：</h2><h3 id="将操作符重载实现为类的成员函数"><a href="#将操作符重载实现为类的成员函数" class="headerlink" title="将操作符重载实现为类的成员函数"></a>将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//类结构中被声明的函数</span><br><span class="line"> bool operator==(const person&amp; ps) //person为自己定义的类</span><br><span class="line"> ｛</span><br><span class="line"> 		If（this-&gt;age == ps.age）&#123;</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line">		return false;</span><br><span class="line"> ｝</span><br></pre></td></tr></table></figure>
+<h3 id="将操作符重载为非类的成员函数（即：全局函数）"><a href="#将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="将操作符重载为非类的成员函数（即：全局函数）"></a>将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **<br>即必须指明A==B中A的取值，而不能直接使用this关键字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//全局函数</span><br><span class="line">bool operator==(person const &amp; p1,person const &amp; p2);</span><br><span class="line">&#123;</span><br><span class="line">	if(p1.age==p2.age)&#123;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line">	return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>‘ 其中person的定义如下：’</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class person&#123;</span><br><span class="line">	public :</span><br><span class="line">		int age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="2-C-中修饰符-inline-表示内联函数"><a href="#2-C-中修饰符-inline-表示内联函数" class="headerlink" title="2.  C++中修饰符 inline,表示内联函数"></a>2.  C++中修饰符 inline,表示内联函数</h1><ul>
-<li><h2 id="2-1-what"><a href="#2-1-what" class="headerlink" title="2.1 what:"></a>2.1 what:</h2><p>修饰为内联函数</p>
-</li>
-<li><h2 id="2-2-why"><a href="#2-2-why" class="headerlink" title="2.2 why:"></a>2.2 why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
-</li>
-<li><h2 id="2-3-how"><a href="#2-3-how" class="headerlink" title="2.3 how:"></a>2.3 how:</h2></li>
+<h1 id="C-中修饰符-inline-表示内联函数"><a href="#C-中修饰符-inline-表示内联函数" class="headerlink" title="C++中修饰符 inline,表示内联函数"></a>C++中修饰符 inline,表示内联函数</h1><h2 id="what"><a href="#what" class="headerlink" title="what:"></a>what:</h2><p>修饰为内联函数</p>
+<h2 id="why-1"><a href="#why-1" class="headerlink" title="why:"></a>why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
+<h2 id="how"><a href="#how" class="headerlink" title="how:"></a>how:</h2><ul>
 <li><figure class="image-box">
                 <a rel=C++学习（二） href="wps1.jpg" title="[image]" data-fancybox="images"><img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
                 <p>[image]</p>
@@ -243,9 +237,51 @@
 <p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">//定义于类结构之内的函数默认为内联函数</span><br><span class="line">void Foo(int x,int y)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//如果需要定义于类结构之外的内联函数</span><br><span class="line">inline void  A::Foo(int x,int y)&#123;&#125;</span><br><span class="line">//同时需要注意的是，inline必须于函数定义放置一起</span><br></pre></td></tr></table></figure>
 
-
-
 <hr>
+<h1 id="C-头文件和实现函数分别写什么："><a href="#C-头文件和实现函数分别写什么：" class="headerlink" title="C++头文件和实现函数分别写什么："></a>C++头文件和实现函数分别写什么：</h1><h2 id="概览："><a href="#概览：" class="headerlink" title="概览："></a>概览：</h2><figure class="image-box">
+                <a rel=C++学习（二） href="C:\Users\Render\AppData\Roaming\Typora\typora-user-images\image-20191110133905131.png" title="image-20191110133905131" data-fancybox="images"><img src="C:\Users\Render\AppData\Roaming\Typora\typora-user-images\image-20191110133905131.png" alt="image-20191110133905131" title="" class=""></a>
+                <p>image-20191110133905131</p>
+            </figure>
+
+<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><p>头文件的所有内容，都必须包含在<br>#ifndef {Filename}<br>#define {Filename}<br>//{Content of head file}<br>#endif<br><em>这样才能保证头文件被多个其他文件引用(include)时，内部的数据不会被多次定义而造成错误</em></p>
+<h2 id="inline限定符"><a href="#inline限定符" class="headerlink" title="inline限定符"></a>inline限定符</h2><ul>
+<li>在头文件中，可以对函数用inline限定符来告知编译器，这段函数非常的简单，可以直接嵌入到调用定义之处。</li>
+<li>当然inline的函数并不一定会被编译器作为inline来实现，如果函数过于复杂，编译器也会拒绝inline。</li>
+<li>因此简单说来，代码最好短到只有3-5行的才作为inline。有循环，分支，递归的函数都不要用做inline。</li>
+<li>对于在类定义内定义实现的函数，编译器自动当做有inline请求（也是不一定inline的）。因此在下边，我把带有inline限定符的函数成员和写在类定义体内的函数成员统称为“要inline的函数成员”</li>
+</ul>
+<h2 id="非模版类型"><a href="#非模版类型" class="headerlink" title="非模版类型"></a>非模版类型</h2><h3 id="全局类型"><a href="#全局类型" class="headerlink" title="全局类型"></a>全局类型</h3><p>就像前面笼统的话讲的：声明写在.h文件。<br>对于函数来讲，没有实现体的函数，就相当于是声明；而对于数据类型（包括基本类型和自定义类型）来说，其声明就需要用extern来修饰。<br>然后在.cpp文件里定义、实现或初始化这些全局函数和全局变量。</p>
+<h3 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h3><p>对于自定义类型，包括类（class）和结构体（struct），它们的定义都是放在.h文件中。<br>函数成员：<br>函数成员无论是否带有static限定符，其申明都放在.h文件的类定义内部。<br>对于要inline的函数成员其定义放在.h文件；其他函数的实现都放在.cpp文件中。<br>数据成员：<br>数据成员的申明与定义都是放在.h文件的类定义内部。对于数据类型，关键问题是其初始化要放在什么地方进行。</p>
+<ul>
+<li>对于只含有static限定符的数据成员，它的初始化要放在.cpp文件中。因为它是所有类对象共有的，因此必须对它做合适的初始化。</li>
+<li>对于只含有const限定符的数据成员，它的初始化只能在构造函数的初始化列表中完成。因为它是一经初始化就不能重新赋值，因此它也必须进行合适的初始化。</li>
+<li>对于既含有static限定符，又含有const限定符的数据成员，它的初始化和定义同时进行。它也是必须进行合适的初始化</li>
+<li>对于既没有static限定符，又没有const限定符的数据成员，它的值只针对本对象可以随意修改，因此我们并不在意它的初始化什么时候进行。</li>
+</ul>
+<h2 id="模版类型"><a href="#模版类型" class="headerlink" title="模版类型"></a>模版类型</h2><p>对于模板，最重要的一点，就是在定义它的时候，编译器并不会对它进行编译，因为它没有一个实体可用。<br>只有模板被具体化（specialization）之后（用在特定的类型上），编译器才会根据具体的类型对模板进行编译。所以定义模板的时候，会发现编译器基本不会报错<br>因为模板的这种特殊性，它并没有自己的准确定义，因此我们不能把它放在.cpp文件中，而要把他们全部放在.h文件中进行书写。这也是为了在模板具体化的时候，能够让编译器可以找到模板的所有定义在哪里，以便真正的定义方法。</p>
+<hr>
+<h1 id="4-C-中的const修饰符"><a href="#4-C-中的const修饰符" class="headerlink" title="4.C++中的const修饰符"></a>4.C++中的const修饰符</h1><h2 id="const-修饰函数"><a href="#const-修饰函数" class="headerlink" title="const 修饰函数"></a>const 修饰函数</h2><p>表明该函数<strong>不修改类对象</strong>（不改变对象的非const成员变量. 也不能调用类中任何非const成员函数）。<br>格式：<strong>关键字const被放在成员函数的参数表（即“()”）和函数体（即“{}”）之间。</strong></p>
+<ul>
+<li>如下代码，const修饰的是函数x()。表示该函数的函数体中的操作不会修改当前这个类的类对象。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inline float x()const&#123;return e[0];&#125;</span><br></pre></td></tr></table></figure></li>
+<li>又如如下代码，const修饰的是函数operator+()。表示该函数的函数体中的操作不会修改当前这个类的类对象。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inline const vec3&amp; operator+()const&#123;return *this;&#125;</span><br></pre></td></tr></table></figure></li>
+<li>另外，对于在类体之外定义的const成员函数，我们必须在它的定义和声明中同时指定关键字const。比如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inline float x() const; //declaration</span><br><span class="line">inline float x() const&#123; //definition </span><br><span class="line">	return e[0];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="const-修饰函数参数"><a href="#const-修饰函数参数" class="headerlink" title="const 修饰函数参数"></a>const 修饰函数参数</h2>表示函数体中不能修改参数的值（包括参数本身的值或者参数其中包含的值）。比如如下代码：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">inline vec3&amp; vec3::operator+=(const vec3 &amp;v)&#123;</span><br><span class="line">	e[0]+=v.e[0];</span><br><span class="line">	e[1]+=v.e[1];</span><br><span class="line">	e[2]+=v.e[2];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="const-修饰函数返回值"><a href="#const-修饰函数返回值" class="headerlink" title="const 修饰函数返回值"></a>const 修饰函数返回值</h2><ul>
+<li>const修饰函数返回值：<br>其实用的并不是很多，它的含义和const修饰普通变量以及指针的含义基本相同。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1  .const int fun1()//函数返回的是值</span><br><span class="line">2.  const int* fun2()//函数返回的是指针，调用时:const int* pValue=fun2();</span><br><span class="line"></span><br><span class="line">3.  int* const fun3()</span><br><span class="line">//函数返回的是指针（不是值）：调用时 int* const pValue = fun3();</span><br><span class="line">//我们可以把fun3()看作成一个变量，即指针本身不可变。</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>结合《RayTracing in One-Weekend》的源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inline const vec3&amp; operator+()&#123;return *this;&#125;</span><br></pre></td></tr></table></figure>
+<p>这个就属于上面第二种情况，即函数operator+()返回的是一个vec3类型的对象的指针/引用。此处const表示该指针所指向的vec3类型的对象不可变。 </p>
+<h1 id="C-中this指针"><a href="#C-中this指针" class="headerlink" title="C++中this指针"></a>C++中this指针</h1><p>每个类成员函数都含有一个指向被调用对象的指针，这个指针被称为this指针。<br>this表示被调用对象的指针；<br>*this表示被调用对象本身；<br>例如如下代码中，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">inline void Screen::home()&#123;</span><br><span class="line">	this-&gt;cursor=0;</span><br><span class="line">&#125;</span><br><span class="line">//this表示被调用对象的指针</span><br><span class="line">//this-&gt;cursor表示被调用对象的成员变量cursor，此处对该成员变量赋值。</span><br></pre></td></tr></table></figure>
+<p>又如之前多次引用的《RayTracing-OneWeekend》中的code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">inline vec3&amp; vec3::operator+=(const vec3&amp;v)&#123;</span><br><span class="line">	e[0]=v.e[0];</span><br><span class="line">	e[1]=v.e[1];</span><br><span class="line">	e[2]=v.e[2];</span><br><span class="line">	return *this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于函数定义的函数返回是引用类型，即返回的不是值或者指针，而是对象本身。所以，此处需要return *this来返回对象本身，而不是return this（返回的是指针）。</p>
 
         </div>
         
@@ -253,7 +289,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-11-05T04:43:13.446Z" itemprop="dateUpdated">2019-11-05 12:43:13</time>
+    Last updated: <time datetime="2019-11-10T07:58:02.614Z" itemprop="dateUpdated">2019-11-10 15:58:02</time>
 </span><br>
 
 
@@ -324,9 +360,9 @@
 
   
     <div class="next">
-      <a href="/2019/11/05/GI_1/" id="post-next" class="post-nav-link">
+      <a href="/2019/11/05/PBRT_Learning_1/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">全局光照（总览）</h4>
+        <h4 class="title">PBRT（Chapter1）</h4>
       </a>
     </div>
   
@@ -338,7 +374,7 @@
         <aside class="post-widget">
             <nav class="post-toc-wrap" id="post-toc">
                 <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-C-重载操作符operator"><span class="post-toc-number">1.</span> <span class="post-toc-text">1. C++重载操作符operator</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-what："><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1. 1 what：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-why"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">1.2 why:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3-how-两种方式："><span class="post-toc-number">1.3.</span> <span class="post-toc-text">1.3 how:两种方式：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-1将操作符重载实现为类的成员函数"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">1.3.1将操作符重载实现为类的成员函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-2将操作符重载为非类的成员函数（即：全局函数）"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">1.3.2将操作符重载为非类的成员函数（即：全局函数）</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-C-中修饰符-inline-表示内联函数"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.  C++中修饰符 inline,表示内联函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-1-what"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">2.1 what:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-2-why"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2.2 why:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-3-how"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">2.3 how:</span></a></li></ol></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#C-重载操作符operator"><span class="post-toc-number">1.</span> <span class="post-toc-text">C++重载操作符operator</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#what："><span class="post-toc-number">1.1.</span> <span class="post-toc-text">what：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#why"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">why:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#how-两种方式："><span class="post-toc-number">1.3.</span> <span class="post-toc-text">how:两种方式：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#将操作符重载实现为类的成员函数"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">将操作符重载实现为类的成员函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#将操作符重载为非类的成员函数（即：全局函数）"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">将操作符重载为非类的成员函数（即：全局函数）</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#C-中修饰符-inline-表示内联函数"><span class="post-toc-number">2.</span> <span class="post-toc-text">C++中修饰符 inline,表示内联函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#what"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">what:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#why-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">why:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#how"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">how:</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#C-头文件和实现函数分别写什么："><span class="post-toc-number">3.</span> <span class="post-toc-text">C++头文件和实现函数分别写什么：</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#概览："><span class="post-toc-number">3.1.</span> <span class="post-toc-text">概览：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#头文件"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">头文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#inline限定符"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">inline限定符</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#非模版类型"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">非模版类型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#全局类型"><span class="post-toc-number">3.4.1.</span> <span class="post-toc-text">全局类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自定义类型"><span class="post-toc-number">3.4.2.</span> <span class="post-toc-text">自定义类型</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模版类型"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">模版类型</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4-C-中的const修饰符"><span class="post-toc-number">4.</span> <span class="post-toc-text">4.C++中的const修饰符</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#const-修饰函数"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">const 修饰函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#const-修饰函数参数"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">const 修饰函数参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#const-修饰函数返回值"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">const 修饰函数返回值</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#C-中this指针"><span class="post-toc-number">5.</span> <span class="post-toc-text">C++中this指针</span></a></li></ol>
             </nav>
             <div class="toc-bar"><div>
         </aside>
