@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     
     
-    <title>VS使用及错误合集 | Tan桑のBlog | 见证一个图形程序员的成长！</title>
+    <title>RayTracing In One Weekend（一） | Tan桑のBlog | 见证一个图形程序员的成长！</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="开发工具,Visual Studio">
+    <meta name="keywords" content="RayTracing">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
@@ -15,7 +15,7 @@
     <script type="text/javascript">
         // Data Center
         var DC = {
-            reward:	false,
+            reward:	true,
             lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
             v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
             g: JSON.parse('{"enable":false,"lazy":true,"owner":"Demeter-Leivietahn","repo":"gitment","oauth":{"client_id":"823e39665f3e408cad61","client_secret":"2da69d5327a26f6898d5cd0c5f67854b79ac57ef"},"perPage":10}'),
@@ -146,7 +146,7 @@
           <i class="icon icon-lg icon-navicon"></i>
         </a>
         <div class="flex-col header-title ellipsis">
-            <span>VS使用及错误合集</span>
+            <span>RayTracing In One Weekend（一）</span>
             
         </div>
         
@@ -159,15 +159,15 @@
 <header class="content-header post-header">
     <img src="/img/banner.jpg" class="header-bg">
     <div class="container fade-scale">
-        <h1 class="title">VS使用及错误合集</h1>
+        <h1 class="title">RayTracing In One Weekend（一）</h1>
         <h5 class="subtitle">
             
-                <time datetime="2019-11-04T01:56:27.000Z" itemprop="datePublished" class="page-time">
-  2019-11-04
+                <time datetime="2019-11-05T01:56:27.000Z" itemprop="datePublished" class="page-time">
+  2019-11-05
 </time>
 
 
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/RayTracing/">RayTracing</a></li></ul></li></ul>
 
             
         </h5>
@@ -192,15 +192,15 @@
 
 
 <div class="container body-wrap">
-    <article id="post-Basic_Software_Use_VS"
+    <article id="post-RayTracing_OneWeekend_1"
   class="post-article article-type-post" itemprop="blogPost">
     <div class="post-card">
-        <h1 class="post-card-title">VS使用及错误合集</h1>
+        <h1 class="post-card-title">RayTracing In One Weekend（一）</h1>
         <div class="post-meta">
-            <time class="post-time" title="2019-11-04 09:56:27" datetime="2019-11-04T01:56:27.000Z"  itemprop="datePublished">2019-11-04</time>
+            <time class="post-time" title="2019-11-05 09:56:27" datetime="2019-11-05T01:56:27.000Z"  itemprop="datePublished">2019-11-05</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/RayTracing/">RayTracing</a></li></ul></li></ul>
 
 
 
@@ -213,51 +213,32 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             
-            <h1 id="1-错误合集"><a href="#1-错误合集" class="headerlink" title="1.错误合集"></a>1.错误合集</h1><hr>
-<h3 id="1-1-ErrorLINK2019无法解析的外部符号-WinMain-16"><a href="#1-1-ErrorLINK2019无法解析的外部符号-WinMain-16" class="headerlink" title="1.1 .ErrorLINK2019无法解析的外部符号_WinMain@16"></a>1.1 .ErrorLINK2019无法解析的外部符号_WinMain@16</h3><ul>
-<li>原因：无法找到适当的程序入口函数，其中Windows程序和控制台程序Console的入口程序不一致，应该在项目配置信息中选择适当预处理器以及链接器中合适的子系统。</li>
-</ul>
+            <h1 id="vec3类解读"><a href="#vec3类解读" class="headerlink" title="vec3类解读"></a>vec3类解读</h1><h2 id="类体内"><a href="#类体内" class="headerlink" title="类体内"></a>类体内</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">inline float x()const&#123;</span><br><span class="line">return e[0]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类体内的函数x()</p>
 <ul>
-<li><figure class="image-box">
-                <a rel=VS使用及错误合集 href="VS1.png" title="[image]" data-fancybox="images"><img src="VS1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
-                <p>[image]</p>
-            </figure>
-</li>
-<li><p>解决：</p>
-</li>
+<li>const:表示该函数不修改类对象。</li>
+<li>inline:表示该函数在程序中每个调用点上被内联展开。</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">inline const vec3&amp; opearator+()const&#123;</span><br><span class="line">	return *this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类体内定义成员函数operator+()。</p>
 <ul>
-<li><figure class="image-box">
-                <a rel=VS使用及错误合集 href="VS2.png" title="[image]" data-fancybox="images"><img src="VS2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
-                <p>[image]</p>
-            </figure>
-
-
-</li>
+<li>operator+()：操作符重载。</li>
+<li>&amp;：表示函数返回的是引用类型，此处表示返回的是一个vec3对象的引用。</li>
+<li>const（左边这个）：表示函数返回不可被修改，此处表示返回的vec3对象的引用不可被修改。</li>
+<li>const（右边这个）：表示该函数不修改类对象。</li>
 </ul>
-<h1 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h1><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inline vec3&amp; operator+=(const vec3&amp;v2);</span><br></pre></td></tr></table></figure>
+<p>类体内声明成员函数operator+=()。</p>
 <ul>
-<li>Ctrl+Shift+B：生成解决方案，形成可执行文件。</li>
-<li>生成可执行文件后有两种形式，其中一种是调试，一种是直接执行不调试</li>
-<li>(F5或Alt+F5)在调试程序过程中，若遇到断点，会停止在断点处，等待继续运行的指令，当程序运行完毕后不会直接退出，而会暂停程序。</li>
-<li>(Ctrl+F5)直接执行程序（不调试），完全忽略断点，程序运行完毕后直接结束程序。</li>
+<li>&amp;（左边这个）：函数返回引用类型。当函数返回引用类型时，没有复制返回值。相反，返回的是对象本身。</li>
+<li>&amp;（右边这个）：形参是引用类型。当把参数声明为引用时，传递的是形参本身。此时不需要将形参的值拷贝（赋值）给实参，可以直接操纵形参。和指针类似。</li>
 </ul>
-<hr>
-<h2 id="在VS2017中安装配置OpenGL教程："><a href="#在VS2017中安装配置OpenGL教程：" class="headerlink" title="在VS2017中安装配置OpenGL教程："></a>在VS2017中安装配置OpenGL教程：</h2><p><a href="http://www.cnblogs.com/flylinmu/p/7823019.html" target="_blank" rel="noopener">http://www.cnblogs.com/flylinmu/p/7823019.html</a></p>
-<p>注意：</p>
+<h2 id="类体外："><a href="#类体外：" class="headerlink" title="类体外："></a>类体外：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">inline const vec3&amp; opearator+=(const vec3 &amp;v)&#123;</span><br><span class="line">	e[0]=v.e[0];</span><br><span class="line">	e[1]=v.e[1];</span><br><span class="line">	e[2]=v.e[2];</span><br><span class="line">	return *this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类体外定义operator+=函数</p>
 <ul>
-<li><p>（1）.在VS中对于项目进行属性配置时，右键点击解决方案中的项目名称，选择“属性配置”。</p>
-</li>
-<li><p>（2）.在VS2017中新建一个Windows控制台项目时，会自动生成一个pch.h文件，项目将其默认为预编译头文件，当项目较大时，可以在pch.h头文件中加入大量的宏定义，便于后期的维护更新，但是当项目较小时，可以在项目配置中，选择C/C++,将预编译头省略。</p>
-</li>
-<li><p>相关博客：<br><a href="http://www.blog.csdn.net/weixin_43074474/article/details/89520392" target="_blank" rel="noopener">http://www.blog.csdn.net/weixin_43074474/article/details/89520392</a></p>
-</li>
-</ul>
-<hr>
-<h2 id="VS快捷键"><a href="#VS快捷键" class="headerlink" title="VS快捷键"></a>VS快捷键</h2><ul>
-<li>Alt+→：代码提示代码</li>
-<li>注释代码：Ctrl+K选中后再C</li>
-<li>取消注释代码：Ctrl+K选中后再U</li>
+<li>vec3::：表示类体外定义的operator+=()是vec3类的成员函数。“::”是域解析操作符。表示某个成员属于某个类，某个类的某个成员。</li>
+<li>this：指向被调用对象的指针。</li>
+<li>*this：由于函数定义的函数返回是引用类型，即返回的不是值或者指针，而是对象本身。所以，此处需要return *this来返回对象本身，而不是return this（返回的是指针）。</li>
 </ul>
 
         </div>
@@ -266,7 +247,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-11-05T08:27:28.683Z" itemprop="dateUpdated">2019-11-05 16:27:28</time>
+    Last updated: <time datetime="2019-11-10T08:36:58.329Z" itemprop="dateUpdated">2019-11-10 16:36:58</time>
 </span><br>
 
 
@@ -283,9 +264,15 @@
 </blockquote>
 
         
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
         <div class="post-footer">
             
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Visual-Studio/" rel="tag">Visual Studio</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" rel="tag">开发工具</a></li></ul>
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RayTracing/" rel="tag">RayTracing</a></li></ul>
 
             <div class="page-share-wrap">
     
@@ -294,7 +281,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/04/Basic_Software_Use_VS/&title=《VS使用及错误合集》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/05/RayTracing_OneWeekend_1/&title=《RayTracing In One Weekend（一）》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -306,7 +293,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/04/Basic_Software_Use_VS/&title=《VS使用及错误合集》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/05/RayTracing_OneWeekend_1/&title=《RayTracing In One Weekend（一）》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -328,18 +315,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="prev">
-      <a href="/2019/11/04/Basic_Software_Use/" id="post-prev" class="post-nav-link">
+      <a href="/2019/11/05/PBRT_Learning_1/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">开发工具推荐及相关使用</h4>
+        <h4 class="title">PBRT（Chapter1）</h4>
       </a>
     </div>
   
 
   
     <div class="next">
-      <a href="/2019/11/04/Tips/" id="post-next" class="post-nav-link">
+      <a href="/2019/11/04/Basic_Software_Use/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Basic Tips about CS or SE</h4>
+        <h4 class="title">开发工具推荐及相关使用</h4>
       </a>
     </div>
   
@@ -351,13 +338,40 @@
         <aside class="post-widget">
             <nav class="post-toc-wrap" id="post-toc">
                 <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-错误合集"><span class="post-toc-number">1.</span> <span class="post-toc-text">1.错误合集</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-ErrorLINK2019无法解析的外部符号-WinMain-16"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">1.1 .ErrorLINK2019无法解析的外部符号_WinMain@16</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-使用"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#在VS2017中安装配置OpenGL教程："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">在VS2017中安装配置OpenGL教程：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#VS快捷键"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">VS快捷键</span></a></li></ol></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#vec3类解读"><span class="post-toc-number">1.</span> <span class="post-toc-text">vec3类解读</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类体内"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">类体内</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类体外："><span class="post-toc-number">1.2.</span> <span class="post-toc-text">类体外：</span></a></li></ol></li></ol>
             </nav>
             <div class="toc-bar"><div>
         </aside>
     
 </article>
 
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.png" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
 
 </div>
 
@@ -421,7 +435,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/04/Basic_Software_Use_VS/&title=《VS使用及错误合集》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/05/RayTracing_OneWeekend_1/&title=《RayTracing In One Weekend（一）》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -433,7 +447,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/04/Basic_Software_Use_VS/&title=《VS使用及错误合集》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/05/RayTracing_OneWeekend_1/&title=《RayTracing In One Weekend（一）》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -445,7 +459,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACOUlEQVR42u3aQW7DMAwF0dz/0i7QVYEg7nxSRitqtArS2NbzgiVFvl54Xd/r/vPPb95/8/79p7++/2bZkiFDxraM63bx7RLM/ashr+Djc2XIkHEAox9k00hIwGRvMmTIkLF2K/dXyZAhQ8bTAbdTgvKUVIYMGSczeEgNCkscxNNAL0OGjNMYqxoDT3z+g/6GDBky/hnjKq00HawVscF+ZMiQMZpBmpGkPVkbm+BDGCgQy5AhYzTj/jKyubR8TUNzcE8ZMmSMY/ANdUi1a4N/AzJkyDiAQYrMNHEkW6klkR8DrgwZMkYzOo/kgxfkDrw8XvzmZMiQsQmjdshVC6Y8NSQFtgwZMmYz0lKW14zpdtP2gAwZMmSQ5I+nmLzlkAb0V7otGTJkbMjoJGfpnAMH8y4AamHKkCFjKIMcmaVH/GkIJq817prKkCFjQwY/V48HIHBiVxu5kCFDxjmM/mBWOkbWv/MvwxYyZMgYx+gkdvzgLB07q91NhgwZsxnBwdaio7damcrbCTJkyJjHqCkvvPjBXKttIEOGjGMYtQN9ngjWCubg0E2GDBlDGa38EYfg2nFeGldlyJAxj3GFK2181upp8gqKWaoMGTI2ZKRhLh3F4KlhmlzWgrUMGTL2ZfRTuk7boBNwZciQcRqDB750W8+VrzJkyJDx3ChYbbQiyF5lyJBxMINvgiR5aXKJOhsyZMgYzSBFbG14gtyNP2VBB1WGDBkbMtLGANl0LRDzEnpBf0OGDBl7ML4AXBIi4IeuTVgAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACH0lEQVR42u3aQW7DMAwEwP7/0+m1h8bdpZwClkanIoEjTQKwJMWvr3i9fqzrV/J3k11uXhgYGI9lvC5XcqwWdv3s9VNvqRgYGAcw3kWw/EDt4fK9rs+GgYGBkSdz7XGvczwMDAyM9YC7Qm1LZQwMDIy8iG3ZSTHcpqE31OIYGBgPZORd9///+yP3GxgYGI9ivMq1HqCTUFufCgMDY2tG2wKbXWTe0EpLxjIwMDA2ZeRDFW05em84/gOGgYGxNWO2cRsic0Db5vvl/wYGBsbWjPaIyYVlHTTLUIuBgXECI2l1rQfK2VBFMbqBgYGxNSMZ28pb+cm7+YhG8uVmPgwMjGczVtr6eTI3a9IVaSsGBsYBjNnR82CaF7HDCwMMDIwDGG3obF+fjW7c0C/EwMDYgjE7XF76tgMWs0IaAwPjZEZy9LzsXElAi2ELDAyM7Riz5tfsYmC9lK1/BwwMjI0YLSAf8JoljkszIxgYGNsxkhRtZcu7Es16RwwMjO0Ys9GKhDobhG2behgYGKcxZhu3pexSyZrXvhgYGJsyVlpgt5Wgs5NgYGBsyniVK+/Dz64B8rQSAwPjHMZ6a6wdp1gJ7hgYGCcz2iD7wYBYfv7wngEDA+OxjFngaxPH/Km6q4aBgYExSvjWG3PFp2FgYGBcfkTSYstHvmbJKwYGxgmMdpC0TQHvugR9+xVgYGBszWhLx3zk695DrJS+GBgYj2V8AygvpxWstmd9AAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
