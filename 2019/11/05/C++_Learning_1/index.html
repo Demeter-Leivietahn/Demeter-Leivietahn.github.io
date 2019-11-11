@@ -511,13 +511,18 @@
 <li><strong>如果没有使用访问修饰符，那么默认为private</strong> </li>
 </ul>
 </blockquote>
-<h2 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h2><p>纯虚函数没有函数体</p>
-<pre><code>class shape{
- public:
-  virtual double calcPerimeter()=0//纯虚函数
- }</code></pre><p>不可实例化含有虚函数的基类</p>
+<h2 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h2><p>纯虚函数是在基类中声明的虚函数，它在基类中没有定义，但要求任何派生类都要定义自己的实现方法。<br>纯虚函数没有函数体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class shape&#123;</span><br><span class="line"> public:</span><br><span class="line">  virtual double calcPerimeter()=0//纯虚函数</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>不可实例化含有虚函数的基类</p>
+<ul>
+<li>引入原因</li>
+</ul>
+<p>1.在很多情况下，基类本身生成对象是不合情理的。例如，动物作为一个基类可以派生出老虎、孔雀等子类，但动物本身生成对象明显不合常理。<br>2.为了方便使用多态特性，我们常常需要在基类中定义虚拟函数。</p>
+<p>特别注意：子类对虚函数的实现要放在.cpp中（不能放在.h中）</p>
 <h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><ul>
 <li>抽象类无法实例化对象</li>
+<li>包含纯虚函数的类称为抽象类。由于抽象类包含了没有定义的纯虚函数，所以不能定义抽象类的对象。</li>
+<li>存在纯虚函数是成为抽象类的充要条件。</li>
 </ul>
 <h2 id="rand-函数"><a href="#rand-函数" class="headerlink" title="rand()函数"></a>rand()函数</h2><ul>
 <li>rand()不需要参数，它会返回一个从0到最大随机数的任意整数，</li>
@@ -538,7 +543,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-11-10T11:31:26.988Z" itemprop="dateUpdated">2019-11-10 19:31:26</time>
+    Last updated: <time datetime="2019-11-11T04:47:11.885Z" itemprop="dateUpdated">2019-11-11 12:47:11</time>
 </span><br>
 
 
@@ -597,21 +602,14 @@
         
     </div>
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="prev">
-      <a href="/2019/11/05/C++_Learning_2/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">C++学习（二）</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="next">
-      <a href="/2019/11/05/RayTracing_OneWeekend_1/" id="post-next" class="post-nav-link">
+      <a href="/2019/11/05/C++_Learning_2/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">RayTracing In One Weekend（一）</h4>
+        <h4 class="title">C++学习（二）</h4>
       </a>
     </div>
   
