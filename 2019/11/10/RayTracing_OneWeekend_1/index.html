@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>RayTracing In One Weekend（一） | Tan桑のBlog | 见证一个图形程序员的成长！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="RayTracing">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"Demeter-Leivietahn","repo":"gitment","oauth":{"client_id":"823e39665f3e408cad61","client_secret":"2da69d5327a26f6898d5cd0c5f67854b79ac57ef"},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/head2.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Leivie_Tan</h5>
+          <a href="mailto:754050478@qq.com" target="_blank" rel="noopener" title="754050478@qq.com" class="mail">
+            
+              <span>7</span>
+            
+              <span>5</span>
+            
+              <span>4</span>
+            
+              <span>0</span>
+            
+              <span>5</span>
+            
+              <span>0</span>
+            
+              <span>4</span>
+            
+              <span>7</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/Demeter-Leivietahn" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT ME
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" target="_blank" rel="noopener" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>RayTracing In One Weekend（一）</span>
+            
+        </div>
+        
+        <a href="javascript:;" target="_blank" rel="noopener" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">RayTracing In One Weekend（一）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-10T02:56:27.000Z" itemprop="datePublished" class="page-time">
+  2019-11-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/RayTracing/">RayTracing</a></li></ul></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" target="_blank" rel="noopener" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-RayTracing_OneWeekend_1"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">RayTracing In One Weekend（一）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-10 10:56:27" datetime="2019-11-10T02:56:27.000Z"  itemprop="datePublished">2019-11-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/RayTracing/">RayTracing</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>实验室师兄师姐和RayTracing相关各路大佬都推荐入门《RayTracing in One Weekend》这本小册子<br>自然有这本书的独到之处<br>…其实学完了以后还有《RayTracing the Next Weekend》《RayTracing the future》<br>总之加油，冲冲冲<br>本博文参考了CSDN大佬图形跟班的很多内容，加入了部分自己的理解，不喜勿喷</p>
+<hr>
+<h1 id="vec3类解读"><a href="#vec3类解读" class="headerlink" title="vec3类解读"></a>vec3类解读</h1><h2 id="类体内"><a href="#类体内" class="headerlink" title="类体内"></a>类体内</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">float</span> <span class="title">x</span><span class="params">()</span><span class="keyword">const</span></span>&#123;</span><br><span class="line"><span class="keyword">return</span> e[<span class="number">0</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类体内的函数x()</p>
+<ul>
+<li>const:表示该函数不修改类对象。</li>
+<li>inline:表示该函数在程序中每个调用点上被内联展开。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">const</span> vec3&amp; opearator+()<span class="keyword">const</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类体内定义成员函数operator+()。</p>
+<ul>
+<li>operator+()：操作符重载。</li>
+<li>&amp;：表示函数返回的是引用类型，此处表示返回的是一个vec3对象的引用。</li>
+<li>const（左边这个）：表示函数返回不可被修改，此处表示返回的vec3对象的引用不可被修改。</li>
+<li>const（右边这个）：表示该函数不修改类对象。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> vec3&amp; <span class="keyword">operator</span>+=(<span class="keyword">const</span> vec3&amp;v2);</span><br></pre></td></tr></table></figure>
+<p>类体内声明成员函数operator+=()。</p>
+<ul>
+<li>&amp;（左边这个）：函数返回引用类型。当函数返回引用类型时，没有复制返回值。相反，返回的是对象本身。</li>
+<li>&amp;（右边这个）：形参是引用类型。当把参数声明为引用时，传递的是形参本身。此时不需要将形参的值拷贝（赋值）给实参，可以直接操纵形参。和指针类似。</li>
+</ul>
+<h2 id="类体外："><a href="#类体外：" class="headerlink" title="类体外："></a>类体外：</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">const</span> vec3&amp; opearator+=(<span class="keyword">const</span> vec3 &amp;v)&#123;</span><br><span class="line">	e[<span class="number">0</span>]=v.e[<span class="number">0</span>];</span><br><span class="line">	e[<span class="number">1</span>]=v.e[<span class="number">1</span>];</span><br><span class="line">	e[<span class="number">2</span>]=v.e[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类体外定义operator+=函数</p>
+<ul>
+<li>vec3::：表示类体外定义的operator+=()是vec3类的成员函数。“::”是域解析操作符。表示某个成员属于某个类，某个类的某个成员。</li>
+<li>this：指向被调用对象的指针。</li>
+<li>*this：由于函数定义的函数返回是引用类型，即返回的不是值或者指针，而是对象本身。所以，此处需要return *this来返回对象本身，而不是return this（返回的是指针）。</li>
+</ul>
+<hr>
+<h1 id="如何通过RayTracing-画第一张图"><a href="#如何通过RayTracing-画第一张图" class="headerlink" title="如何通过RayTracing 画第一张图"></a>如何通过RayTracing 画第一张图</h1><h2 id="代码分析："><a href="#代码分析：" class="headerlink" title="代码分析："></a>代码分析：</h2><p>ray类(ray.h)：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> RAY_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RAY_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"vec3.h"</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ray</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        ray() &#123;&#125;</span><br><span class="line">        ray(<span class="keyword">const</span> vec3&amp; a, <span class="keyword">const</span> vec3&amp; b) &#123; A = a; B = b; &#125;</span><br><span class="line">        <span class="function">vec3 <span class="title">orgin</span><span class="params">()</span> <span class="keyword">const</span>     </span>&#123; <span class="keyword">return</span> A; &#125;</span><br><span class="line">        <span class="function">vec3 <span class="title">direction</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> B; &#125;</span><br><span class="line">        <span class="function">vec3 <span class="title">point_at_parameter</span><span class="params">(<span class="keyword">float</span> t)</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> A + t*B; &#125;</span><br><span class="line">		<span class="comment">//已知t时，可以获得光线上该点的坐标（向量）</span></span><br><span class="line">        vec3 A;</span><br><span class="line">        vec3 B;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// RAY_H</span></span></span><br></pre></td></tr></table></figure>
+<p>ray类中其实主要是定义两个向量：<br>起点向量（坐标）A和方向向量B。<br>从ray的方程R(t)=A+t*B可以得知A，B两个向量即可决定一条光线。<br>main.cpp</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STB_IMAGE_IMPLEMENTATION</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stb_image.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STB_IMAGE_WRITE_IMPLEMENTATION</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stb_image_write.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ray.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">vec3 <span class="title">color</span><span class="params">(<span class="keyword">const</span> ray&amp;r)</span></span>&#123;</span><br><span class="line">	<span class="comment">//对方向向量进行标准化。</span></span><br><span class="line">	vec3 unit_direction = unit_vector(r.direction());</span><br><span class="line">	<span class="comment">//标准化之后的y值在[-1,1]中 y+1在[0,2]中0.5*(y+1)在[0,1]中</span></span><br><span class="line">	<span class="keyword">float</span> t = <span class="number">0.5</span>*(unit_direction.y() + <span class="number">1.0</span>);</span><br><span class="line">	<span class="comment">//linear-blend 线性混合</span></span><br><span class="line">	<span class="comment">//t=0时，color=vec3(1,1,1)，乘以255后对应的RGB为（255，255，255）		</span></span><br><span class="line">	<span class="comment">//t=1时，color=vec3(0,0.4,0)，乘以255后对应的RGB为（0，102，0）</span></span><br><span class="line">	<span class="comment">//如上两个颜色分别对应着白色和深绿色</span></span><br><span class="line">	<span class="comment">//画面颜色=(1-t)*白色+ t*深绿色，即画面颜色为白色和深绿色（沿着Y方向）的线性插值的结果。</span></span><br><span class="line">	<span class="comment">//如果要换成X或者Z方向，将上面的.y()改成.x()或者.z()即可。若要换其他颜色，设置对应的RGB值即可。</span></span><br><span class="line">	<span class="keyword">return</span> (<span class="number">1.0</span> - t)*vec3(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>)+t*vec3(<span class="number">0</span>,<span class="number">0.4</span>,<span class="number">0</span>);<span class="comment">//表征颜色的三维向量(rgb) (0,0.4,0)为深绿色</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> nx = <span class="number">1980</span>;</span><br><span class="line">	<span class="keyword">int</span> ny = <span class="number">1080</span>;</span><br><span class="line">	<span class="keyword">int</span> channel = <span class="number">3</span>;<span class="comment">//RGB三通道</span></span><br><span class="line">	<span class="comment">//字符数组保存图像数据</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> *data = <span class="keyword">new</span> <span class="keyword">unsigned</span> <span class="keyword">char</span>[nx*ny*channel];s</span><br><span class="line">	<span class="comment">//camera相关数据</span></span><br><span class="line">	<span class="function">vec3 <span class="title">lower_left_corner</span><span class="params">(<span class="number">-2.0</span>, <span class="number">-1.0</span>, <span class="number">-1.0</span>)</span></span>; <span class="comment">// 左下角</span></span><br><span class="line">	<span class="function">vec3 <span class="title">horizontal</span><span class="params">(<span class="number">4.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>)</span></span>; <span class="comment">// 横轴</span></span><br><span class="line">	<span class="function">vec3 <span class="title">vertical</span><span class="params">(<span class="number">0.0</span>, <span class="number">2.0</span>, <span class="number">0.0</span>)</span></span>; <span class="comment">// 竖轴</span></span><br><span class="line">	<span class="function">vec3 <span class="title">origin</span><span class="params">(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>)</span></span>; <span class="comment">// eye	</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = ny - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--)&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nx; i++)&#123;</span><br><span class="line">			<span class="keyword">float</span> u = <span class="keyword">float</span>(i) / <span class="keyword">float</span>(nx);</span><br><span class="line">			<span class="keyword">float</span> v = <span class="keyword">float</span>(j) / <span class="keyword">float</span>(ny);</span><br><span class="line">				<span class="comment">/*由画面中每个像素点在画面中的相对位置每个像素点对应的光线的方向向量从而确定画面的范围/大小。（完成第一步）*/</span></span><br><span class="line">			<span class="function">ray <span class="title">r</span><span class="params">(origin, lower_left_corner + u*horizontal + v*vertical)</span></span>;</span><br><span class="line">			<span class="comment">//根据光线对每一个像素点上色。（完成第二步）</span></span><br><span class="line">			vec3 col = color(r);</span><br><span class="line">			<span class="comment">//写入图像数据</span></span><br><span class="line">			data[(ny - j - <span class="number">1</span>)*nx * <span class="number">3</span> + <span class="number">3</span> * i] = <span class="keyword">int</span>(<span class="number">255</span> * col[<span class="number">0</span>]);</span><br><span class="line">			data[(ny - j - <span class="number">1</span>)*nx * <span class="number">3</span> + <span class="number">3</span> * i+<span class="number">1</span>] = <span class="keyword">int</span>(<span class="number">255</span> * col[<span class="number">1</span>]);</span><br><span class="line">			data[(ny - j - <span class="number">1</span>)*nx * <span class="number">3</span> + <span class="number">3</span> * i+<span class="number">2</span>] = <span class="keyword">int</span>(<span class="number">255</span> * col[<span class="number">2</span>]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; (ny - j)/<span class="keyword">float</span>(ny)*<span class="number">100.0f</span> &lt;&lt; <span class="string">"%\n"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	stbi_write_png(<span class="string">"Render_Chapter3_test.png"</span>,nx,ny,channel,data,<span class="number">0</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"完成渲染"</span>;</span><br><span class="line">	system(<span class="string">"PAUSE"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="原理分析："><a href="#原理分析：" class="headerlink" title="原理分析："></a>原理分析：</h2><p>光线起点（也就是eye或者camera）固定的情况下，光线的方向向量的变动范围即形成光线束。光线束即是eye或者camera看到画面。<br>也就意味着：方向向量的变动范围决定着所能看到画面的范围。<br>另外，光线中每个光子的频率（颜色）决定这画面的内容。</p>
+<p>所以，如果我们要通过光线追踪来画图的话，只需要做两件事情：<br>第一步：<strong>确定光线的方向向量的活动范围函数，从而确定画面的范围、大小（一条光线对应这画面上的一个像素点）。</strong><br>第二步：<strong>对每一条光线（像素点）设置颜色，（高质量图的每个像素点上可能对应多个采样）从而确定画面上的内容。</strong></p>
+<p>如下图，光线的起点为（0，0，0），要求在黑框内作图（即光线和黑框平面的交点落在黑框内）</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（一） href="image-20191110203344058.png" title="[image]" data-fancybox="images"><img src="image-20191110203344058.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <p>[image]</p>
+            </figure>
+<p>同时我们需要对相机和人眼进行设置：<br>camera.h</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//camera类构造函数中进行初始化</span></span><br><span class="line">lower_left_corner = vec3(<span class="number">-2.0</span>, <span class="number">-1.0</span>, <span class="number">-1.0</span>); <span class="comment">// 左下角</span></span><br><span class="line">		horizontal = vec3(<span class="number">4.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>); <span class="comment">// 横轴</span></span><br><span class="line">		vertical = vec3(<span class="number">0.0</span>, <span class="number">2.0</span>, <span class="number">0.0</span>); <span class="comment">// 竖轴</span></span><br><span class="line">		origin = vec3(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>); <span class="comment">// eye</span></span><br></pre></td></tr></table></figure>
+<p>由上图可得：交点坐标可以表示为向量：lower_left_corner + u<em>horizontal + v</em>vertical<br>故可以通过camera类中的get_ray函数（传入u,v）得到光线</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ray <span class="title">get_ray</span><span class="params">(<span class="keyword">float</span> u, <span class="keyword">float</span> v)</span> </span>&#123; </span><br><span class="line">	<span class="keyword">return</span> ray(origin, lower_left_corner + u*horizontal + v*vertical); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于：<br>光线的方向向量=交点向量-起点向量<br>且起点为原点，所以方向向量=交点向量。<br>（而方向向量由u,v决定）<br><strong>每个交点的u，v的值即为该像素点在整个画面中的位置。</strong></p>
+<h2 id="结果展示：（背景）"><a href="#结果展示：（背景）" class="headerlink" title="结果展示：（背景）"></a>结果展示：（背景）</h2><p>（白色、深绿色沿着Y轴线性插值）</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（一） href="Render_Chapter3_test.png" title="[结果展示]" data-fancybox="images"><img src="Render_Chapter3_test.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]"></a>
+                <p>[结果展示]</p>
+            </figure>
+
+<hr>
+<h1 id="如何通过RayTracing画球"><a href="#如何通过RayTracing画球" class="headerlink" title="如何通过RayTracing画球"></a>如何通过RayTracing画球</h1><h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>当然这个球是画在之前的背景图上。<br>通过画第一张图，已经直到画图有两个步骤：<br>其一，确定位置（范围、大小）；<br>其二，设置颜色。<br>画球也不例外。<br>第一步：确定球的位置。球上每个像素点的位置即为光线与球的交点，所有这些交点就组成了球。所以，<strong>问题转化为找光线和球的交点。</strong><br>第二步：设置球的颜色。即<strong>设置光线和球交点的颜色。</strong><br>（<em>一张图遍历像素点，逐个像素点画出来的。一个光线代表着一个像素点。此处和球有交点的光线对应的像素点就设置成球的颜色</em>）</p>
+<h2 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h2><p>我们已知球心为（a,b,c）的球的表达式可以表示为：<br>$$<br>(x-a)^{2} + (y-b)^{2} + (z-c)^{2}=R^{2}<br>$$<br>可知：满足下式的任意点P均在球的表面：<br>$$<br>|P-C|^{2}=R^{2}<br>$$<br>故射线p(t)与球C是否有交点的问题<br>转变为<br>$$<br>(x-a)^{2} + (y-b)^{2} + (z-c)^{2}=R^{2}是否有解<br>$$<br>结合判别式disriminant可知：<br>$$<br>\Delta大于0时有两个解，等于0时有一个解，小于0时无解，对应着2到0个顶点.<br>$$</p>
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><p>main.cpp<br>遍历图片每一个piexl<br>确定范围和大小:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//遍历每个像素的for循环中</span></span><br><span class="line"><span class="function">ray <span class="title">r</span><span class="params">(origin, lower_left_corner + u*horizontal + v*vertical)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>确定颜色:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ray r 返回的颜色值</span></span><br><span class="line"><span class="comment">//三维向量col保存RGB三个通道的值 </span></span><br><span class="line">vec3 col = color(r);</span><br></pre></td></tr></table></figure>
+
+
+<p>在main()中调用了color(const ray&amp;r)方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过ray返回的颜色，决定每个pixel的颜色值</span></span><br><span class="line"><span class="comment">//if有交点，返回小球的颜色</span></span><br><span class="line"><span class="comment">//else无交点，返回背景的颜色</span></span><br><span class="line"><span class="function">vec3 <span class="title">color</span><span class="params">(<span class="keyword">const</span> ray &amp;r)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (hit_sphere(vec3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>), <span class="number">0.5</span>, r))&#123;</span><br><span class="line">		<span class="keyword">return</span> vec3(<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	vec3 unit_direction = unit_vector(r.direction());</span><br><span class="line">	<span class="comment">//一种根据ray的方向向量的y轴进行线性混合的背景渲染</span></span><br><span class="line">	<span class="keyword">float</span> t = (<span class="number">0.5</span>*unit_direction.y() + <span class="number">1.0</span>);</span><br><span class="line">	<span class="keyword">return</span> (<span class="number">1.0</span> - t)*vec3(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>) + t*vec3(<span class="number">0.5</span>, <span class="number">0.7</span>, <span class="number">1.0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>在color()中调用了hit_sphere(vec3 center,float radius,ray &amp;r)方法<br>根据判别式判断光线r与球C是否有交点</p>
+<ul>
+<li>如果有交点，返回交点颜色</li>
+<li>如果没有交点，则返回背景色</li>
+</ul>
+<h2 id="结果展示：（背景-一个球）"><a href="#结果展示：（背景-一个球）" class="headerlink" title="结果展示：（背景+一个球）"></a>结果展示：（背景+一个球）</h2><p>（通过增加x,y两轴的采样像素个数，提高了图像的质量）</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（一） href="Render_Chapter4_test.png" title="[结果展示]" data-fancybox="images"><img src="Render_Chapter4_test.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]"></a>
+                <p>[结果展示]</p>
+            </figure>
+
+<hr>
+<h1 id="Visualize-The-Normal-With-a-Color-Map"><a href="#Visualize-The-Normal-With-a-Color-Map" class="headerlink" title="Visualize The Normal With a Color Map"></a>Visualize The Normal With a Color Map</h1><p>如何可视化球的法向量<br>我们首先需要的是：此处的法向量需要转换为单位法向量（通过vec3中的unit_vector()方法）<br>光线R与球C的交点为P，其交点对应的参数为t,调用Ray中的point_at_parameter(t)方法得到交点P的坐标<br>我们通过：将交点P的坐标减去球心C的坐标，得到了球C的法向量<br>然后将单位法向量映射成Color Map<br>main.cpp中color(const ray &amp;r)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vec3 <span class="title">color</span><span class="params">(<span class="keyword">const</span> ray&amp; r)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 如果 ray r 击中球体的话，返回交点的 t</span></span><br><span class="line">	<span class="keyword">float</span> t = hit_sphere(vec3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>), <span class="number">0.5</span>, r);</span><br><span class="line">	<span class="keyword">if</span> (t &gt; <span class="number">0.0</span>) &#123;</span><br><span class="line">		<span class="comment">// 计算交点处的法线，并把法线进行可视化</span></span><br><span class="line">		vec3 N = unit_vector(r.point_at_parameter(t) - vec3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>)); <span class="comment">// P - C</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.5</span>*vec3(N.x() + <span class="number">1</span>, N.y() + <span class="number">1</span>, N.z() + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 否则，计算背景色并返回</span></span><br><span class="line">	vec3 unit_direction = unit_vector(r.direction());</span><br><span class="line">	t = (<span class="number">0.5</span> * unit_direction.y() + <span class="number">1.0</span>);</span><br><span class="line">	<span class="keyword">return</span> (<span class="number">1.0</span> - t) * vec3(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>) + t * vec3(<span class="number">0.5</span>, <span class="number">0.7</span>, <span class="number">1.0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="结果展示：（背景-一个球）-1"><a href="#结果展示：（背景-一个球）-1" class="headerlink" title="结果展示：（背景+一个球）"></a>结果展示：（背景+一个球）</h2><p>//通过可视化法向量绘制球的颜色,即是交点处法向量的映射</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（一） href="ch05-1.png" title="[结果展示]" data-fancybox="images"><img src="ch05-1.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]"></a>
+                <p>[结果展示]</p>
+            </figure>
+
+<hr>
+<h1 id="如何通过RayTracing画多个球"><a href="#如何通过RayTracing画多个球" class="headerlink" title="如何通过RayTracing画多个球"></a>如何通过RayTracing画多个球</h1><h2 id="Tips："><a href="#Tips：" class="headerlink" title="Tips："></a>Tips：</h2><p>画多个球方式和画一个球的方式是一样的<br>都是先找交点，再设置颜色<br><strong>第一步：求交，</strong>一条光线和N个球的交点可能有0-2N个。<br>之前画一个球时，我们取的是大于零的较小的那个根（因为只考虑球完全不透明）。<br>所以，现在画多个球，我们取所有交点中大于零最小的那个交点（因为我们向前看，只能看到最近的那个交点，后面所有的交点都被一个球体或者多个球体挡住了。）。<br><strong>第二步：设置颜色，</strong>这个和画一个球时一样，设置为球在该点的单位法向量的色彩表映射值。<br>这样的话，有个问题：球和球的相交边界处，两个球的颜色会不会很接近导致边界模糊呢？不会-不会-不会。<br>因为，虽然交点坐标非常接近，但是球的法向量是等于交点坐标减去球心坐标。从而，每个球在边界点的法向量是不一样的。如果两个球的球心坐标相差较大时，法向量坐标也会相差比较大，颜色也会相差比较大。</p>
+<h2 id="代码分析：-1"><a href="#代码分析：-1" class="headerlink" title="代码分析："></a>代码分析：</h2><p>main.cpp中：<br>1.创建场景world<br><strong>场景中包含了多个hitable实例（物体）</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 场景相关</span></span><br><span class="line">hitable *<span class="built_in">list</span>[<span class="number">2</span>];</span><br><span class="line"><span class="built_in">list</span>[<span class="number">0</span>] = <span class="keyword">new</span> sphere(vec3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>), <span class="number">0.5</span>);</span><br><span class="line"><span class="built_in">list</span>[<span class="number">1</span>] = <span class="keyword">new</span> sphere(vec3(<span class="number">0</span>, <span class="number">-100.5</span>, <span class="number">-1</span>), <span class="number">100</span>);</span><br><span class="line">hitable *world = <span class="keyword">new</span> hitable_list(<span class="built_in">list</span>, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>2.遍历图片每一个piexl<br>确定范围和大小:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//遍历每个像素的for循环中</span></span><br><span class="line"><span class="function">ray <span class="title">r</span><span class="params">(origin, lower_left_corner + u*horizontal + v*vertical)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>确定颜色:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算 ray r 射入场景 world 后，返回的颜色</span></span><br><span class="line">vec3 col = color(r, world);</span><br></pre></td></tr></table></figure>
+
+<p>这其中main()中调用了color(const ray&amp;r,hitable *world)方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vec3 <span class="title">color</span><span class="params">(<span class="keyword">const</span> ray&amp; r, hitable *world)</span> </span>&#123;</span><br><span class="line">	hit_record rec;</span><br><span class="line">	<span class="keyword">if</span> (world-&gt;hit(r, <span class="number">0.0</span>, FLT_MAX, rec)) &#123;</span><br><span class="line">		<span class="comment">// 若 ray 交到场景中任意 object，计算其交点法线并可视化</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.5</span>*vec3(rec.normal.x() + <span class="number">1</span>, rec.normal.y() + <span class="number">1</span>, rec.normal.z() + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">// 否则，计算背景色并返回</span></span><br><span class="line">		vec3 unit_direction = unit_vector(r.direction());<span class="comment">//计算可得：交点向量=方向向量 </span></span><br><span class="line">		<span class="keyword">float</span> t = (<span class="number">0.5</span> * unit_direction.y() + <span class="number">1.0</span>);</span><br><span class="line">		<span class="keyword">return</span> (<span class="number">1.0</span> - t) * vec3(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>) + t * vec3(<span class="number">0.5</span>, <span class="number">0.7</span>, <span class="number">1.0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在color方法中<br>①使用hit_record（定义在hitable.h中的结构）记录交点信息<br>②if (world-&gt;hit(r, 0.0, FLT_MAX, rec))<br>world调用的是hitable_list中的hit方法，<br>在hitable_list中对于hit方法的定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> hitable_list::hit(<span class="keyword">const</span> ray&amp; r, <span class="keyword">float</span> t_min, <span class="keyword">float</span> t_max, hit_record&amp; rec) <span class="keyword">const</span> &#123;</span><br><span class="line">	hit_record temp_rec;</span><br><span class="line">	<span class="keyword">bool</span> hit_anything = <span class="literal">false</span>;</span><br><span class="line"><span class="comment">/*如果光线撞上了球。N个球，可能有2N撞点，到底哪一个撞点是有效的呢？可以被最终设置颜色呢？原则是：找出最近的撞点。*/</span></span><br><span class="line">	<span class="keyword">double</span> closest_so_far = t_max;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list_size; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">list</span>[i]-&gt;hit(r, t_min, closest_so_far, temp_rec)) &#123;</span><br><span class="line">			hit_anything = <span class="literal">true</span>;</span><br><span class="line">			closest_so_far = temp_rec.t;</span><br><span class="line">			rec = temp_rec;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> hit_anything;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由此可见，hitable_list的hit方法遍历了场景中的sphere对象(继承于hitable)，这些对象又调用了sphere中的hit方法<br>sphere.h中的hit方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> sphere::hit(<span class="keyword">const</span> ray&amp; r, <span class="keyword">float</span> t_min, <span class="keyword">float</span> t_max, hit_record&amp; rec) <span class="keyword">const</span> &#123;</span><br><span class="line">	vec3 A_C = r.origin() - center;</span><br><span class="line">	vec3 B = r.direction();</span><br><span class="line">	<span class="keyword">float</span> a = dot(B, B);</span><br><span class="line">	<span class="keyword">float</span> b = dot(A_C, B);</span><br><span class="line">	<span class="keyword">float</span> c = dot(A_C, A_C) - radius * radius;</span><br><span class="line">	<span class="keyword">float</span> discriminant = b * b - a * c;</span><br><span class="line">	<span class="keyword">if</span> (discriminant &gt; <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">float</span> temp = (-b - <span class="built_in">sqrt</span>(discriminant)) / a;</span><br><span class="line">		<span class="keyword">if</span> (temp &lt; t_max &amp;&amp; temp &gt; t_min) &#123;</span><br><span class="line">			rec.t = temp;</span><br><span class="line">			rec.p = r.point_at_parameter(rec.t);</span><br><span class="line">			rec.normal = (rec.p - center) / radius;</span><br><span class="line">			<span class="comment">//考虑光线交一个球时，优先取的是大于零的较小的那个根</span></span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		temp = (-b + <span class="built_in">sqrt</span>(discriminant)) / a;</span><br><span class="line">		<span class="keyword">if</span> (temp &lt; t_max &amp;&amp; temp &gt; t_min) &#123;</span><br><span class="line">			rec.t = temp;</span><br><span class="line">			rec.p = r.point_at_parameter(rec.t);</span><br><span class="line">			rec.normal = (rec.p - center) / radius;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于颜色设置的过程可以总结如下：<br>1，光线是否撞上球？是：设置为球的颜色；否：设置为背景颜色<br>2，如果光线撞上了球。N个球，可能有2N撞点，到底哪一个撞点是有效的呢？可以被最终设置颜色呢？原则是：找出最近的撞点。<br>3，怎么找？一个球一个球依次找。每个球可能有2个撞点，选出较近的有效的撞点。<br>4，然后，从所有这些每个球的较近的有效的撞点中，选出最近的那个撞点。<br>对应着hitable_list的循环中部分代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list_size; i++) &#123;<span class="comment">//遍历所有球</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">list</span>[i]-&gt;hit(r, t_min, closest_so_far, temp_rec)) &#123;<span class="comment">//temp_rec中保存对于每个球而言，较小的t值</span></span><br><span class="line">			hit_anything = <span class="literal">true</span>;</span><br><span class="line">			closest_so_far = temp_rec.t;<span class="comment">//更新变量t,选出最小t</span></span><br><span class="line">			rec = temp_rec;</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结果展示：（背景-两个球）"><a href="#结果展示：（背景-两个球）" class="headerlink" title="结果展示：（背景+两个球）"></a>结果展示：（背景+两个球）</h2><p>//此时需要考虑此处的交点为光线与所有球的所有交点中最近的那个交点</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（一） href="Render_Chapter5_test.png" title="[结果展示]" data-fancybox="images"><img src="Render_Chapter5_test.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]"></a>
+                <p>[结果展示]</p>
+            </figure>
+
+<hr>
+<h1 id="如何对RayTracing图形消锯齿"><a href="#如何对RayTracing图形消锯齿" class="headerlink" title="如何对RayTracing图形消锯齿"></a>如何对RayTracing图形消锯齿</h1><h2 id="锯齿出现原因："><a href="#锯齿出现原因：" class="headerlink" title="锯齿出现原因："></a>锯齿出现原因：</h2><p>之前的图是每个像素点设置一个颜色值，相当于将像素中心位置的颜色设置给了整个像素。所以，如果两个像素点中心位置的颜色值相差比较大时，这两个像素点就会产生清晰的边界。</p>
+<h2 id="解决方式："><a href="#解决方式：" class="headerlink" title="解决方式："></a>解决方式：</h2><p>增加采样精度<br>书上具体的做法是：<br>针对每个像素点随机采样100次，获得100个颜色值，然后将这100个颜色值的平均值设置为整个像素点的颜色值。<br>（在遍历每个像素的同时，增加对于每个像素的采样，nx,ny,ns三层循环）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 采样ns 次</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; ns; k++) &#123;</span><br><span class="line">	<span class="keyword">float</span> u = <span class="keyword">float</span>(i + (rand() % <span class="number">100</span> / <span class="keyword">float</span>(<span class="number">100</span>))) / <span class="keyword">float</span>(nx);</span><br><span class="line">	<span class="keyword">float</span> v = <span class="keyword">float</span>(j + (rand() % <span class="number">100</span> / <span class="keyword">float</span>(<span class="number">100</span>)) )/ <span class="keyword">float</span>(ny);</span><br><span class="line"><span class="comment">// 确定 ray r</span></span><br><span class="line">	ray r = cam.get_ray(u, v);</span><br><span class="line"><span class="comment">// 累加 ray r 射入场景 world 后，返回的颜色</span></span><br><span class="line">	col += color(r, world);</span><br><span class="line">&#125;</span><br><span class="line">col /= <span class="keyword">float</span>(ns);<span class="comment">//平均处理</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="模拟RayTracing中漫反射材质（diffuse-material）"><a href="#模拟RayTracing中漫反射材质（diffuse-material）" class="headerlink" title="模拟RayTracing中漫反射材质（diffuse material）"></a>模拟RayTracing中漫反射材质（diffuse material）</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>前面画一个球时，球体的颜色设置为红色；<br>前面画多个球时，球体的颜色设置为球在该点的单位法向量的色彩表映射值；<br>现在需要画漫射材质的球，球体的颜色设置为背景颜色的系数倍。</p>
+<p>首先，我们需要明晰：漫反射材质不自发光，只吸收和反射环境光（反射光的方向是随机的）<br>所以将漫射材料的球体的颜色设置为背景颜色乘以某系数是合理的。系数怎么确定呢？光线每被反射一次1/2（因为光线没被反射一次会被吸收一半）。</p>
+<p>既然已经知道漫射材料球体的颜色和反射次数有关，那么怎么获得光线反射次数呢；<br>光线反射次数=光线撞击球的次数；<br>撞击次数由反射光线的方向和起点（前一个撞击点）决定；<br>第一撞击点，之前画一个球或者多个球都是根据撞击点画的；<br>现在问题归结于怎么获取反射光线的方向。<br>之前说了，漫射材质反射光线的方向是随机的，怎么模拟一个随机方向的向量呢？<br><strong>在交点处单位法向量的基础上加上一个长度小于1的随机向量。</strong></p>
+<p>已知P为交点，PS为球C在P点的单位法向量，现在要模拟一个起点为P方向向球C外面的任何方向的向量。<br>流程：<br>1.找一个辅助球O，该球是球心在原点的单位球体；<br>2.在球O<strong>里面</strong>随机找一点E或者F；（E点在球体里面，也就是<strong>向量OE的长度小于1，PS为单位法向量</strong>）<br>3.OP+PS=OS，OS+OE=OM，OM-OP=PM。<br> 所以，<strong>PM</strong> =OP+PS+OE-OP=<strong>PS+OE。</strong><br>（辅助球O选球心在原点的单位球的原因，其一，“球心在原点”，方便计算；其二，“单位球”，可以确保PM的方向不会指向球C内部）。PS是已知的，所以只要获得OE即可。</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（一） href="image-20191112082645320.png" title="[原理图]" data-fancybox="images"><img src="image-20191112082645320.png" alt="[sorry,图片挂了]" title="[原理图]" class="[samll]"></a>
+                <p>[原理图]</p>
+            </figure>
+
+
+<p>描述”起点在原点，长度小于1，方向随机“的向量采取‘’接受—拒绝’‘方式，<br>只接受部分区间的值<br>在这种方法中：<br>向量a  = (x, y, z)，b = (2x-1, 2y-1, 2z-1)， 其中x,y, z ∈（0，1）<br>推出2x-1, 2y-1, 2z-1∈（-1，1）推出(2x-1)2+(2y-1)2+(2z-1)2∈（0，3）推出|b|∈（0，  √3 ）<br>而我们能接受的是|b|∈（0，1），所以采取“接受——拒绝”方式：只接受|b|∈（0，1）。<br><strong>下面代码即是采用接拒法，描述”起点在原点，长度小于1，方向随机的向量“</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在单位立方体中取一点S，让xyz随机取（-1,1）之间的值，S则在这个立方体内，若xyz的平方和小于1，则在球内</span></span><br><span class="line"><span class="function">vec3 <span class="title">random_in_unit_sphere</span><span class="params">()</span></span>&#123;</span><br><span class="line">	vec3 p;</span><br><span class="line">	<span class="keyword">do</span> &#123;</span><br><span class="line">		p = <span class="number">2.0f</span> * vec3((rand() % <span class="number">100</span> / <span class="keyword">float</span>(<span class="number">100</span>)), (rand() % <span class="number">100</span> / <span class="keyword">float</span>(<span class="number">100</span>)), (rand() % <span class="number">100</span> / <span class="keyword">float</span>(<span class="number">100</span>))) - vec3(<span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">1.0f</span>);</span><br><span class="line">	&#125; <span class="keyword">while</span> (p.squared_length() &gt;= <span class="number">1.0f</span>);</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来我们又回顾一下整个流程：<br>1，起点为原点的光线撞击球C，获得撞击点P和单位法向量PS。<br>2，产生一个“起点在原点，长度小于1，方向随机”的向量OE。<br>3，OP+PS+OE-OP=PM，PM即为漫射材料的球体在P点的随机反射方向向量。<br>4，反射光线是以P为起点，PM为方向向量，所以，我们可以获得反射光线的方程<br>5，让反射光线去撞击其他球吧（回到第一步）</p>
+<p>由此设置color方法为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">光线撞击球的次数=光线反射的次数*球体该像素点的颜色值对应背景颜色的系数值。</span><br><span class="line"><span class="comment">//递归，同一条ray可能多次反射</span></span><br><span class="line">vec3 color(<span class="keyword">const</span> ray&amp;r,hitable *world)&#123;</span><br><span class="line">	hit_record rec;</span><br><span class="line">	<span class="keyword">if</span> (world-&gt;hit(r, <span class="number">0.001</span>, FLT_MAX, rec))&#123;</span><br><span class="line">		vec3 target = rec.p + rec.normal + random_in_unit_sphere();</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0.5</span>*color(ray(rec.p, target - rec.p), world);<span class="comment">//0.5为吸收率</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		vec3 unit_direction = unit_vector(r.direction());</span><br><span class="line">		<span class="keyword">float</span> t = (<span class="number">0.5</span>*unit_direction.y() + <span class="number">1.0</span>);</span><br><span class="line">		<span class="keyword">return</span> (<span class="number">1.0</span> - t)*vec3(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>) + t*vec3(<span class="number">0.5</span>, <span class="number">0.7</span>, <span class="number">1.0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="结果展示：-背景-两个漫反射材质的球-、"><a href="#结果展示：-背景-两个漫反射材质的球-、" class="headerlink" title="结果展示：(背景+两个漫反射材质的球)、"></a>结果展示：(背景+两个漫反射材质的球)、</h2><p>Diffuse材质要在返回的基础上乘上吸收率<br>Tips:漫反射和镜面反射的区别在于，漫反射的每次反射方向是随机的。</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（一） href="Render_Chapter7.png" title="[结果展示]" data-fancybox="images"><img src="Render_Chapter7.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]"></a>
+                <p>[结果展示]</p>
+            </figure>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-11-12T10:29:08.007Z" itemprop="dateUpdated">2019-11-12 18:29:08</time>
+</span><br>
+
+
+        
+        转载注明出处
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/head2.jpg" alt="Leivie_Tan">
+            Leivie_Tan
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RayTracing/" rel="tag">RayTracing</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/10/RayTracing_OneWeekend_1/&title=《RayTracing In One Weekend（一）》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/10/RayTracing_OneWeekend_1/&title=《RayTracing In One Weekend（一）》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" target="_blank" rel="noopener" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/11/12/RayTracing_OneWeekend_2/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">RayTracing In One Weekend（二）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/11/05/GI_1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">全局光照（总览）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#vec3类解读"><span class="post-toc-number">1.</span> <span class="post-toc-text">vec3类解读</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类体内"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">类体内</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类体外："><span class="post-toc-number">1.2.</span> <span class="post-toc-text">类体外：</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何通过RayTracing-画第一张图"><span class="post-toc-number">2.</span> <span class="post-toc-text">如何通过RayTracing 画第一张图</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码分析："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">代码分析：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理分析："><span class="post-toc-number">2.2.</span> <span class="post-toc-text">原理分析：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结果展示：（背景）"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">结果展示：（背景）</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何通过RayTracing画球"><span class="post-toc-number">3.</span> <span class="post-toc-text">如何通过RayTracing画球</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tips"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Tips</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#推导过程"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">推导过程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码分析"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">代码分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结果展示：（背景-一个球）"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">结果展示：（背景+一个球）</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Visualize-The-Normal-With-a-Color-Map"><span class="post-toc-number">4.</span> <span class="post-toc-text">Visualize The Normal With a Color Map</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结果展示：（背景-一个球）-1"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">结果展示：（背景+一个球）</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何通过RayTracing画多个球"><span class="post-toc-number">5.</span> <span class="post-toc-text">如何通过RayTracing画多个球</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Tips："><span class="post-toc-number">5.1.</span> <span class="post-toc-text">Tips：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码分析：-1"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">代码分析：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结果展示：（背景-两个球）"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">结果展示：（背景+两个球）</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何对RayTracing图形消锯齿"><span class="post-toc-number">6.</span> <span class="post-toc-text">如何对RayTracing图形消锯齿</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#锯齿出现原因："><span class="post-toc-number">6.1.</span> <span class="post-toc-text">锯齿出现原因：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决方式："><span class="post-toc-number">6.2.</span> <span class="post-toc-text">解决方式：</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#模拟RayTracing中漫反射材质（diffuse-material）"><span class="post-toc-number">7.</span> <span class="post-toc-text">模拟RayTracing中漫反射材质（diffuse material）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结果展示：-背景-两个漫反射材质的球-、"><span class="post-toc-number">7.2.</span> <span class="post-toc-text">结果展示：(背景+两个漫反射材质的球)、</span></a></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.png" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/Demeter-Leivietahn/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Leivie_Tan &copy; 2019
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" target="_blank" rel="noopener" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/10/RayTracing_OneWeekend_1/&title=《RayTracing In One Weekend（一）》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/10/RayTracing_OneWeekend_1/&title=《RayTracing In One Weekend（一）》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIklEQVR42u3ay27DMAxE0fz/TzvbAoWZmaGcQNT1KqjhSMcBWD70esnX9ef6//e7z/VdfZVlFwwYMLZlXOVVb6t+ql5FuWusAgMGjAMYdwvXwbSzOX2tem8wYMCAoSdz7nbrHA8GDBgw+gG3Q9VLZRgwYMBwi9j6i7JieFUaCgMGjNkMvev+/c+PzDdgwICxFeMyrywguo02e1cwYMAYzXBbYHU6qByYCAtUZT8wYMAYysgK0VWlrB6OP8BgwIAxmtF/WG/3u201N62EAQPGCQw3UVuVLK56QTBgwJjKUFpd/UCZHaowjm7AgAFjNMMF1AzlrpI46i9XGmTCgAFjc8batr7+lNKk0wM3DBgwZjP0MJdhpHhvNuY+TGJhwIAxlJEdd9BbZnohGoZaGDBgHMbIQltnGKknjjBgwDiZ4Y4Y14483QI4nMTCgAFjW4be/MqSNmM6IW/d+B1gwIAxiKEvuSo0/+zMCAwYMDZkKAvrS3aOqNbBPazFYcCAMYjhFpYuvt9okzAwYMA4huGOFfUAnR3dCOeuMGDAGM0IZwtyeem23oxdwYABYyjjMi8lvXPL2s6xexgwYJzAWNUac0Nt9p8BBgwYJzOyIPtIQDS/P5wzwIABY1vGqsDXacm5RSwMGDBguMVqFnD1YcCDARcGDBhDGW5zLXtKT15hwIBxAsM9SNoZanYC8e0rgAEDxmhGp3TsbNHdRKf0hQEDxraMN9z8F6VxTnckAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = 'Tan桑のBlog';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)咦!又好了!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+
+    
+</body>
+</html>

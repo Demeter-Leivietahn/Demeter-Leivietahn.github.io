@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    
+    <title>RayTracing In One Weekend（二） | Tan桑のBlog | 见证一个图形程序员的成长！</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="RayTracing">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":null,"app_key":null,"icon":true}'),
+            v: JSON.parse('{"enable":false,"appid":null,"appkey":null,"notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar"}'),
+            g: JSON.parse('{"enable":false,"lazy":true,"owner":"Demeter-Leivietahn","repo":"gitment","oauth":{"client_id":"823e39665f3e408cad61","client_secret":"2da69d5327a26f6898d5cd0c5f67854b79ac57ef"},"perPage":10}'),
+            d: JSON.parse('{"app_id":null}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+</head>
+
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" target="_blank" rel="noopener" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/head2.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Leivie_Tan</h5>
+          <a href="mailto:754050478@qq.com" target="_blank" rel="noopener" title="754050478@qq.com" class="mail">
+            
+              <span>7</span>
+            
+              <span>5</span>
+            
+              <span>4</span>
+            
+              <span>0</span>
+            
+              <span>5</span>
+            
+              <span>0</span>
+            
+              <span>4</span>
+            
+              <span>7</span>
+            
+              <span>8</span>
+            
+              <span>@</span>
+            
+              <span>q</span>
+            
+              <span>q</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/Demeter-Leivietahn" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                首页
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT ME
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" target="_blank" rel="noopener" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>RayTracing In One Weekend（二）</span>
+            
+        </div>
+        
+        <a href="javascript:;" target="_blank" rel="noopener" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title">RayTracing In One Weekend（二）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-12T01:56:27.000Z" itemprop="datePublished" class="page-time">
+  2019-11-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/RayTracing/">RayTracing</a></li></ul></li></ul>
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" target="_blank" rel="noopener" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+<div class="container body-wrap">
+    <article id="post-RayTracing_OneWeekend_2"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">RayTracing In One Weekend（二）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-12 09:56:27" datetime="2019-11-12T01:56:27.000Z"  itemprop="datePublished">2019-11-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/RayTracing/">RayTracing</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <p>接下来介绍《RayTracing In One Weekend》Chapter8 以后的内容<br>本博文参考了CSDN大佬图形跟班的很多内容，加入了部分自己的理解，不喜勿喷</p>
+<hr>
+<h1 id="如何模拟材质"><a href="#如何模拟材质" class="headerlink" title="如何模拟材质"></a>如何模拟材质</h1><p>前面章节，我们已经知道漫射材料颜色的设置：return 0.5*color( ray(rec.p, target-rec.p), world);也就是反射光线方向向量的映射值和衰减系数的乘积。</p>
+<h2 id="材质Material"><a href="#材质Material" class="headerlink" title="材质Material"></a>材质Material</h2><p>根据不同的反射方式，可将材质分为漫反射材质和镜面反射材质。各种反射材质又有不同的反射衰减系数。所以，我们有必要先定义一个material的抽象类，这个类包含反射光线和衰减系数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> MATERIAL_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MATERIAL_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"hitable.h"</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">material</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">scatter</span><span class="params">(<span class="keyword">const</span> ray&amp;r,<span class="keyword">const</span> hit_record&amp; rec,vec3 &amp;attenuation,ray &amp;scattered)</span><span class="keyword">const</span></span>=<span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// MATERIAL_H</span></span></span><br></pre></td></tr></table></figure>
+<p>然后定义Lambertian材质和Metal材质,使这两个类继承于Material类<br>Lambertian：也叫理想散射，Lambertian表面是指在一个固定的照明分布下从所有的视场方向上观测都具有相同亮度的表面，Lambertian表面不吸收任何入射光．</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">lambertian</span>:</span><span class="keyword">public</span> material&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">lambertian(<span class="keyword">const</span> vec3&amp;a):albedo(a)&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">scatter</span><span class="params">(<span class="keyword">const</span> ray&amp;r,<span class="keyword">const</span> hit_record&amp;rec,vec3&amp; attenuation,ray &amp;scattered)</span><span class="keyword">const</span></span>&#123;</span><br><span class="line">	vec3 target=rec.p+rec.normal+random_in_unit_sphere();</span><br><span class="line">	scattered=ray(rec.p,target-rec.p);</span><br><span class="line">	attenuation=albedo;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">vec3 albedo;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Metal材质（表面进行镜面反射）吸收所有折射的光照</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">metal</span>:</span><span class="keyword">public</span> material&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">metal(<span class="keyword">const</span> vec3&amp;a,<span class="keyword">float</span> f):albedo(a),fuzz(f)&#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">scatter</span><span class="params">(<span class="keyword">const</span> ray&amp;r,<span class="keyword">const</span> hit_record &amp;rec,vec3&amp;attenuation,ray &amp;scattered)</span><span class="keyword">const</span></span>&#123; </span><br><span class="line">	vec3 reflected=reflect(unit_vector(r_in.direction()),rec.normal);</span><br><span class="line">	scattered=ray(rec.p,reflected+fuzz*random_in_unit_sphere());</span><br><span class="line">	attenuation=albedo;</span><br><span class="line">	<span class="comment">// 反射出的光线若与 normal 夹角大于90度，则不正确</span></span><br><span class="line">	<span class="keyword">return</span> (dot(scattered.direction(),rec.normal)&gt;<span class="number">0</span>);</span><br><span class="line">&#125;;</span><br><span class="line">	vec3 albedo;</span><br><span class="line">	<span class="keyword">float</span> fuzz;</span><br></pre></td></tr></table></figure>
+<p>在metal材质中，对于镜面反射后反射光的方向向量的计算为函数reflect:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//镜面反射</span></span><br><span class="line"><span class="function">vec3 <span class="title">reflect</span><span class="params">(<span class="keyword">const</span> vec3&amp; v, <span class="keyword">const</span> vec3&amp; n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> v - <span class="number">2</span> * dot(v, n)*n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（二） href="image-20191112103139971.png" title="[反射推导]" data-fancybox="images"><img src="image-20191112103139971.png" alt="[sorry,图片挂了]" title="[反射推导]" class="[samll]"></a>
+                <p>[反射推导]</p>
+            </figure>
+
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><p>由于在此引入了material材质的概念，因此需要在过去代码的基础上进行修改：<br>1.修改hitable.h中定义的hitable_record结构（保存交点信息）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">hit_record</span> &#123;</span></span><br><span class="line">	<span class="keyword">float</span> t;</span><br><span class="line">	vec3 p;</span><br><span class="line">	vec3 normal;</span><br><span class="line">	<span class="comment">//Chapter8中添加了材质指针 </span></span><br><span class="line">	<span class="comment">//当Ray击中一个表面时，结构体中的材质指针能够给出材质</span></span><br><span class="line">	<span class="comment">//通过color()方法得到hit_record结构 </span></span><br><span class="line">	material *mat_ptr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>2.同时需要更新sphere.h中的类结构定义，同时更新其构造函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sphere</span> :</span><span class="keyword">public</span> hitable &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	sphere() &#123;&#125;</span><br><span class="line">	sphere(vec3 cen, <span class="keyword">float</span> r, material *m) &#123; center = cen; radius = r; mat_ptr = m; &#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">hit</span><span class="params">(<span class="keyword">const</span> ray&amp; r, <span class="keyword">float</span> t_min, <span class="keyword">float</span> t_max, hit_record&amp; rec)</span> <span class="keyword">const</span></span>;</span><br><span class="line">	vec3 center;</span><br><span class="line">	<span class="keyword">float</span> radius;</span><br><span class="line">	material *mat_ptr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>3.还需要修改color方法，基于不同的材质属性设置颜色</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//此处的depth记录球撞击的次数</span></span><br><span class="line"><span class="comment">//在if判断中设置depth的阈值，即最大撞击次数</span></span><br><span class="line"><span class="function">vec3 <span class="title">color</span><span class="params">(<span class="keyword">const</span> ray&amp; r, hitable *world, <span class="keyword">int</span> depth)</span> </span>&#123;</span><br><span class="line">	hit_record rec;</span><br><span class="line">	<span class="keyword">if</span> (world-&gt;hit(r, <span class="number">0.001</span>, FLT_MAX, rec)) &#123;</span><br><span class="line">		ray scattered;</span><br><span class="line">		vec3 attenuation;</span><br><span class="line">		<span class="keyword">if</span> (depth &lt; <span class="number">50</span> &amp;&amp; rec.mat_ptr-&gt;scatter(r, rec, attenuation, scattered)) &#123;</span><br><span class="line">			<span class="keyword">return</span> attenuation * color(scattered, world, depth + <span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> vec3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">// 否则，计算背景色并返回</span></span><br><span class="line">		vec3 unit_direction = unit_vector(r.direction());</span><br><span class="line">		<span class="keyword">float</span> t = (<span class="number">0.5</span> * unit_direction.y() + <span class="number">1.0</span>);</span><br><span class="line">		<span class="keyword">return</span> (<span class="number">1.0</span> - t) * vec3(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>) + t * vec3(<span class="number">0.5</span>, <span class="number">0.7</span>, <span class="number">1.0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.最后由于修改了sphere的构造函数，因此在main()实例化sphere对象时需要传入实例化的Materail对象</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">list</span>[<span class="number">0</span>] = <span class="keyword">new</span> sphere(vec3(<span class="number">0</span>,<span class="number">0</span>,<span class="number">-1</span>), <span class="number">0.5</span>, <span class="keyword">new</span> lambertian(vec3(<span class="number">0.8</span>, <span class="number">0.3</span>,<span class="number">0.3</span>)));</span><br><span class="line"><span class="built_in">list</span>[<span class="number">1</span>] = <span class="keyword">new</span> sphere(vec3(<span class="number">0</span>,<span class="number">-100.5</span>,<span class="number">-1</span>),<span class="number">100</span>, <span class="keyword">new</span> lambertian(vec3(<span class="number">0.8</span>,<span class="number">0.8</span>, <span class="number">0.0</span>)));</span><br><span class="line"><span class="built_in">list</span>[<span class="number">2</span>] = <span class="keyword">new</span> sphere(vec3(<span class="number">1</span>,<span class="number">0</span>,<span class="number">-1</span>), <span class="number">0.5</span>, <span class="keyword">new</span> metal(vec3(<span class="number">0.8</span>, <span class="number">0.6</span>, <span class="number">0.2</span>)));</span><br><span class="line"><span class="built_in">list</span>[<span class="number">3</span>] = <span class="keyword">new</span> sphere(vec3(<span class="number">-1</span>,<span class="number">0</span>,<span class="number">-1</span>), <span class="number">0.5</span>, <span class="keyword">new</span> metal(vec3(<span class="number">0.8</span>, <span class="number">0.8</span>,<span class="number">0.8</span>)));</span><br><span class="line">hitable *world = <span class="keyword">new</span> hitable_list(<span class="built_in">list</span>, <span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="结果展示："><a href="#结果展示：" class="headerlink" title="结果展示："></a>结果展示：</h2><figure class="image-box">
+                <a rel=RayTracing In One Weekend（二） href="Render_Chapter8.png" title="[结果展示]" data-fancybox="images"><img src="Render_Chapter8.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]"></a>
+                <p>[结果展示]</p>
+            </figure>
+
+<hr>
+<h1 id="如何模拟RayTracing中介质材料的颜色（dielectric）"><a href="#如何模拟RayTracing中介质材料的颜色（dielectric）" class="headerlink" title="如何模拟RayTracing中介质材料的颜色（dielectric）"></a>如何模拟RayTracing中介质材料的颜色（dielectric）</h1><p>之前我们学习并推导过反射光线的方向向量：<br>其中：<br>$$<br>漫反射：\vec{n}+\vec{p}   (\vec{p}为“起点在原点，长度小于1，方向随机的向量”)<br>$$<br>$$<br>镜面反射：\vec{v}-2 * dot(\vec{v},\vec{n})*\vec{n}(其中\vec{n}为单位法向量，\vec{v}为入射光线的方向向量)<br>$$</p>
+<p>折射光线的方向向量：</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（二） href="image-20191112195648542.png" title="[折射光线]" data-fancybox="images"><img src="image-20191112195648542.png" alt="[sorry,图片挂了]" title="[折射光线]" class="[samll]"></a>
+                <p>[折射光线]</p>
+            </figure>
+<p>注意：此处的N是普通法向量（不需要是单位法向量）。<br>要求的的折射光线的单位方向向量T（这里设置|T|=1，方便计算。）</p>
+<p>由此对于refract T的方向向量的求解可以表示为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uv=unit_vector(v);<span class="comment">//单位化入射光线的方向向量</span></span><br><span class="line">dt=dot(uv,n);</span><br><span class="line">discriminant=<span class="number">1.0</span>-ni_over_nt*ni_over_nt*(<span class="number">1</span>-dt*dt);</span><br><span class="line">refracted=ni_over_nt*(uv-n*dt)-n*<span class="built_in">sqrt</span>(discriminant);</span><br></pre></td></tr></table></figure>
+
+<h2 id="介质界面的反射系数"><a href="#介质界面的反射系数" class="headerlink" title="介质界面的反射系数"></a>介质界面的反射系数</h2><p>当光从一种介质进入另一种介质时，实际上，有一部分光会折射进入另一种介质，有另一部分光则会反射回来。<br>$$<br>反射系数=\frac{反射光能量}{入射光能量}<br>$$</p>
+<p>由于反射系数的求解是是一个非常复杂的过程，Christophe Schlick这个人提供一个逼近公式<br>这个公式被称为“ChristopheSchlick’s Approximation”</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（二） href="image-20191112200810113.png" title="[折射光线]" data-fancybox="images"><img src="image-20191112200810113.png" alt="[sorry,图片挂了]" title="[折射光线]" class="[samll]"></a>
+                <p>[折射光线]</p>
+            </figure>
+
+<h2 id="模拟介质的颜色（反射系数为0时）"><a href="#模拟介质的颜色（反射系数为0时）" class="headerlink" title="模拟介质的颜色（反射系数为0时）"></a>模拟介质的颜色（反射系数为0时）</h2><p>反射系数为0时，只有折射，没有反射。<br>由于此章节的的物体是均匀球体（根据球体的几何特点和光路可逆原理），从球体内进入空气的光线不会发生全反射。<br>所以本节内容不会有反射系数，也不会有全反射。</p>
+<h2 id="代码分析："><a href="#代码分析：" class="headerlink" title="代码分析："></a>代码分析：</h2><p>XXX(待完善)</p>
+<h2 id="结果展示：-1"><a href="#结果展示：-1" class="headerlink" title="结果展示："></a>结果展示：</h2><figure class="image-box">
+                <a rel=RayTracing In One Weekend（二） href="Render_Chapter9.png" title="[结果展示]" data-fancybox="images"><img src="Render_Chapter9.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]"></a>
+                <p>[结果展示]</p>
+            </figure>
+
+
+
+<h1 id="RayTracing中的Positionable-Camera-移式相机"><a href="#RayTracing中的Positionable-Camera-移式相机" class="headerlink" title="RayTracing中的Positionable Camera(移式相机)"></a>RayTracing中的Positionable Camera(移式相机)</h1><h2 id="theta-vfov-aspect"><a href="#theta-vfov-aspect" class="headerlink" title="theta(vfov), aspect"></a>theta(vfov), aspect</h2><p>之前我们对于相机的描述如图    </p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（二） href="image-20191110203344058.png" title="[原点处的固定相机]" data-fancybox="images"><img src="image-20191110203344058.png" alt="[sorry,图片挂了]" title="[原点处的固定相机]" class="[samll]"></a>
+                <p>[原点处的固定相机]</p>
+            </figure>
+<p>我们可以求出下面三个值：<br>vec3 lower_left_corner(-2.0, -1.0, -1.0);<br>vec3 horizontal(4.0, 0.0, 0.0);<br>vec3 vertical(0.0, 2.0, 0.0);<br>并由此求出光线和平面的交点坐标：<br>$$<br>lower_left_corner + u<em>horizontal + v</em>vertical<br>$$</p>
+<p><strong>现在引入一个张角theta、</strong><br><strong>画面宽高比值aspect</strong>来表示上面三个值。**</p>
+<figure class="image-box">
+                <a rel=RayTracing In One Weekend（二） href="image-20191112214415244.png" title="[images]" data-fancybox="images"><img src="image-20191112214415244.png" alt="[sorry,图片挂了]" title="[images]" class="[samll]"></a>
+                <p>[images]</p>
+            </figure>
+
+<p>设整个画面的高为height，半高为half_height，宽为width，半宽为half_width。<br>引入张角theta，(vfov为度数，theta为弧度数)<br>half_height = tan(theta/2)<br>另外，<br>half_width = aspect * half_height<br>所以之前三个值可以表示为：<br>   vec3 lower_left_corner(-half_width, -half_height,-1.0);<br>   vec3 horizontal(2<em>half_width, 0.0, 0.0);<br>   vec3 vertical(0.0, 2</em>half_height, 0.0);</p>
+<h2 id="相机不在原点"><a href="#相机不在原点" class="headerlink" title="相机不在原点"></a>相机不在原点</h2><p>之前我们将相机固定到原点<br>现在我们假设相机摆放位置为lookfrom<br>我们看的画面中心点为lookat<br>相机的倾斜方向为view up (简称vup，一般设置为（0,1,0）)</p>
+<p>我们现在需要建立相机坐标系，（UVW坐标）<br>由于相机可在任意点，因此我们需要找到相机在任意点的标准正交基<br>w = unit_vector(lookfrom - lookat)（w相当于z，这个是由放相机的位置（lookfrom）和目标点（lookat）确定的。）</p>
+<p>u = unit_vector(cross(vup, w))（u相当于x，因为相机倾斜方向vup和y比较接近，所以vup和w叉乘之后就是x。）</p>
+<p>v = cross(w, u)（v相当于y，由于x,z都已确定，两者叉乘得到v）</p>
+<p>！！！Attention：对UVW坐标系来说，所有图像都是画在-w平面上</p>
+<h2 id="代码分析：-1"><a href="#代码分析：-1" class="headerlink" title="代码分析："></a>代码分析：</h2><p>此节仅对Camera更改了定义，因此只需要更改Camera.h，以及main中camera对象实例化的部分代码<br>camera.h</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ray.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _USE_MATH_DEFINES</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">camera</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	camera(vec3 lookfrom,vec3 lookat,vec3 vup,<span class="keyword">float</span> vfov,<span class="keyword">float</span> aspect) &#123;</span><br><span class="line">		vec3 u, v, w;</span><br><span class="line">		<span class="keyword">float</span> theta = vfov* M_PI / <span class="number">180</span>;</span><br><span class="line">		<span class="keyword">float</span> half_height = <span class="built_in">tan</span>(theta / <span class="number">2</span>);</span><br><span class="line">		<span class="keyword">float</span> half_width = aspect * half_height;</span><br><span class="line">		origin = lookfrom;</span><br><span class="line">		w = unit_vector(lookfrom - lookat);</span><br><span class="line">		u = unit_vector(cross(vup, w));</span><br><span class="line">		v = cross(w, u);</span><br><span class="line">		lower_left_corner = origin - half_width*u - half_height*v - w; <span class="comment">// 左下角</span></span><br><span class="line">		horizontal = <span class="number">2</span> * half_width*u; <span class="comment">// 横轴</span></span><br><span class="line">		vertical = <span class="number">2</span> * half_height*v; <span class="comment">// 竖轴</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function">ray <span class="title">get_ray</span><span class="params">(<span class="keyword">float</span> u, <span class="keyword">float</span> v)</span> </span>&#123; <span class="keyword">return</span> ray(origin, lower_left_corner + u * horizontal + v * vertical); &#125;</span><br><span class="line"></span><br><span class="line">	vec3 lower_left_corner;</span><br><span class="line">	vec3 origin;</span><br><span class="line">	vec3 horizontal;</span><br><span class="line">	vec3 vertical;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>main中</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">camera <span class="title">cam</span><span class="params">(vec3(<span class="number">-2</span>, <span class="number">2</span>, <span class="number">1</span>), vec3(<span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>), vec3(<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>), <span class="number">60</span>, <span class="keyword">float</span>(nx) / <span class="keyword">float</span>(ny))</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="结果展示：-2"><a href="#结果展示：-2" class="headerlink" title="结果展示："></a>结果展示：</h2><figure class="image-box">
+                <a rel=RayTracing In One Weekend（二） href="ch10.png" title="[结果展示]" data-fancybox="images"><img src="ch10.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]"></a>
+                <p>[结果展示]</p>
+            </figure>
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-11-12T14:42:49.117Z" itemprop="dateUpdated">2019-11-12 22:42:49</time>
+</span><br>
+
+
+        
+        转载注明出处
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/head2.jpg" alt="Leivie_Tan">
+            Leivie_Tan
+        </a>
+    </footer>
+</blockquote>
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RayTracing/" rel="tag">RayTracing</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/12/RayTracing_OneWeekend_2/&title=《RayTracing In One Weekend（二）》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/12/RayTracing_OneWeekend_2/&title=《RayTracing In One Weekend（二）》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" target="_blank" rel="noopener" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="next">
+      <a href="/2019/11/10/RayTracing_OneWeekend_1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">RayTracing In One Weekend（一）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何模拟材质"><span class="post-toc-number">1.</span> <span class="post-toc-text">如何模拟材质</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#材质Material"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">材质Material</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码分析"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">代码分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结果展示："><span class="post-toc-number">1.3.</span> <span class="post-toc-text">结果展示：</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何模拟RayTracing中介质材料的颜色（dielectric）"><span class="post-toc-number">2.</span> <span class="post-toc-text">如何模拟RayTracing中介质材料的颜色（dielectric）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#介质界面的反射系数"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">介质界面的反射系数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模拟介质的颜色（反射系数为0时）"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">模拟介质的颜色（反射系数为0时）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码分析："><span class="post-toc-number">2.3.</span> <span class="post-toc-text">代码分析：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结果展示：-1"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">结果展示：</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#RayTracing中的Positionable-Camera-移式相机"><span class="post-toc-number">3.</span> <span class="post-toc-text">RayTracing中的Positionable Camera(移式相机)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#theta-vfov-aspect"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">theta(vfov), aspect</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#相机不在原点"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">相机不在原点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码分析：-1"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">代码分析：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#结果展示：-2"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">结果展示：</span></a></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.png" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/Demeter-Leivietahn/" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="bottom">
+        <p>
+            <span>
+                Leivie_Tan &copy; 2019
+            </span>
+        		
+           	
+            
+            
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+            
+            
+
+            
+                
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+            
+        </p>
+    </div>
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" target="_blank" rel="noopener" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/12/RayTracing_OneWeekend_2/&title=《RayTracing In One Weekend（二）》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/12/RayTracing_OneWeekend_2/&title=《RayTracing In One Weekend（二）》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aQW7CQAwFUO5/abqtRJN826FSZl5WCAXix8LYHr9e8fWOr8/7f7/z+froKa9vXBgYGI9lVMM6fz8J8fOe6vf/8RQMDIwNGEcPPrrnPKUmwSXPSmLDwMDAOHo9gSU1HgYGBsZdCTf/nqRBTX4IDAyMnRlJE5sXdvkYLk/ut/XiGBgYD2TkU/f/f/2V8w0MDIxHMd7FKynjvpGsL6LCwMBYmlEdgeWB9hrjXjwYGBhrM3rJbr4eUU3HFzAMDIwNGNUPT4Zf+VitUFZiYGAszeitO5wXgvkxZLmGrRaRGBgYSzCSlNc7VpwvVRRWNzAwMLZk5L1hb7Wil74vtkUwMDAWZeRj/d4xQPX7e4kbAwNjB8ZkYat3eDBZPrv4+TAwMJZj5CVddQBXbkTjzx7+Y2BgYGzAmJdxvRCrhSkGBsaejOqeVb4qUV3gaB6mYmBgbMmojsBy3qSVLSdcDAyMJRiTxJcHlMz8RssWGBgYmzGqQfd4ydJGta3FwMBYm5EUcJOlivmgLcJgYGBsw5i0r1XSbS0rBgbGNoxJMVdthqtFZMTGwMBYlPEuXudpdzKSGx1IYGBgLM2oprmkiOwtW+QHohgYGHsyekn2K79WMeE2zxkwMDAey+glvpx6XjhWG2kMDAyMXoi9hJsP7G5OuBgYGEsz5ounvbb2omHGwMDYgDFfJJ2M+Asl4FE8GBgYSzN6reNdCbQ3hhudb2BgYDyJ8QP7uA3LXO0tmQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+    
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+    
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = 'Tan桑のBlog';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)咦!又好了!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+
+    
+</body>
+</html>
