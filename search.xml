@@ -350,6 +350,75 @@
     </entry>
     
     <entry>
+      <title><![CDATA[全局光照（总览）]]></title>
+      <url>/2019/11/05/GI_1/</url>
+      <content type="html"><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><ul>
+<li>全局光照，(Global Illumination,简称 GI), 或被称为Indirect Illumination, 间接光照，是指既考虑场景中直接来自光源的光照（Direct Light）又考虑经过场景中其他物体反射后的光照（Indirect Light）的一种渲染技术。使用全局光照能够有效地增强场景的真实感。</li>
+</ul>
+<p>即可以理解为：全局光照 = 直接光照(Direct Light) + 间接光照(Indirect Light)<br>下面是直接光照和全局光照的对比</p>
+<p>@column-2{</p>
+<p>@card{</p>
+<figure class="image-box">
+                <img src="1.jpg" alt="[sorry,图片挂了]" title="[直接光照]" class="justify-small">
+                <p>[直接光照]</p>
+            </figure>
+
+<p>}</p>
+<p>@card{</p>
+<figure class="image-box">
+                <img src="2.jpg" alt="[sorry,图片挂了]" title="[全局光照]" class="justify-small">
+                <p>[全局光照]</p>
+            </figure>
+
+<p>}</p>
+<p>}</p>
+<p><strong>全局光照技术历程</strong></p>
+<ul>
+<li><p>光线投射 Ray Casting<br>其具体思路是从每一个像素射出一条射线，然后找到最接近的物体挡住射线的路径，而视平面上每个像素的颜色取决于从可见光表面产生的亮度。</p>
+</li>
+<li><p>光线追踪 Ray Tracing<br>Turner Whitted在光线投射的基础上，加入光与物体表面的交互，让光线在物体表面沿着反射，折射以及散射方式上继续传播，直到与光源相交。<br>这一方法后来也被称为经典光线跟踪方法、递归式光线追踪（Recursive Ray Tracing）方法，或 Whitted-style 光线跟踪方法。</p>
+</li>
+<li><p>分布式光线追踪 Distributed Ray Tracing<br>Cook于1984年引入蒙特卡洛方法（Monte Carlo method）到光线跟踪领域，将经典的光线跟踪方法扩展为分布式光线跟踪算法，又称为随机光线追踪。<br>可以模拟更多的效果，如金属光泽、软阴影、景深（ Depthof Field）、运动模糊等等。</p>
+</li>
+<li><p>渲染方程 The Rendering Equation<br>Kajiya于1986年建立了渲染方程的相关理论，使用它来解释光能传输的产生的各种现象。这一方程描述了场景中光能传输达到稳定状态以后，物体表面某个点在某个方向上的辐射率（Radiance）与入射辐射亮度等的关系。<br>可以将渲染方程理解为全局光照算法的基础，随后出现的很多全局光照的算法，都是以渲染方程为基础，对其进行简化的求解，以达到优化性能的目的。渲染方程根据光的物理学原理，以及能量守恒定律，完美地描述了光能在场景中的传播。很多真实感渲染技术都是对它的一个近似。</p>
+</li>
+<li><p>路径追踪 Path Tracing<br>根据渲染方程， Kajiya 提出的路径追踪方法是第一个无偏（Unbiased）的渲染方法。<br>路径追踪的基本思想是从视点发出一条光线，光线与物体表面相交时根据表面的材质属性继续采样一个方向，发出另一条光线，如此迭代，直到光线打到光源上（或逃逸出场景），然后用蒙特卡洛的方法，计算其贡献，作为像素的颜色值。而使用蒙特卡洛方法对积分的求解是无偏的，只要时间足够长，最终图像能收敛到一个正确的结果。</p>
+</li>
+<li><p>双向路径追踪 Bidirectional Path Tracing<br>基本思想是同时从视点、光源打出射线，经过若干次反弹后，将视点子路径（ eye path） 和光源子路径（ light path） 上的顶点连接起来（连接时需要测试可见性），以快速产生很多路径。<br>这种方法能够产生一些传统路径追踪难以采样到的光路，所以能够很有效地降低噪声。<br>进一步的， [Veach 1997]将渲染方程改写成对路径积分的形式，允许多种路径采样的方法来求解该积分。</p>
+</li>
+<li><p>梅特波利斯光照传输 Metropolis Light Transport 简称MLT<br>路径追踪（ Path Tracing）中一个核心问题就是怎样去尽可能多的采样一些贡献大的路径，而该方法可以自适应的生成贡献大的路径，简单来说它会避开贡献小的路径，而在贡献大的路径附近做更多局部的探索，通过特殊的变异方法，生成一些新的路径，这些局部的路径的贡献往往也很高。<br>与双向路径追踪相比， MLT 更加鲁棒，能处理各种复杂的场景。<br>比如说整个场景只通过门缝透进来的间接光照亮，此时传统的路径追踪方法因为难以采样到透过门缝的这样的特殊路径而产生非常大的噪声。</p>
+</li>
+</ul>
+<p><strong>回到光线追踪（Ray Tracing）上:</strong><br>上面我们说到Ray Tracing是三维计算机图形学中的特殊渲染方法，跟踪从眼睛发出的光线而不是光源发出的光线。<br>通过这样一项技术得到的结果有着更好的光线效果，例如对于反射和折射有着更准确的模拟效果，并且效率非常高，追求高质量图像时常采用这样的方式。<br>Ray Tracing的缺点就是性能，它所需要的计算量非常巨大。<br>传统的RayTracing并不一定是真实效果图像，只有在非常近似或者完全实现渲染方程时，才能实现真正的真实效果图像。由于渲染方程描述了每个光束的物理效果，所以实现渲染方程可以得到真正的真实效果，但是，考虑到所需要的计算资源，这通常是无法实现的。于是，所有可以实现的渲染模型都必须是渲染方程的近似，而光线跟踪就不一定是最为可行的方法。包括光子映射在内的一些方法，都是依据光线跟踪实现一部分算法，但是可以得到更好的效果。</p>
+<p><strong>再讲到路径追踪（Path Tracing）上：</strong><br>简单来说，路径追踪 = 光线追踪+ 蒙特卡洛方法。</p>
+<p><strong>我们再来总结一下Ray Casting，Ray Tracing，PathTracing这三者的区别</strong></p>
+<ul>
+<li>Ray Casting：其它就是ray tracing的第一步，发射光线，与物体相交。</li>
+<li>Ray Tracing：这其实是个框架，而不是个方法。符合这个框架的都叫raytracing。这个框架就是从视点发射ray，与物体相交就根据规则反射、折射或吸收。遇到光源或者走太远就停住。一般来说运算量不小。</li>
+<li>Path Tracing：是ray tracing + 蒙特卡洛法。在相交后会选一个随机方向继续跟踪，并根据BRDF计算颜色。运算量也不小。还有一些小分类，比如Bidirectional path tracing。</li>
+</ul>
+<p><strong>最后我们来学习一下AO</strong><br>AO是Ambient Occlusion的简称，是全局光照明的一种近似替代品，<br>可以产生重要的视觉明暗效果，通过描绘物体之间由于遮挡而产生的阴影， 能够更好地捕捉到场景中的细节，可以解决漏光，阴影漂浮等问题，改善场景中角落、锯齿、裂缝等细小物体阴影不清。<br>AO最常用的方法是SSAO，UE4中的AO即是采用这种方案</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1308281829&auto=1&height=66"></iframe>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> RayTracing </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> RayTracing </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C++学习（二）]]></title>
       <url>/2019/11/05/C++_Learning_2/</url>
       <content type="html"><![CDATA[<p>参考资料：CSDN 图形跟班 相关博客</p>
@@ -536,7 +605,7 @@
             </figure>
 
 <hr>
-<h1 id="如何通过RayTracing画多个球"><a href="#如何通过RayTracing画多个球" class="headerlink" title="如何通过RayTracing画多个球"></a>如何通过RayTracing画多个球</h1><h2 id="Tips："><a href="#Tips：" class="headerlink" title="Tips："></a>Tips：</h2><p>画多个球方式和画一个球的方式是一样的<br>都是先找交点，再设置颜色<br><strong>第一步：求交，</strong>一条光线和N个球的交点可能有0<del>2N个。<br>之前画一个球时，我们取的是大于零的较小的那个根（因为只考虑球完全不透明）。<br>所以，现在画多个球，我们取所有交点中大于零最小的那个交点（因为我们向前看，只能看到最近的那个交点，后面所有的交点都被一个球体或者多个球体挡住了。）。<br><strong>第二步：设置颜色，</strong>这个和画一个球时一样，设置为球在该点的单位法向量的色彩表映射值。<br>这样的话，有个问题：球和球的相交边界处，两个球的颜色会不会很接近导致边界模糊呢？不会</del>不会~不会。<br>因为，虽然交点坐标非常接近，但是球的法向量是等于交点坐标减去球心坐标。从而，每个球在边界点的法向量是不一样的。如果两个球的球心坐标相差较大时，法向量坐标也会相差比较大，颜色也会相差比较大。</p>
+<h1 id="如何通过RayTracing画多个球"><a href="#如何通过RayTracing画多个球" class="headerlink" title="如何通过RayTracing画多个球"></a>如何通过RayTracing画多个球</h1><h2 id="Tips："><a href="#Tips：" class="headerlink" title="Tips："></a>Tips：</h2><p>画多个球方式和画一个球的方式是一样的<br>都是先找交点，再设置颜色<br><strong>第一步：求交，</strong>一条光线和N个球的交点可能有0-2N个。<br>之前画一个球时，我们取的是大于零的较小的那个根（因为只考虑球完全不透明）。<br>所以，现在画多个球，我们取所有交点中大于零最小的那个交点（因为我们向前看，只能看到最近的那个交点，后面所有的交点都被一个球体或者多个球体挡住了。）。<br><strong>第二步：设置颜色，</strong>这个和画一个球时一样，设置为球在该点的单位法向量的色彩表映射值。<br>这样的话，有个问题：球和球的相交边界处，两个球的颜色会不会很接近导致边界模糊呢？不会-不会-不会。<br>因为，虽然交点坐标非常接近，但是球的法向量是等于交点坐标减去球心坐标。从而，每个球在边界点的法向量是不一样的。如果两个球的球心坐标相差较大时，法向量坐标也会相差比较大，颜色也会相差比较大。</p>
 <h2 id="代码分析：-1"><a href="#代码分析：-1" class="headerlink" title="代码分析："></a>代码分析：</h2><p>main.cpp中：<br>1.创建场景world<br><strong>场景中包含了多个hitable实例（物体）</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 场景相关</span><br><span class="line">hitable *list[2];</span><br><span class="line">list[0] = new sphere(vec3(0, 0, -1), 0.5);</span><br><span class="line">list[1] = new sphere(vec3(0, -100.5, -1), 100);</span><br><span class="line">hitable *world = new hitable_list(list, 2);</span><br></pre></td></tr></table></figure>
 <p>2.遍历图片每一个piexl<br>确定范围和大小:</p>
@@ -565,8 +634,25 @@
 
 <hr>
 <h1 id="模拟RayTracing中漫反射材质（diffuse-material）"><a href="#模拟RayTracing中漫反射材质（diffuse-material）" class="headerlink" title="模拟RayTracing中漫反射材质（diffuse material）"></a>模拟RayTracing中漫反射材质（diffuse material）</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>前面画一个球时，球体的颜色设置为红色；<br>前面画多个球时，球体的颜色设置为球在该点的单位法向量的色彩表映射值；<br>现在需要画漫射材质的球，球体的颜色设置为背景颜色的系数倍。</p>
-<p>首先，我们需要明晰：漫反射材质不自发光，只吸收和反射环境光（反射光的方向是随机的）<br>所以将漫射材料的球体的颜色设置为背景颜色乘以某系数是合理的。系数怎么确定呢？光线每被反射一次*1/2（因为光线没被反射一次会被吸收一半）。</p>
-<p>既然已经知道漫射材料球体的颜色和反射次数有关，那么怎么获得光线反射次数呢；<br>光线反射次数=光线撞击球的次数；<br>撞击次数由反射光线的方向和起点（前一个撞击点）决定；<br>第一撞击点，之前画一个球或者多个球都是根据撞击点画的；<br>现在问题归结于怎么获取反射光线的方向。<br>之前说了，漫射材质反射光线的方向是随机的，怎么模拟一个随机方向的向量呢？<br>在交点处单位法向量的基础上加上一个长度小于1的随机向量。</p>
+<p>首先，我们需要明晰：漫反射材质不自发光，只吸收和反射环境光（反射光的方向是随机的）<br>所以将漫射材料的球体的颜色设置为背景颜色乘以某系数是合理的。系数怎么确定呢？光线每被反射一次1/2（因为光线没被反射一次会被吸收一半）。</p>
+<p>既然已经知道漫射材料球体的颜色和反射次数有关，那么怎么获得光线反射次数呢；<br>光线反射次数=光线撞击球的次数；<br>撞击次数由反射光线的方向和起点（前一个撞击点）决定；<br>第一撞击点，之前画一个球或者多个球都是根据撞击点画的；<br>现在问题归结于怎么获取反射光线的方向。<br>之前说了，漫射材质反射光线的方向是随机的，怎么模拟一个随机方向的向量呢？<br><strong>在交点处单位法向量的基础上加上一个长度小于1的随机向量。</strong></p>
+<p>已知P为交点，PS为球C在P点的单位法向量，现在要模拟一个起点为P方向向球C外面的任何方向的向量。<br>流程：<br>1.找一个辅助球O，该球是球心在原点的单位球体；<br>2.在球O<strong>里面</strong>随机找一点E或者F；（E点在球体里面，也就是<strong>向量OE的长度小于1，PS为单位法向量</strong>）<br>3.OP+PS=OS，OS+OE=OM，OM-OP=PM。<br> 所以，<strong>PM</strong> =OP+PS+OE-OP=<strong>PS+OE。</strong><br>（辅助球O选球心在原点的单位球的原因，其一，“球心在原点”，方便计算；其二，“单位球”，可以确保PM的方向不会指向球C内部）。PS是已知的，所以只要获得OE即可。</p>
+<figure class="image-box">
+                <img src="image-20191112082645320.png" alt="[sorry,图片挂了]" title="[原理图]" class="[samll]">
+                <p>[原理图]</p>
+            </figure>
+
+
+<p>描述”起点在原点，长度小于1，方向随机“的向量采取‘’接受—拒绝’‘方式，<br>只接受部分区间的值<br>在这种方法中：<br>向量a  = (x, y, z)，b = (2x-1, 2y-1, 2z-1)， 其中x,y, z ∈（0，1）<br>推出2x-1, 2y-1, 2z-1∈（-1，1）推出(2x-1)2+(2y-1)2+(2z-1)2∈（0，3）推出|b|∈（0，  √3 ）<br>而我们能接受的是|b|∈（0，1），所以采取“接受——拒绝”方式：只接受|b|∈（0，1）。<br><strong>下面代码即是采用接拒法，描述”起点在原点，长度小于1，方向随机的向量“</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//在单位立方体中取一点S，让xyz随机取（-1,1）之间的值，S则在这个立方体内，若xyz的平方和小于1，则在球内</span><br><span class="line">vec3 random_in_unit_sphere()&#123;</span><br><span class="line">	vec3 p;</span><br><span class="line">	do &#123;</span><br><span class="line">		p = 2.0f * vec3((rand() % 100 / float(100)), (rand() % 100 / float(100)), (rand() % 100 / float(100))) - vec3(1.0f, 1.0f, 1.0f);</span><br><span class="line">	&#125; while (p.squared_length() &gt;= 1.0f);</span><br><span class="line">	return p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来我们又回顾一下整个流程：<br>1，起点为原点的光线撞击球C，获得撞击点P和单位法向量PS。<br>2，产生一个“起点在原点，长度小于1，方向随机”的向量OE。<br>3，OP+PS+OE-OP=PM，PM即为漫射材料的球体在P点的随机反射方向向量。<br>4，反射光线是以P为起点，PM为方向向量，所以，我们可以获得反射光线的方程<br>5，让反射光线去撞击其他球吧（回到第一步）</p>
+<p>由此设置color方法为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">光线撞击球的次数=光线反射的次数*球体该像素点的颜色值对应背景颜色的系数值。</span><br><span class="line">//递归，同一条ray可能多次反射</span><br><span class="line">vec3 color(const ray&amp;r,hitable *world)&#123;</span><br><span class="line">	hit_record rec;</span><br><span class="line">	if (world-&gt;hit(r, 0.001, FLT_MAX, rec))&#123;</span><br><span class="line">		vec3 target = rec.p + rec.normal + random_in_unit_sphere();</span><br><span class="line">		return 0.5*color(ray(rec.p, target - rec.p), world);//0.5为吸收率</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">		vec3 unit_direction = unit_vector(r.direction());</span><br><span class="line">		float t = (0.5*unit_direction.y() + 1.0);</span><br><span class="line">		return (1.0 - t)*vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="结果展示：-4"><a href="#结果展示：-4" class="headerlink" title="结果展示："></a>结果展示：</h2><figure class="image-box">
+                <img src="Render_Chapter7.png" alt="[sorry,图片挂了]" title="[原理图]" class="[samll]">
+                <p>[原理图]</p>
+            </figure>
 ]]></content>
       
         <categories>
@@ -636,75 +722,6 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
         <tags>
             
             <tag> Programming Language </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[全局光照（总览）]]></title>
-      <url>/2019/11/05/GI_1/</url>
-      <content type="html"><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><ul>
-<li>全局光照，(Global Illumination,简称 GI), 或被称为Indirect Illumination, 间接光照，是指既考虑场景中直接来自光源的光照（Direct Light）又考虑经过场景中其他物体反射后的光照（Indirect Light）的一种渲染技术。使用全局光照能够有效地增强场景的真实感。</li>
-</ul>
-<p>即可以理解为：全局光照 = 直接光照(Direct Light) + 间接光照(Indirect Light)<br>下面是直接光照和全局光照的对比</p>
-<p>@column-2{</p>
-<p>@card{</p>
-<figure class="image-box">
-                <img src="1.jpg" alt="[sorry,图片挂了]" title="[直接光照]" class="justify-small">
-                <p>[直接光照]</p>
-            </figure>
-
-<p>}</p>
-<p>@card{</p>
-<figure class="image-box">
-                <img src="2.jpg" alt="[sorry,图片挂了]" title="[全局光照]" class="justify-small">
-                <p>[全局光照]</p>
-            </figure>
-
-<p>}</p>
-<p>}</p>
-<p><strong>全局光照技术历程</strong></p>
-<ul>
-<li><p>光线投射 Ray Casting<br>其具体思路是从每一个像素射出一条射线，然后找到最接近的物体挡住射线的路径，而视平面上每个像素的颜色取决于从可见光表面产生的亮度。</p>
-</li>
-<li><p>光线追踪 Ray Tracing<br>Turner Whitted在光线投射的基础上，加入光与物体表面的交互，让光线在物体表面沿着反射，折射以及散射方式上继续传播，直到与光源相交。<br>这一方法后来也被称为经典光线跟踪方法、递归式光线追踪（Recursive Ray Tracing）方法，或 Whitted-style 光线跟踪方法。</p>
-</li>
-<li><p>分布式光线追踪 Distributed Ray Tracing<br>Cook于1984年引入蒙特卡洛方法（Monte Carlo method）到光线跟踪领域，将经典的光线跟踪方法扩展为分布式光线跟踪算法，又称为随机光线追踪。<br>可以模拟更多的效果，如金属光泽、软阴影、景深（ Depthof Field）、运动模糊等等。</p>
-</li>
-<li><p>渲染方程 The Rendering Equation<br>Kajiya于1986年建立了渲染方程的相关理论，使用它来解释光能传输的产生的各种现象。这一方程描述了场景中光能传输达到稳定状态以后，物体表面某个点在某个方向上的辐射率（Radiance）与入射辐射亮度等的关系。<br>可以将渲染方程理解为全局光照算法的基础，随后出现的很多全局光照的算法，都是以渲染方程为基础，对其进行简化的求解，以达到优化性能的目的。渲染方程根据光的物理学原理，以及能量守恒定律，完美地描述了光能在场景中的传播。很多真实感渲染技术都是对它的一个近似。</p>
-</li>
-<li><p>路径追踪 Path Tracing<br>根据渲染方程， Kajiya 提出的路径追踪方法是第一个无偏（Unbiased）的渲染方法。<br>路径追踪的基本思想是从视点发出一条光线，光线与物体表面相交时根据表面的材质属性继续采样一个方向，发出另一条光线，如此迭代，直到光线打到光源上（或逃逸出场景），然后用蒙特卡洛的方法，计算其贡献，作为像素的颜色值。而使用蒙特卡洛方法对积分的求解是无偏的，只要时间足够长，最终图像能收敛到一个正确的结果。</p>
-</li>
-<li><p>双向路径追踪 Bidirectional Path Tracing<br>基本思想是同时从视点、光源打出射线，经过若干次反弹后，将视点子路径（ eye path） 和光源子路径（ light path） 上的顶点连接起来（连接时需要测试可见性），以快速产生很多路径。<br>这种方法能够产生一些传统路径追踪难以采样到的光路，所以能够很有效地降低噪声。<br>进一步的， [Veach 1997]将渲染方程改写成对路径积分的形式，允许多种路径采样的方法来求解该积分。</p>
-</li>
-<li><p>梅特波利斯光照传输 Metropolis Light Transport 简称MLT<br>路径追踪（ Path Tracing）中一个核心问题就是怎样去尽可能多的采样一些贡献大的路径，而该方法可以自适应的生成贡献大的路径，简单来说它会避开贡献小的路径，而在贡献大的路径附近做更多局部的探索，通过特殊的变异方法，生成一些新的路径，这些局部的路径的贡献往往也很高。<br>与双向路径追踪相比， MLT 更加鲁棒，能处理各种复杂的场景。<br>比如说整个场景只通过门缝透进来的间接光照亮，此时传统的路径追踪方法因为难以采样到透过门缝的这样的特殊路径而产生非常大的噪声。</p>
-</li>
-</ul>
-<p><strong>回到光线追踪（Ray Tracing）上:</strong><br>上面我们说到Ray Tracing是三维计算机图形学中的特殊渲染方法，跟踪从眼睛发出的光线而不是光源发出的光线。<br>通过这样一项技术得到的结果有着更好的光线效果，例如对于反射和折射有着更准确的模拟效果，并且效率非常高，追求高质量图像时常采用这样的方式。<br>Ray Tracing的缺点就是性能，它所需要的计算量非常巨大。<br>传统的RayTracing并不一定是真实效果图像，只有在非常近似或者完全实现渲染方程时，才能实现真正的真实效果图像。由于渲染方程描述了每个光束的物理效果，所以实现渲染方程可以得到真正的真实效果，但是，考虑到所需要的计算资源，这通常是无法实现的。于是，所有可以实现的渲染模型都必须是渲染方程的近似，而光线跟踪就不一定是最为可行的方法。包括光子映射在内的一些方法，都是依据光线跟踪实现一部分算法，但是可以得到更好的效果。</p>
-<p><strong>再讲到路径追踪（Path Tracing）上：</strong><br>简单来说，路径追踪 = 光线追踪+ 蒙特卡洛方法。</p>
-<p><strong>我们再来总结一下Ray Casting，Ray Tracing，PathTracing这三者的区别</strong></p>
-<ul>
-<li>Ray Casting：其它就是ray tracing的第一步，发射光线，与物体相交。</li>
-<li>Ray Tracing：这其实是个框架，而不是个方法。符合这个框架的都叫raytracing。这个框架就是从视点发射ray，与物体相交就根据规则反射、折射或吸收。遇到光源或者走太远就停住。一般来说运算量不小。</li>
-<li>Path Tracing：是ray tracing + 蒙特卡洛法。在相交后会选一个随机方向继续跟踪，并根据BRDF计算颜色。运算量也不小。还有一些小分类，比如Bidirectional path tracing。</li>
-</ul>
-<p><strong>最后我们来学习一下AO</strong><br>AO是Ambient Occlusion的简称，是全局光照明的一种近似替代品，<br>可以产生重要的视觉明暗效果，通过描绘物体之间由于遮挡而产生的阴影， 能够更好地捕捉到场景中的细节，可以解决漏光，阴影漂浮等问题，改善场景中角落、锯齿、裂缝等细小物体阴影不清。<br>AO最常用的方法是SSAO，UE4中的AO即是采用这种方案</p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1308281829&auto=1&height=66"></iframe>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> RayTracing </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> RayTracing </tag>
             
         </tags>
         
@@ -853,64 +870,6 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
     </entry>
     
     <entry>
-      <title><![CDATA[开发工具推荐及相关使用]]></title>
-      <url>/2019/11/04/Basic_Software_Use/</url>
-      <content type="html"><![CDATA[<h1 id="开发工具及使用"><a href="#开发工具及使用" class="headerlink" title="开发工具及使用"></a>开发工具及使用</h1><p>+++</p>
-<h3 id="1-listary"><a href="#1-listary" class="headerlink" title="1. listary"></a>1. listary</h3><ul>
-<li>双击Ctrl全局搜索</li>
-<li>在文件管理器中双击空白处进行列表呼出</li>
-</ul>
-<h3 id="2-cmd"><a href="#2-cmd" class="headerlink" title="2.cmd"></a>2.cmd</h3><ul>
-<li>在当前文件目录的显示栏下输入 cmd ,即可在当前路径下打开命令行</li>
-</ul>
-<h3 id="3-stb-image简单图像库"><a href="#3-stb-image简单图像库" class="headerlink" title="3,stb_image简单图像库"></a>3,stb_image简单图像库</h3><ul>
-<li><p>重点关注三个头文件</p>
-</li>
-<li><figure class="image-box">
-                <img src="1570780034511.png.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-</li>
-</ul>
-<h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
-<li>Shift+F10:鼠标右键快捷键</li>
-<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
-</ul>
-<h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
-<li>可集成到VS或者Unity3D中</li>
-</ul>
-<h3 id="6-Typora"><a href="#6-Typora" class="headerlink" title="6. Typora"></a>6. Typora</h3><ul>
-<li>Ctrl+/：源代码模式进入或者退出</li>
-</ul>
-<h3 id="7-Visual-Studio-Code"><a href="#7-Visual-Studio-Code" class="headerlink" title="7. Visual Studio Code"></a>7. Visual Studio Code</h3><ul>
-<li>Ctrl+Shift+P:调出主命令框</li>
-<li>Ctrl +K选中后，再按V：预览markdown效果</li>
-</ul>
-<h3 id="8-Scons"><a href="#8-Scons" class="headerlink" title="8. Scons"></a>8. Scons</h3><ul>
-<li>基于python的软件构建工具</li>
-</ul>
-<h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发工具 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Tips </tag>
-            
-            <tag> 开发工具 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[VS使用及错误合集]]></title>
       <url>/2019/11/04/Basic_Software_Use_VS/</url>
       <content type="html"><![CDATA[<h1 id="1-错误合集"><a href="#1-错误合集" class="headerlink" title="1.错误合集"></a>1.错误合集</h1><hr>
@@ -970,40 +929,69 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
         
         <tags>
             
-            <tag> 开发工具 </tag>
-            
             <tag> Visual Studio </tag>
+            
+            <tag> 开发工具 </tag>
             
         </tags>
         
     </entry>
     
     <entry>
-      <title><![CDATA[Hello Graphic World]]></title>
-      <url>/2019/11/04/hello-world/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<a id="more"></a>
-
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-<h3 id="创建新的分页"><a href="#创建新的分页" class="headerlink" title="创建新的分页"></a>创建新的分页</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page XXX</span><br></pre></td></tr></table></figure>
-<h3 id="创建新的博文"><a href="#创建新的博文" class="headerlink" title="创建新的博文"></a>创建新的博文</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new XXX</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>使用图像资源的相对路径的话，需要在yml文件中设置，并且在_posts文件中创建一个与博文名称一致的文件夹，并将图像资源放置其中。</li>
+      <title><![CDATA[开发工具推荐及相关使用]]></title>
+      <url>/2019/11/04/Basic_Software_Use/</url>
+      <content type="html"><![CDATA[<h1 id="开发工具及使用"><a href="#开发工具及使用" class="headerlink" title="开发工具及使用"></a>开发工具及使用</h1><p>+++</p>
+<h3 id="1-listary"><a href="#1-listary" class="headerlink" title="1. listary"></a>1. listary</h3><ul>
+<li>双击Ctrl全局搜索</li>
+<li>在文件管理器中双击空白处进行列表呼出</li>
 </ul>
+<h3 id="2-cmd"><a href="#2-cmd" class="headerlink" title="2.cmd"></a>2.cmd</h3><ul>
+<li>在当前文件目录的显示栏下输入 cmd ,即可在当前路径下打开命令行</li>
+</ul>
+<h3 id="3-stb-image简单图像库"><a href="#3-stb-image简单图像库" class="headerlink" title="3,stb_image简单图像库"></a>3,stb_image简单图像库</h3><ul>
+<li><p>重点关注三个头文件</p>
+</li>
+<li><figure class="image-box">
+                <img src="1570780034511.png.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
+<li>Shift+F10:鼠标右键快捷键</li>
+<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
+</ul>
+<h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
+<li>可集成到VS或者Unity3D中</li>
+</ul>
+<h3 id="6-Typora"><a href="#6-Typora" class="headerlink" title="6. Typora"></a>6. Typora</h3><ul>
+<li>Ctrl+/：源代码模式进入或者退出</li>
+</ul>
+<h3 id="7-Visual-Studio-Code"><a href="#7-Visual-Studio-Code" class="headerlink" title="7. Visual Studio Code"></a>7. Visual Studio Code</h3><ul>
+<li>Ctrl+Shift+P:调出主命令框</li>
+<li>Ctrl +K选中后，再按V：预览markdown效果</li>
+</ul>
+<h3 id="8-Scons"><a href="#8-Scons" class="headerlink" title="8. Scons"></a>8. Scons</h3><ul>
+<li>基于python的软件构建工具</li>
+</ul>
+<h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 开发工具 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 开发工具 </tag>
+            
+            <tag> Tips </tag>
+            
+        </tags>
         
     </entry>
     
@@ -1062,6 +1050,35 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
             <tag> Tips </tag>
             
         </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hello Graphic World]]></title>
+      <url>/2019/11/04/hello-world/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h3 id="创建新的分页"><a href="#创建新的分页" class="headerlink" title="创建新的分页"></a>创建新的分页</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page XXX</span><br></pre></td></tr></table></figure>
+<h3 id="创建新的博文"><a href="#创建新的博文" class="headerlink" title="创建新的博文"></a>创建新的博文</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new XXX</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用图像资源的相对路径的话，需要在yml文件中设置，并且在_posts文件中创建一个与博文名称一致的文件夹，并将图像资源放置其中。</li>
+</ul>
+]]></content>
+      
         
     </entry>
     
