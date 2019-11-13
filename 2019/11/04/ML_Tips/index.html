@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     
     
-    <title>Tags: Programming Language | Tan桑のBlog | 见证一个图形程序员的成长！</title>
+    <title>ML Basic Tips | Tan桑のBlog | 见证一个图形程序员的成长！</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="">
+    <meta name="keywords" content="ML">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
@@ -120,7 +120,7 @@
               </a>
             </li>
         
-            <li class=" active">
+            <li class="">
               <a href="/tags"  >
                 <i class="icon icon-lg icon-tags"></i>
                 标签
@@ -146,7 +146,7 @@
           <i class="icon icon-lg icon-navicon"></i>
         </a>
         <div class="flex-col header-title ellipsis">
-            <span>Tags: Programming Language</span>
+            <span>ML Basic Tips</span>
             
         </div>
         
@@ -156,52 +156,24 @@
         
     </div>
 </header>
-<header class="content-header tags-header">
+<header class="content-header post-header">
     <img src="/img/banner.jpg" class="header-bg">
     <div class="container fade-scale">
-        <h1 class="title">Tags: Programming Language</h1>
+        <h1 class="title">ML Basic Tips</h1>
         <h5 class="subtitle">
+            
+                <time datetime="2019-11-04T01:56:27.000Z" itemprop="datePublished" class="page-time">
+  2019-11-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/Machine-Learning/">Machine-Learning</a></li></ul></li></ul>
+
             
         </h5>
         
     </div>
     
-<div class="tabs-bar container">
-    <nav class="tags-list">
-        <a href="/tags" style="-webkit-order:-1;order:-1" class="tags-list-item waves-effect waves-button waves-light
-            ">All</a>
-        
-            <a href="/tags/Tips/" backup-style="-webkit-order:6;order:6" class="tags-list-item waves-effect waves-button waves-light">Tips</a>
-            
-        
-            <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" backup-style="-webkit-order:7;order:7" class="tags-list-item waves-effect waves-button waves-light">开发工具</a>
-            
-        
-            <a href="/tags/Visual-Studio/" backup-style="-webkit-order:0;order:0" class="tags-list-item waves-effect waves-button waves-light">Visual Studio</a>
-            
-        
-            <a href="/tags/Programming-Language/" backup-style="-webkit-order:1;order:1" class="tags-list-item waves-effect waves-button waves-light active">Programming Language</a>
-            
-        
-            <a href="/tags/C/" backup-style="-webkit-order:2;order:2" class="tags-list-item waves-effect waves-button waves-light">C++</a>
-            
-        
-            <a href="/tags/RayTracing/" backup-style="-webkit-order:3;order:3" class="tags-list-item waves-effect waves-button waves-light">RayTracing</a>
-            
-        
-            <a href="/tags/ML/" backup-style="-webkit-order:4;order:4" class="tags-list-item waves-effect waves-button waves-light">ML</a>
-            
-        
-            <a href="/tags/PBRT/" backup-style="-webkit-order:5;order:5" class="tags-list-item waves-effect waves-button waves-light">PBRT</a>
-            
-        
-    </nav>
-    <!-- PC show more-->
-    <div class="tags-list-more">
-        <a href="javascript:;" target="_blank" rel="noopener" class="action tags-list-item waves-effect waves-circle waves-light"><i class="icon icon-ellipsis-h"></i></a>
-    </div>
-</div>
-
 
 </header>
 
@@ -218,111 +190,141 @@
     <div id="local-search-result"></div>
 </div>
 
-<div class="container body-wrap fade">
-    
-            <div class="waterfall">
-                
-                <div class="waterfall-item">
-  <article class="article-card archive-article">
-    <div class="post-meta">
-      <time class="post-time" title="2019-11-05 09:56:27" datetime="2019-11-05T01:56:27.000Z"  itemprop="datePublished">2019-11-05</time>
 
+<div class="container body-wrap">
+    <article id="post-ML_Tips"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">ML Basic Tips</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-04 09:56:27" datetime="2019-11-04T01:56:27.000Z"  itemprop="datePublished">2019-11-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/Machine-Learning/">Machine-Learning</a></li></ul></li></ul>
+
+
+
+            
+
+            
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h1 id="Ground-Truth-GT"><a href="#Ground-Truth-GT" class="headerlink" title="Ground Truth(GT)"></a>Ground Truth(GT)</h1><p>机器学习包括</p>
+<ul>
+<li>有监督学习(supervised learning) </li>
+<li>无监督学习(unsupervised learning)</li>
+<li>半监督学习（semi-supervised learning）</li>
+</ul>
+<p>在有监督学习中，数据是有标注的，以(x, t)的形式出现，其中x是输入数据，t是标注.正确的t标注是ground truth，错误的标记则不是。（也有人将所有标注数据都叫做ground truth）</p>
+<p>模型函数的数据则是由(x, y)的形式出现的。其中x为之前的输入数据，y为模型预测的值。<br>标注会和模型预测的结果作比较。在损耗函数(loss function / error function)中会将y 和 t 作比较，从而计算损耗(loss / error)。</p>
+<p>使用错误的数据，对模型的估计会比实际要糟糕。另外，标记数据还被用来更新权重，错误标记的数据会导致权重更新错误。因此使用高质量的数据是很有必要的。</p>
+<p>在半监督学习中，对标记数据也要进行比较</p>
+<hr>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-11-13T02:24:22.163Z" itemprop="dateUpdated">2019-11-13 10:24:22</time>
+</span><br>
+
+
+        
+        转载注明出处
+        
+    </div>
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/head2.jpg" alt="Leivie_Tan">
+            Leivie_Tan
+        </a>
+    </footer>
+</blockquote>
+
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML/" rel="tag">ML</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
       
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/Programming-Language/">Programming Language</a></li></ul></li></ul>
-
-
-
-    </div>
-    
-
-
-  
-    <h3 class="post-title " itemprop="name">
-      <a class="post-title-link" href="/2019/11/05/C++_Learning_1/">C++学习（一）</a>
-    </h3>
-  
-
-
-
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Programming-Language/" rel="tag">Programming Language</a></li></ul>
-
-    </div>
-    
-  </article>
-</div>
-        
-                <div class="waterfall-item">
-  <article class="article-card archive-article">
-    <div class="post-meta">
-      <time class="post-time" title="2019-11-05 09:56:27" datetime="2019-11-05T01:56:27.000Z"  itemprop="datePublished">2019-11-05</time>
-
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/04/ML_Tips/&title=《ML Basic Tips》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
       
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/Programming-Language/">Programming Language</a></li></ul></li></ul>
-
-
-
-    </div>
-    
-
-
-  
-    <h3 class="post-title " itemprop="name">
-      <a class="post-title-link" href="/2019/11/05/C++_Learning_2/">C++学习（二）</a>
-    </h3>
-  
-
-
-
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Programming-Language/" rel="tag">Programming Language</a></li></ul>
-
-    </div>
-    
-  </article>
-</div>
-        
-                <div class="waterfall-item">
-  <article class="article-card archive-article">
-    <div class="post-meta">
-      <time class="post-time" title="2019-11-05 09:56:27" datetime="2019-11-05T01:56:27.000Z"  itemprop="datePublished">2019-11-05</time>
-
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
       
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/">Computer-Science</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Computer-Science/Programming-Language/">Programming Language</a></li></ul></li></ul>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/04/ML_Tips/&title=《ML Basic Tips》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
 
 
 
-    </div>
-    
-
-
-  
-    <h3 class="post-title " itemprop="name">
-      <a class="post-title-link" href="/2019/11/05/Matlab_Learning/">Matlab相关</a>
-    </h3>
-  
-
-
-
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Programming-Language/" rel="tag">Programming Language</a></li></ul>
-
-    </div>
-    
-  </article>
-</div>
-        
-            </div>
-        
-    
+    <a href="javascript:;" target="_blank" rel="noopener" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
 </div>
 
+        </div>
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/11/04/Basic_Software_Use_VS/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">VS使用及错误合集</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/11/04/Tips/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Basic Tips about CS or SE</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Ground-Truth-GT"><span class="post-toc-number">1.</span> <span class="post-toc-text">Ground Truth(GT)</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+</article>
+
+
+</div>
 
     </main>
     <footer class="footer ">
@@ -384,7 +386,7 @@
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/tags/Programming-Language/&title=Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/11/04/ML_Tips/&title=《ML Basic Tips》 — Tan桑のBlog&pic=http://yoursite.com/img/head2.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -396,7 +398,7 @@
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/tags/Programming-Language/&title=Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/11/04/ML_Tips/&title=《ML Basic Tips》 — Tan桑のBlog&source=见证一个图形程序员的成长！" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -408,7 +410,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aO3LDMAwFQN//0kqdQsoDoHhG0LLy2DLFbTD48POJ13Gyrp//FFey82hhYGA8lnFcrrNn5m9Jfk3OhoGB8R7GddA8e/HZ52TPfLdoHwwMDIzLgyZHz/+FgYGBcRejd9Czb5JfMTAwMJIiNmmlTQLol2pxDAyMBzLyZtn3P//LfAMDA+NRjKO4kuKzGi7z50/3wcDAWM3IA1wvRauWr73zYGBg7GYk1yl6zbJq4Zo08k5LZQwMjJcxqk20JATnQTZPIn99g4GBsZqRJ3OTMWevlV9NPTEwMHYzovRr0FZLQnD17QU3BgbGwxm9Nv1dFynyIrlwWwQDA2Mdo9egn4wz85K4HHwxMDCWMubB7q4iNh8JFEaYGBgYKxjVwNq7vHXvGOCPPBcDA2MdY3IhLAmX1ZFDc38MDIzVjPIlhlZS2Ctr89IXAwNjNyNP0fIQee/wMip9MTAwXsCoXqdI0rv5PbVCaMbAwFjNyBtb1fZZb9jQ+wYDA+NtjHxwmITa3rCh+UYMDIzXMPIAOimAe0VvczCAgYGxiJGH2vk4YRKs/yhiMTAw1jGO4uodq9doK+yJgYGxmpGv6mByEqbzo5cxGBgYj2XcNQaoPjlPHzEwMN7GyJv4+aWKKnUU+jEwMDBiUt6wy4edzfkGBgYGRtyZn6eM0X8xMDBewOhdm6j+Wj1uIaHEwMBYzagmatelacLoHaJ3RQMDA+PhjB+rvtE/32/CBgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABvUlEQVR42u3aMW7DMAwF0Nz/0i3QqYvtT1JSEuBpCgLDfPJASCRfr3j9/K3/v6/W/fNX/yxeuLi4Y+48/NUzV1F6nwAXF/c8t5q8kjzToz/YcHFxP4yb4HrJDhcX93u5+Vr7OXBxcd/FTS4/1Q3kZZEtdzVcXNwBt1cwXft7e30XFxd3UVciObhMElA5Oi4u7hHufUEzCZCET6LkJVRcXNwz3B5rEiZvxkRoXFzcI9zqi/IN5G/It4eLi7uWm5Q4C02O1ihGXlTFxcU9w03SUPWZ6vBWdYQLFxd3Nzc/fCTEyRmq0A3GxcXdzO0dVvJk93BY6W0PFxf3CHcyJJGksGoqjK5MuLi427i95NIbzZwURHBxcT+Nm4OqQxh5kRQXF/ck9z5AFbHvUoSLi3uSWx2GyA89+eEp/xC4uLgnuZNhiMmARbXFgouLe5Kbr1HzI27rlvs5uLi4S7mrwpT7NsHhKW/n4OLi7uDmZZFqSsoLpoUN4+LiHuTmyWt+WWpefnBxcT+SWz0x9QqsD5ciXFzcr+LOB7ailgwuLu5B7iRkfqzpJcfRtAguLm7/yULB9D6r5Ben/HlcXNyD3F+z6yULFOOWsgAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

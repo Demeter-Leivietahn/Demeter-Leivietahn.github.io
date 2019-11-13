@@ -87,7 +87,37 @@
 <h2 id="结果展示：-2"><a href="#结果展示：-2" class="headerlink" title="结果展示："></a>结果展示：</h2><figure class="image-box">
                 <img src="ch10.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]">
                 <p>[结果展示]</p>
-            </figure>]]></content>
+            </figure>
+
+<hr>
+<h1 id="RayTracing中的散焦模糊（defocus-blur）"><a href="#RayTracing中的散焦模糊（defocus-blur）" class="headerlink" title="RayTracing中的散焦模糊（defocus blur）"></a>RayTracing中的散焦模糊（defocus blur）</h1><h2 id="原理介绍："><a href="#原理介绍：" class="headerlink" title="原理介绍："></a>原理介绍：</h2><p>散焦模糊”在摄影上又称“景深”。<br>在现实的相机中，我们需要做“散焦模糊”的原因是：我们需要一个更大的孔来收集光线增加图片的亮度（而不是“针孔”）。我们称“更大的孔”为“光圈”。<br>光圈的增大，导致图片出现散焦而模糊。<br>我们可以调节成像的位置，改变图片的清晰度，使图片在当前光圈条件下尽可能清晰。<br>接下来我们引入两个参数：aperture(光圈)和focus_dist(成像位置)</p>
+<p>在原点建立的坐标系，成像位置被设置在Z=-1平面<br>在任意点的标准正交基uvw的坐标系，成像位置被设置在-W平面<br>在我们引入focus_dist后，<br>$$<br>成像位置位于-focus_dist* W 平面<br>$$<br>图像的长宽都需要乘上focus_dist，放上一张图就能看出：</p>
+<figure class="image-box">
+                <img src="image-20191113134802630.png" alt="[sorry,图片挂了]" title="[images]" class="[samll]">
+                <p>[images]</p>
+            </figure>
+
+<p>针对于引入的另一参数：aperture(光圈)</p>
+<figure class="image-box">
+                <img src="image-20191113135020757.png" alt="[sorry,图片挂了]" title="[images]" class="[samll]">
+                <p>[images]</p>
+            </figure>
+
+<h2 id="代码分析：-2"><a href="#代码分析：-2" class="headerlink" title="代码分析："></a>代码分析：</h2><p>由于相机引入了两个新的参数，因此需要对camera类进行相应的修改<br>构造函数的参数列表增加参数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span> aperture;<span class="comment">//光圈</span></span><br><span class="line"><span class="keyword">float</span> focus_dist;<span class="comment">//焦距</span></span><br></pre></td></tr></table></figure>
+<p>同时还需要修改camera类中的get_ray方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//lens_radius=aperture/2;为光圈半径</span></span><br><span class="line"><span class="function">ray <span class="title">get_ray</span><span class="params">(<span class="keyword">float</span> s, <span class="keyword">float</span> t)</span> </span>&#123;</span><br><span class="line">		vec3 rd = lens_radius * random_in_unit_disk();</span><br><span class="line">		vec3 offset = u * rd.x() + v * rd.y();</span><br><span class="line">		<span class="keyword">return</span> ray(origin + offset, lower_left_corner + s * horizontal + t * vertical - origin - offset);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>此处调用的random_in_unit_disk方法<br>同样采用拒取法，产生长度小于1的随机向量</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vec3 <span class="title">random_in_unit_disk</span><span class="params">()</span></span>&#123;</span><br><span class="line">	vec3 p;</span><br><span class="line">	<span class="keyword">do</span> &#123;</span><br><span class="line">		p = <span class="number">2.0f</span> * vec3((rand() % <span class="number">100</span> / <span class="keyword">float</span>(<span class="number">100</span>)), (rand() % <span class="number">100</span> / <span class="keyword">float</span>(<span class="number">100</span>)), <span class="number">0</span>) - vec3(<span class="number">1.0f</span>, <span class="number">1.0f</span>, <span class="number">0</span>);</span><br><span class="line">	&#125; <span class="keyword">while</span> (p.squared_length() &gt;= <span class="number">1.0f</span>);</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="结果展示：-3"><a href="#结果展示：-3" class="headerlink" title="结果展示："></a>结果展示：</h2><figure class="image-box">
+                <img src="Render_Chapter11.png" alt="[sorry,图片挂了]" title="[结果展示]" class="[samll]">
+                <p>[结果展示]</p>
+            </figure>
+
+
+
+]]></content>
       
         <categories>
             
@@ -260,6 +290,148 @@
         <tags>
             
             <tag> RayTracing </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[PBRT（Chapter1）]]></title>
+      <url>/2019/11/05/PBRT_Learning_1/</url>
+      <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><p>*Introduction<br>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
+<p>渲染是根据三维场景的描述生成图像的过程。显然，这是一个非常广泛的任务，有许多方法可以实现它。基于物理的技术试图模拟现实;也就是说，他们使用物理原理来模拟光和物质的相互作用。虽然基于物理的方法似乎是处理呈现的最明显的方法，但它只是在过去10年左右的实践中才被广泛采用。<br>学习基于PBRT-v3<br>友情链接：<br>（一）PBRT-v3在线电子书：<a href="http://www.pbr-book.org/3ed-2018/contents.html" target="_blank" rel="noopener">http://www.pbr-book.org/3ed-2018/contents.html</a><br>（二）实验室学长的PBRT-v3配置教程: <a href="https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/" target="_blank" rel="noopener">https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/</a></p>
+<h2 id="1-1-Literate-Programming-文学编程"><a href="#1-1-Literate-Programming-文学编程" class="headerlink" title="1.1 Literate Programming 文学编程"></a>1.1 Literate Programming 文学编程</h2><p>PBRT-v2和-v3之间的改动</p>
+<ul>
+<li>增加了一个功能完备的BRDF模型，支持体积光照与重要性多重路径采样。</li>
+<li>次表面散射，基于光线追踪技术，无需预处理。</li>
+<li>解决浮点数四折五入的问题</li>
+<li>光子映射</li>
+<li>样本生成</li>
+</ul>
+<h2 id="1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><a href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法" class="headerlink" title="1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法"></a>1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</h2><ul>
+<li>渲染分块问题：<br>渲染任务过多的分块会影响性能。<br>过小分块也是不科学的，因为处理核心问题有一定的开销。<br>场景的复杂性会对不同CPU核心的渲染速度产生影响。所以如果是分块数等于核心数，渲染完的核心会等待没渲染完的核心。</li>
+</ul>
+<p>PBRT采用的是16*16的方案</p>
+<p>浮点类型<br>pbrt采用了FLOAT，这样浮点格式会根据宏进行调整</p>
+<h3 id="1-2-1-Camera相机"><a href="#1-2-1-Camera相机" class="headerlink" title="1.2.1 Camera相机"></a>1.2.1 Camera相机</h3><ul>
+<li>针孔相机<br>  胶片Film    针孔Pinhole   视见体Viewing Volume<h3 id="1-2-2-Ray-Object-Intersection光线-对象相交"><a href="#1-2-2-Ray-Object-Intersection光线-对象相交" class="headerlink" title="1.2.2 Ray-Object Intersection光线-对象相交"></a>1.2.2 Ray-Object Intersection光线-对象相交</h3></li>
+<li>当相机生成一条光线时，renderer的首要任务是：确定与光线intersect的首个对象和相交的位置。This intersection point is the visible point along the ray, and we will want to simulate the intersection of light with the object at this point. </li>
+</ul>
+<figure class="image-box">
+                <img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+<p> 给定光线r,o为光线源点，d表示方向向量，参数t的范围为0到无穷，通过t取不同的值可以得到光线上的任何一点。<br> 在交点的计算中，需测试光线与全部场景对象之间的相交结果，并选取与光线首次相交的对象。<br> 多数场景均由多个对象构成，蛮力进行相机计算将依次测试场景中的各个对象，并选取相交结果最小的t值，但这种方案的计算速度较为缓慢；还可以引入加速结构，并剔除一组对象，进行算法的加速。</p>
+<h3 id="1-2-3-Light-Distribution光照分布"><a href="#1-2-3-Light-Distribution光照分布" class="headerlink" title="1.2.3 Light Distribution光照分布"></a>1.2.3 Light Distribution光照分布</h3><figure class="image-box">
+                <img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+<ul>
+<li>较大球体上某点处的能量将小于较小球体，其原因在于相同的光能分布于较大的面积上，特别的，对于半径为r的球体，其表面某点处的能量与1/r^2成比例。</li>
+<li>由于点光源采用各向均等方式辐射能量。因而两球体存储相同光能。</li>
+<li>对于球体表面面积微分dA,其上的光能能够表示为：<figure class="image-box">
+                <img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure><br>其中Φ表示光源能量，θ为表面点法线与表面点和光源连线的夹角<figure class="image-box">
+                <img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+
+</li>
+</ul>
+<h3 id="1-2-4Visibility-可见性"><a href="#1-2-4Visibility-可见性" class="headerlink" title="1.2.4Visibility 可见性"></a>1.2.4Visibility 可见性</h3><ul>
+<li>确定是否被遮挡（阴影）</li>
+<li>当着色点与光源之间没有遮挡时，着色点方可被“点亮”<br>确定是否被遮挡：</li>
+<li>1、着色点与光源之间的连线，指向光源——阴影光线（shaow rays）</li>
+<li>2、通过交点计算，算出参数t,确定阴影光线的交点，并通过t的值，确定遮挡关系</li>
+</ul>
+<h3 id="1-2-5表面散射-Surface-Scattering"><a href="#1-2-5表面散射-Surface-Scattering" class="headerlink" title="1.2.5表面散射 Surface Scattering"></a>1.2.5表面散射 Surface Scattering</h3><p>场景中的各对象的材质属性，描述了表面各点处的外观属性，材质通过BRDF定义（双向反射分布函数），而材质决定外观（BSDF决定通用散射行为）</p>
+<figure class="image-box">
+                <img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+
+<p>参数含义：</p>
+<figure class="image-box">
+                <img src="6.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>    
+<h3 id="1-2-6-Indirect-Light-Transport"><a href="#1-2-6-Indirect-Light-Transport" class="headerlink" title="1.2.6 Indirect Light Transport"></a>1.2.6 Indirect Light Transport</h3><figure class="image-box">
+                <img src="7.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+<h3 id="1-2-7-Ray-Propagation-射线传播"><a href="#1-2-7-Ray-Propagation-射线传播" class="headerlink" title="1.2.7 Ray Propagation 射线传播"></a>1.2.7 Ray Propagation 射线传播</h3><p>渲染环境不一定是真空（vacuum）<br>参与介质介质影响光线传播<br>影响的两种方式：<br>（一）介质在不同的方向上吸收或散射，衰减光线<br>（二）如：介质自发光或者价值沿当前光线相反方向并向其他方向散射光线</p>
+<h2 id="1-3-pbrt-System-Overview-系统总览"><a href="#1-3-pbrt-System-Overview-系统总览" class="headerlink" title="1.3 pbrt:System Overview 系统总览"></a>1.3 pbrt:System Overview 系统总览</h2><p>标准的面向对象构建<br>抽象类针对重要实体进行定义<br>The majority of the system is implemented purely in terms of the interface provided by these abstract base class.(系统的主要内容根据抽象类提供的接口实现)</p>
+<figure class="image-box">
+                <img src="1573095588456.png" alt="[sorry,图片挂了]" title="[pbrt-v3中的10个抽象类]" class="[samll]">
+                <p>[pbrt-v3中的10个抽象类]</p>
+            </figure>
+
+
+<p>pbrt网站中有源码以及额外实现的图形、材质等内容的源码</p>
+<h3 id="1-3-1-Phase-of-Execution执行阶段"><a href="#1-3-1-Phase-of-Execution执行阶段" class="headerlink" title="1.3.1 Phase of Execution执行阶段"></a>1.3.1 Phase of Execution执行阶段</h3><p>PBRT程序执行：<br>① 解析用户提供的.pbrt文件（场景描述文件）<br>初始化相应的类→Scene类的实例和Integrator类（此类用于实现算法渲染Scene）的实例<br>② 整个渲染流程</p>
+<figure class="image-box">
+                <img src="1573096051239.png" alt="[sorry,图片挂了]" title="[pbrt-v3中的10个抽象类]" class="[samll]">
+                <p>[pbrt-v3中的10个抽象类]</p>
+            </figure>
+
+
+<ul>
+<li>并行相关问题<br>① 读取场景文件以及创建场景都是单线程的，获取场景信息因为不涉及到修改数据，所以可以无视。我们只需要关注修改内存数据的情况。<br>② 请不要在不同步的情况下修改数据<br>③ 对应初始化可以考虑std::call_once函数<br>④ 实用程序类MemoryArena（用于高性能临时内存分配）和RNG（伪随机数生成）也不适合多线程使用; 这些类存储在调用其方法时被修改的状态，并且相互排除的保护修改到其状态的开销相对于它们执行的计算量而言过多。 因此，在上面的SamplerIntegrator :: Render()方法的代码中，实现在堆栈上分配这些类的perthread实例。<br>⑤ 每个线程需要各复制一个Sampler的实例，以保证线程安全<br>⑥ 目前的计算机架构运算除法、平方根和三角函数是最慢的。加法与乘法相比之下要快10~50倍。所以我们可以减少这种数学运算数量来提高性能。例如我们可以提前计算1/v,之后再乘。而不是重复除以v。</li>
+</ul>
+<h3 id="1-3-2-Scene-Representation-场景表达"><a href="#1-3-2-Scene-Representation-场景表达" class="headerlink" title="1.3.2 Scene Representation 场景表达"></a>1.3.2 Scene Representation 场景表达</h3><ul>
+<li><p>PBRT中的main函数→处理argv中提供的命令行参数<br>  → 初始化Option Structure,传给pbrtInit()进行系统内的初始化<br>  → parse（解析）Scene ,创建 Scene、Integrator对象<br>  after rendering→pbrtClaenup()，在系统退出前进行清理</p>
+</li>
+<li><p>ParseFile()  解析Scene</p>
+</li>
+<li><p>Light对象：场景中的光源，指定光的形状和能量分布<br>  场景使用C++标准库（std）的shared_ptr实例向量，存储所有灯光<br>  pbrt使用共享指针跟踪对象被其他实例引用的次数（当最后一个持有实例的引用被销毁时，引用次数为零）<br>  系统中很多部分需要访问光源，因此Scene使其成为公共变量。</p>
+</li>
+<li><p>场景定义后，渲染开始前，进行预处理 Preprocess()</p>
+</li>
+<li><p>Scene提供两个光线图元求交函数：<br>①bool Intersect(const Ray&amp;ray,SurfaceInteraction *insect)const<br>对指定光线进行求交判定，将沿光线与图元相交最近的交点信息保存到SurfaceIntersection结构中<br>②bool IntersectP(const Ray&amp;ray)const<br>仅确定沿光线是否存在交点</p>
+</li>
+</ul>
+<h3 id="1-3-3-Integrator-Interface-and-SamplerIntegrator"><a href="#1-3-3-Integrator-Interface-and-SamplerIntegrator" class="headerlink" title="1.3.3 Integrator Interface and SamplerIntegrator"></a>1.3.3 Integrator Interface and SamplerIntegrator</h3><ul>
+<li><p>渲染场景是由实现了Integrator接口的实例完成的，这其中Integrator是一个抽象基类，提供Render()方法<br>virtual void Render(const Scene &amp;scene)=0;<br>Integrator接口定义在：core/integrator.h中<br>Integrator实用方法定义在：core/integrator.cpp中<br>各类积分器的实现位于Integrator文件目录中</p>
+</li>
+<li><p>Integrator<br> ↓继承<br>SamplerIntegrator (Create in RenderOptions::MakeIntegrator)<br> ↓实现<br>WhittedIntegrator</p>
+</li>
+</ul>
+<p>在SamplerIntegrator中，存储了指向Sampler的指针</p>
+<ul>
+<li>Camera对象：控制相机相关，postion,orientation,filed of view ,focus等</li>
+<li>Film对象：在Camera对象内，控制图像存储</li>
+</ul>
+<h3 id="1-3-4-The-Main-Rendering-Loop"><a href="#1-3-4-The-Main-Rendering-Loop" class="headerlink" title="1.3.4 The Main Rendering Loop"></a>1.3.4 The Main Rendering Loop</h3><ul>
+<li>当Scene、Integrator被指定后，Invoke(调用)Render()开启main rendering loop</li>
+</ul>
+<p>实现：at each of a series of positions on the image plane, the method uses the Camera and the Sampler to generate a ray into the scene and then uses the Li() method to determine the amount of light arriving at the image plane along that ray. This value is passed to the Film, which records the light’s contribution.</p>
+<p>主循环源代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> SamplerIntegrator::Render(<span class="keyword">const</span> Scene &amp;scene) &#123;</span><br><span class="line">    Preprocess(scene, *sampler);<span class="comment">//预处理</span></span><br><span class="line">    <span class="comment">//分块并行渲染图片</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算tiles, _nTiles_,用于并行运算</span></span><br><span class="line">    Bounds2i sampleBounds = camera-&gt;film-&gt;GetSampleBounds();</span><br><span class="line">    Vector2i sampleExtent = sampleBounds.Diagonal();</span><br><span class="line">    <span class="comment">//书中说16*16分块可以解决大部分情况</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> tileSize = <span class="number">16</span>;</span><br><span class="line">    <span class="comment">//sampleExtent.x + tileSize - 1 整除考虑</span></span><br><span class="line">    <span class="function">Point2i <span class="title">nTiles</span><span class="params">((sampleExtent.x + tileSize - <span class="number">1</span>) / tileSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                   (sampleExtent.y + tileSize - <span class="number">1</span>) / tileSize)</span></span>;</span><br><span class="line">    <span class="function">ProgressReporter <span class="title">reporter</span><span class="params">(nTiles.x * nTiles.y, <span class="string">"Rendering"</span>)</span></span>;</span><br><span class="line">    &#123;</span><br><span class="line">        ParallelFor2D([&amp;](Point2i tile) &#123;</span><br><span class="line">            <span class="comment">// Render section of image corresponding to _tile_</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//内存池，之后会给Li函数</span></span><br><span class="line">            MemoryArena arena;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//给每个块分配一个Samper实例</span></span><br><span class="line">            <span class="keyword">int</span> seed = tile.y * nTiles.x + tile.x;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;Sampler&gt; tileSampler = sampler-&gt;Clone(seed);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//计算块的采样边界</span></span><br><span class="line">            <span class="keyword">int</span> x0 = sampleBounds.pMin.x + tile.x * tileSize;</span><br><span class="line">            <span class="keyword">int</span> x1 = <span class="built_in">std</span>::<span class="built_in">min</span>(x0 + tileSize, sampleBounds.pMax.x);</span><br><span class="line">            <span class="keyword">int</span> y0 = sampleBounds.pMin.y + tile.y * tileSize;</span><br><span class="line">            <span class="keyword">int</span> y1 = <span class="built_in">std</span>::<span class="built_in">min</span>(y0 + tileSize, sampleBounds.pMax.y);</span><br><span class="line">            Bounds2i tileBounds(Point2i(x0, y0), Point2i(x1, y1));</span><br><span class="line">            LOG(INFO) &lt;&lt; <span class="string">"Starting image tile "</span> &lt;&lt; tileBounds;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//取得指定范围的图片块</span></span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;FilmTile&gt; filmTile =</span><br><span class="line">                camera-&gt;film-&gt;GetFilmTile(tileBounds);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//开始指定区域的渲染循环</span></span><br><span class="line">            <span class="keyword">for</span> (Point2i pixel : tileBounds) &#123;</span><br><span class="line">                &#123;</span><br><span class="line">                    ProfilePhase pp(Prof::StartPixel);</span><br><span class="line">                    tileSampler-&gt;StartPixel(pixel);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Do this check after the StartPixel() call; this keeps</span></span><br><span class="line">                <span class="comment">// the usage of RNG values from (most) Samplers that use</span></span><br><span class="line">                <span class="comment">// RNGs consistent, which improves reproducability /</span></span><br><span class="line">                <span class="comment">// debugging.</span></span><br><span class="line">                <span class="keyword">if</span> (!InsideExclusive(pixel, pixelBounds))</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">do</span> &#123;</span><br><span class="line">                    <span class="comment">//初始化相机采样，存储了时间以及镜头位置的采样值</span></span><br><span class="line">                    CameraSample cameraSample =</span><br><span class="line">                        tileSampler-&gt;GetCameraSample(pixel);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//生成相机光线</span></span><br><span class="line">                    <span class="comment">//以及光线的pdf</span></span><br><span class="line">                    RayDifferential ray;</span><br><span class="line">                    Float rayWeight =</span><br><span class="line">                        camera-&gt;GenerateRayDifferential(cameraSample, &amp;ray);</span><br><span class="line">                    ray.ScaleDifferentials(</span><br><span class="line">                        <span class="number">1</span> / <span class="built_in">std</span>::<span class="built_in">sqrt</span>((Float)tileSampler-&gt;samplesPerPixel));</span><br><span class="line">                    ++nCameraRays;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//估算当前相机光线辐射度</span></span><br><span class="line">                    Spectrum L(<span class="number">0.f</span>);</span><br><span class="line">                    <span class="keyword">if</span> (rayWeight &gt; <span class="number">0</span>) L = Li(ray, scene, *tileSampler, arena);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//对渲染出错误结果的处理，log相应信息</span></span><br><span class="line">                    <span class="keyword">if</span> (L.HasNaNs()) &#123;</span><br><span class="line">                        LOG(ERROR) &lt;&lt; StringPrintf(</span><br><span class="line">                            <span class="string">"Not-a-number radiance value returned "</span></span><br><span class="line">                            <span class="string">"for pixel (%d, %d), sample %d. Setting to black."</span>,</span><br><span class="line">                            pixel.x, pixel.y,</span><br><span class="line">                            (<span class="keyword">int</span>)tileSampler-&gt;CurrentSampleNumber());</span><br><span class="line">                        L = Spectrum(<span class="number">0.f</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (L.y() &lt; <span class="number">-1e-5</span>) &#123;</span><br><span class="line">                        LOG(ERROR) &lt;&lt; StringPrintf(</span><br><span class="line">                            <span class="string">"Negative luminance value, %f, returned "</span></span><br><span class="line">                            <span class="string">"for pixel (%d, %d), sample %d. Setting to black."</span>,</span><br><span class="line">                            L.y(), pixel.x, pixel.y,</span><br><span class="line">                            (<span class="keyword">int</span>)tileSampler-&gt;CurrentSampleNumber());</span><br><span class="line">                        L = Spectrum(<span class="number">0.f</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">std</span>::isinf(L.y())) &#123;</span><br><span class="line">                          LOG(ERROR) &lt;&lt; StringPrintf(</span><br><span class="line">                            <span class="string">"Infinite luminance value returned "</span></span><br><span class="line">                            <span class="string">"for pixel (%d, %d), sample %d. Setting to black."</span>,</span><br><span class="line">                            pixel.x, pixel.y,</span><br><span class="line">                            (<span class="keyword">int</span>)tileSampler-&gt;CurrentSampleNumber());</span><br><span class="line">                        L = Spectrum(<span class="number">0.f</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    VLOG(<span class="number">1</span>) &lt;&lt; <span class="string">"Camera sample: "</span> &lt;&lt; cameraSample &lt;&lt; <span class="string">" -&gt; ray: "</span> &lt;&lt;</span><br><span class="line">                        ray &lt;&lt; <span class="string">" -&gt; L = "</span> &lt;&lt; L;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// Add camera ray's contribution to image</span></span><br><span class="line">                    filmTile-&gt;AddSample(cameraSample.pFilm, L, rayWeight);</span><br><span class="line"></span><br><span class="line">                   <span class="comment">//释放内存池</span></span><br><span class="line">                    arena.Reset();</span><br><span class="line">                &#125; <span class="keyword">while</span> (tileSampler-&gt;StartNextSample());</span><br><span class="line">            &#125;</span><br><span class="line">            LOG(INFO) &lt;&lt; <span class="string">"Finished image tile "</span> &lt;&lt; tileBounds;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//将图片块合并到图片上去</span></span><br><span class="line">            camera-&gt;film-&gt;MergeFilmTile(<span class="built_in">std</span>::<span class="built_in">move</span>(filmTile));</span><br><span class="line">            reporter.Update();</span><br><span class="line">        &#125;, nTiles);</span><br><span class="line">        reporter.Done();</span><br><span class="line">    &#125;</span><br><span class="line">    LOG(INFO) &lt;&lt; <span class="string">"Rendering finished"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保存图片到文件</span></span><br><span class="line">    camera-&gt;film-&gt;WriteImage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-5-An-Integrator-for-Whitted-Ray-Tracing"><a href="#1-3-5-An-Integrator-for-Whitted-Ray-Tracing" class="headerlink" title="1.3.5 An Integrator for Whitted Ray Tracing"></a>1.3.5 An Integrator for Whitted Ray Tracing</h3><ul>
+<li></li>
+</ul>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=501468332&auto=1&height=32"></iframe>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> RayTracing </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> RayTracing </tag>
+            
+            <tag> PBRT </tag>
             
         </tags>
         
@@ -842,200 +1014,33 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
     </entry>
     
     <entry>
-      <title><![CDATA[PBRT（Chapter1）]]></title>
-      <url>/2019/11/05/PBRT_Learning_1/</url>
-      <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><p>*Introduction<br>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
-<p>渲染是根据三维场景的描述生成图像的过程。显然，这是一个非常广泛的任务，有许多方法可以实现它。基于物理的技术试图模拟现实;也就是说，他们使用物理原理来模拟光和物质的相互作用。虽然基于物理的方法似乎是处理呈现的最明显的方法，但它只是在过去10年左右的实践中才被广泛采用。<br>学习基于PBRT-v3<br>友情链接：<br>（一）PBRT-v3在线电子书：<a href="http://www.pbr-book.org/3ed-2018/contents.html" target="_blank" rel="noopener">http://www.pbr-book.org/3ed-2018/contents.html</a><br>（二）实验室学长的PBRT-v3配置教程: <a href="https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/" target="_blank" rel="noopener">https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/</a></p>
-<h2 id="1-1-Literate-Programming-文学编程"><a href="#1-1-Literate-Programming-文学编程" class="headerlink" title="1.1 Literate Programming 文学编程"></a>1.1 Literate Programming 文学编程</h2><p>PBRT-v2和-v3之间的改动</p>
+      <title><![CDATA[ML Basic Tips]]></title>
+      <url>/2019/11/04/ML_Tips/</url>
+      <content type="html"><![CDATA[<h1 id="Ground-Truth-GT"><a href="#Ground-Truth-GT" class="headerlink" title="Ground Truth(GT)"></a>Ground Truth(GT)</h1><p>机器学习包括</p>
 <ul>
-<li>增加了一个功能完备的BRDF模型，支持体积光照与重要性多重路径采样。</li>
-<li>次表面散射，基于光线追踪技术，无需预处理。</li>
-<li>解决浮点数四折五入的问题</li>
-<li>光子映射</li>
-<li>样本生成</li>
+<li>有监督学习(supervised learning) </li>
+<li>无监督学习(unsupervised learning)</li>
+<li>半监督学习（semi-supervised learning）</li>
 </ul>
-<h2 id="1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><a href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法" class="headerlink" title="1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法"></a>1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</h2><ul>
-<li>渲染分块问题：<br>渲染任务过多的分块会影响性能。<br>过小分块也是不科学的，因为处理核心问题有一定的开销。<br>场景的复杂性会对不同CPU核心的渲染速度产生影响。所以如果是分块数等于核心数，渲染完的核心会等待没渲染完的核心。</li>
-</ul>
-<p>PBRT采用的是16*16的方案</p>
-<p>浮点类型<br>pbrt采用了FLOAT，这样浮点格式会根据宏进行调整</p>
-<h3 id="1-2-1-Camera相机"><a href="#1-2-1-Camera相机" class="headerlink" title="1.2.1 Camera相机"></a>1.2.1 Camera相机</h3><ul>
-<li>针孔相机<br>  胶片Film    针孔Pinhole   视见体Viewing Volume<h3 id="1-2-2-Ray-Object-Intersection光线-对象相交"><a href="#1-2-2-Ray-Object-Intersection光线-对象相交" class="headerlink" title="1.2.2 Ray-Object Intersection光线-对象相交"></a>1.2.2 Ray-Object Intersection光线-对象相交</h3></li>
-<li>当相机生成一条光线时，renderer的首要任务是：确定与光线intersect的首个对象和相交的位置。This intersection point is the visible point along the ray, and we will want to simulate the intersection of light with the object at this point. </li>
-</ul>
-<figure class="image-box">
-                <img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-<p> 给定光线r,o为光线源点，d表示方向向量，参数t的范围为0到无穷，通过t取不同的值可以得到光线上的任何一点。<br> 在交点的计算中，需测试光线与全部场景对象之间的相交结果，并选取与光线首次相交的对象。<br> 多数场景均由多个对象构成，蛮力进行相机计算将依次测试场景中的各个对象，并选取相交结果最小的t值，但这种方案的计算速度较为缓慢；还可以引入加速结构，并剔除一组对象，进行算法的加速。</p>
-<h3 id="1-2-3-Light-Distribution光照分布"><a href="#1-2-3-Light-Distribution光照分布" class="headerlink" title="1.2.3 Light Distribution光照分布"></a>1.2.3 Light Distribution光照分布</h3><figure class="image-box">
-                <img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-<ul>
-<li>较大球体上某点处的能量将小于较小球体，其原因在于相同的光能分布于较大的面积上，特别的，对于半径为r的球体，其表面某点处的能量与1/r^2成比例。</li>
-<li>由于点光源采用各向均等方式辐射能量。因而两球体存储相同光能。</li>
-<li>对于球体表面面积微分dA,其上的光能能够表示为：<figure class="image-box">
-                <img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure><br>其中Φ表示光源能量，θ为表面点法线与表面点和光源连线的夹角<figure class="image-box">
-                <img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-
-</li>
-</ul>
-<h3 id="1-2-4Visibility-可见性"><a href="#1-2-4Visibility-可见性" class="headerlink" title="1.2.4Visibility 可见性"></a>1.2.4Visibility 可见性</h3><ul>
-<li>确定是否被遮挡（阴影）</li>
-<li>当着色点与光源之间没有遮挡时，着色点方可被“点亮”<br>确定是否被遮挡：</li>
-<li>1、着色点与光源之间的连线，指向光源——阴影光线（shaow rays）</li>
-<li>2、通过交点计算，算出参数t,确定阴影光线的交点，并通过t的值，确定遮挡关系</li>
-</ul>
-<h3 id="1-2-5表面散射-Surface-Scattering"><a href="#1-2-5表面散射-Surface-Scattering" class="headerlink" title="1.2.5表面散射 Surface Scattering"></a>1.2.5表面散射 Surface Scattering</h3><p>场景中的各对象的材质属性，描述了表面各点处的外观属性，材质通过BRDF定义（双向反射分布函数），而材质决定外观（BSDF决定通用散射行为）</p>
-<figure class="image-box">
-                <img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-
-<p>参数含义：</p>
-<figure class="image-box">
-                <img src="6.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>    
-<h3 id="1-2-6-Indirect-Light-Transport"><a href="#1-2-6-Indirect-Light-Transport" class="headerlink" title="1.2.6 Indirect Light Transport"></a>1.2.6 Indirect Light Transport</h3><figure class="image-box">
-                <img src="7.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-<h3 id="1-2-7-Ray-Propagation-射线传播"><a href="#1-2-7-Ray-Propagation-射线传播" class="headerlink" title="1.2.7 Ray Propagation 射线传播"></a>1.2.7 Ray Propagation 射线传播</h3><p>渲染环境不一定是真空（vacuum）<br>参与介质介质影响光线传播<br>影响的两种方式：<br>（一）介质在不同的方向上吸收或散射，衰减光线<br>（二）如：介质自发光或者价值沿当前光线相反方向并向其他方向散射光线</p>
-<h2 id="1-3-pbrt-System-Overview-系统总览"><a href="#1-3-pbrt-System-Overview-系统总览" class="headerlink" title="1.3 pbrt:System Overview 系统总览"></a>1.3 pbrt:System Overview 系统总览</h2><p>标准的面向对象构建<br>抽象类针对重要实体进行定义<br>The majority of the system is implemented purely in terms of the interface provided by these abstract base class.(系统的主要内容根据抽象类提供的接口实现)</p>
-<figure class="image-box">
-                <img src="1573095588456.png" alt="[sorry,图片挂了]" title="[pbrt-v3中的10个抽象类]" class="[samll]">
-                <p>[pbrt-v3中的10个抽象类]</p>
-            </figure>
-
-
-<p>pbrt网站中有源码以及额外实现的图形、材质等内容的源码</p>
-<h3 id="1-3-1-Phase-of-Execution执行阶段"><a href="#1-3-1-Phase-of-Execution执行阶段" class="headerlink" title="1.3.1 Phase of Execution执行阶段"></a>1.3.1 Phase of Execution执行阶段</h3><p>PBRT程序执行：<br>① 解析用户提供的.pbrt文件（场景描述文件）<br>初始化相应的类→Scene类的实例和Integrator类（此类用于实现算法渲染Scene）的实例<br>② 整个渲染流程</p>
-<figure class="image-box">
-                <img src="1573096051239.png" alt="[sorry,图片挂了]" title="[pbrt-v3中的10个抽象类]" class="[samll]">
-                <p>[pbrt-v3中的10个抽象类]</p>
-            </figure>
-
-
-<ul>
-<li>并行相关问题<br>① 读取场景文件以及创建场景都是单线程的，获取场景信息因为不涉及到修改数据，所以可以无视。我们只需要关注修改内存数据的情况。<br>② 请不要在不同步的情况下修改数据<br>③ 对应初始化可以考虑std::call_once函数<br>④ 实用程序类MemoryArena（用于高性能临时内存分配）和RNG（伪随机数生成）也不适合多线程使用; 这些类存储在调用其方法时被修改的状态，并且相互排除的保护修改到其状态的开销相对于它们执行的计算量而言过多。 因此，在上面的SamplerIntegrator :: Render()方法的代码中，实现在堆栈上分配这些类的perthread实例。<br>⑤ 每个线程需要各复制一个Sampler的实例，以保证线程安全<br>⑥ 目前的计算机架构运算除法、平方根和三角函数是最慢的。加法与乘法相比之下要快10~50倍。所以我们可以减少这种数学运算数量来提高性能。例如我们可以提前计算1/v,之后再乘。而不是重复除以v。</li>
-</ul>
-<h3 id="1-3-2-Scene-Representation-场景表达"><a href="#1-3-2-Scene-Representation-场景表达" class="headerlink" title="1.3.2 Scene Representation 场景表达"></a>1.3.2 Scene Representation 场景表达</h3><ul>
-<li><p>PBRT中的main函数→处理argv中提供的命令行参数<br>  → 初始化Option Structure,传给pbrtInit()进行系统内的初始化<br>  → parse（解析）Scene ,创建 Scene、Integrator对象<br>  after rendering→pbrtClaenup()，在系统退出前进行清理</p>
-</li>
-<li><p>ParseFile()  解析Scene</p>
-</li>
-<li><p>Light对象：场景中的光源，指定光的形状和能量分布<br>  场景使用C++标准库（std）的shared_ptr实例向量，存储所有灯光<br>  pbrt使用共享指针跟踪对象被其他实例引用的次数（当最后一个持有实例的引用被销毁时，引用次数为零）<br>  系统中很多部分需要访问光源，因此Scene使其成为公共变量。</p>
-</li>
-<li><p>场景定义后，渲染开始前，进行预处理 Preprocess()</p>
-</li>
-<li><p>Scene提供两个光线图元求交函数：<br>①bool Intersect(const Ray&amp;ray,SurfaceInteraction *insect)const<br>对指定光线进行求交判定，将沿光线与图元相交最近的交点信息保存到SurfaceIntersection结构中<br>②bool IntersectP(const Ray&amp;ray)const<br>仅确定沿光线是否存在交点</p>
-</li>
-</ul>
-<h3 id="1-3-3-Integrator-Interface-and-SamplerIntegrator"><a href="#1-3-3-Integrator-Interface-and-SamplerIntegrator" class="headerlink" title="1.3.3 Integrator Interface and SamplerIntegrator"></a>1.3.3 Integrator Interface and SamplerIntegrator</h3><ul>
-<li><p>渲染场景是由实现了Integrator接口的实例完成的，这其中Integrator是一个抽象基类，提供Render()方法<br>virtual void Render(const Scene &amp;scene)=0;<br>Integrator接口定义在：core/integrator.h中<br>Integrator实用方法定义在：core/integrator.cpp中<br>各类积分器的实现位于Integrator文件目录中</p>
-</li>
-<li><p>Integrator<br> ↓继承<br>SamplerIntegrator (Create in RenderOptions::MakeIntegrator)<br> ↓实现<br>WhittedIntegrator</p>
-</li>
-</ul>
-<p>在SamplerIntegrator中，存储了指向Sampler的指针</p>
-<ul>
-<li>Camera对象：控制相机相关，postion,orientation,filed of view ,focus等</li>
-<li>Film对象：在Camera对象内，控制图像存储</li>
-</ul>
-<h3 id="1-3-4-The-Main-Rendering-Loop"><a href="#1-3-4-The-Main-Rendering-Loop" class="headerlink" title="1.3.4 The Main Rendering Loop"></a>1.3.4 The Main Rendering Loop</h3><ul>
-<li>当Scene、Integrator被指定后，Invoke(调用)Render()开启main rendering loop</li>
-</ul>
-<p>实现：at each of a series of positions on the image plane, the method uses the Camera and the Sampler to generate a ray into the scene and then uses the Li() method to determine the amount of light arriving at the image plane along that ray. This value is passed to the Film, which records the light’s contribution.</p>
-<p>主循环源代码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> SamplerIntegrator::Render(<span class="keyword">const</span> Scene &amp;scene) &#123;</span><br><span class="line">    Preprocess(scene, *sampler);<span class="comment">//预处理</span></span><br><span class="line">    <span class="comment">//分块并行渲染图片</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算tiles, _nTiles_,用于并行运算</span></span><br><span class="line">    Bounds2i sampleBounds = camera-&gt;film-&gt;GetSampleBounds();</span><br><span class="line">    Vector2i sampleExtent = sampleBounds.Diagonal();</span><br><span class="line">    <span class="comment">//书中说16*16分块可以解决大部分情况</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> tileSize = <span class="number">16</span>;</span><br><span class="line">    <span class="comment">//sampleExtent.x + tileSize - 1 整除考虑</span></span><br><span class="line">    <span class="function">Point2i <span class="title">nTiles</span><span class="params">((sampleExtent.x + tileSize - <span class="number">1</span>) / tileSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                   (sampleExtent.y + tileSize - <span class="number">1</span>) / tileSize)</span></span>;</span><br><span class="line">    <span class="function">ProgressReporter <span class="title">reporter</span><span class="params">(nTiles.x * nTiles.y, <span class="string">"Rendering"</span>)</span></span>;</span><br><span class="line">    &#123;</span><br><span class="line">        ParallelFor2D([&amp;](Point2i tile) &#123;</span><br><span class="line">            <span class="comment">// Render section of image corresponding to _tile_</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//内存池，之后会给Li函数</span></span><br><span class="line">            MemoryArena arena;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//给每个块分配一个Samper实例</span></span><br><span class="line">            <span class="keyword">int</span> seed = tile.y * nTiles.x + tile.x;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;Sampler&gt; tileSampler = sampler-&gt;Clone(seed);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//计算块的采样边界</span></span><br><span class="line">            <span class="keyword">int</span> x0 = sampleBounds.pMin.x + tile.x * tileSize;</span><br><span class="line">            <span class="keyword">int</span> x1 = <span class="built_in">std</span>::<span class="built_in">min</span>(x0 + tileSize, sampleBounds.pMax.x);</span><br><span class="line">            <span class="keyword">int</span> y0 = sampleBounds.pMin.y + tile.y * tileSize;</span><br><span class="line">            <span class="keyword">int</span> y1 = <span class="built_in">std</span>::<span class="built_in">min</span>(y0 + tileSize, sampleBounds.pMax.y);</span><br><span class="line">            Bounds2i tileBounds(Point2i(x0, y0), Point2i(x1, y1));</span><br><span class="line">            LOG(INFO) &lt;&lt; <span class="string">"Starting image tile "</span> &lt;&lt; tileBounds;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//取得指定范围的图片块</span></span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;FilmTile&gt; filmTile =</span><br><span class="line">                camera-&gt;film-&gt;GetFilmTile(tileBounds);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//开始指定区域的渲染循环</span></span><br><span class="line">            <span class="keyword">for</span> (Point2i pixel : tileBounds) &#123;</span><br><span class="line">                &#123;</span><br><span class="line">                    ProfilePhase pp(Prof::StartPixel);</span><br><span class="line">                    tileSampler-&gt;StartPixel(pixel);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Do this check after the StartPixel() call; this keeps</span></span><br><span class="line">                <span class="comment">// the usage of RNG values from (most) Samplers that use</span></span><br><span class="line">                <span class="comment">// RNGs consistent, which improves reproducability /</span></span><br><span class="line">                <span class="comment">// debugging.</span></span><br><span class="line">                <span class="keyword">if</span> (!InsideExclusive(pixel, pixelBounds))</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">do</span> &#123;</span><br><span class="line">                    <span class="comment">//初始化相机采样，存储了时间以及镜头位置的采样值</span></span><br><span class="line">                    CameraSample cameraSample =</span><br><span class="line">                        tileSampler-&gt;GetCameraSample(pixel);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//生成相机光线</span></span><br><span class="line">                    <span class="comment">//以及光线的pdf</span></span><br><span class="line">                    RayDifferential ray;</span><br><span class="line">                    Float rayWeight =</span><br><span class="line">                        camera-&gt;GenerateRayDifferential(cameraSample, &amp;ray);</span><br><span class="line">                    ray.ScaleDifferentials(</span><br><span class="line">                        <span class="number">1</span> / <span class="built_in">std</span>::<span class="built_in">sqrt</span>((Float)tileSampler-&gt;samplesPerPixel));</span><br><span class="line">                    ++nCameraRays;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//估算当前相机光线辐射度</span></span><br><span class="line">                    Spectrum L(<span class="number">0.f</span>);</span><br><span class="line">                    <span class="keyword">if</span> (rayWeight &gt; <span class="number">0</span>) L = Li(ray, scene, *tileSampler, arena);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//对渲染出错误结果的处理，log相应信息</span></span><br><span class="line">                    <span class="keyword">if</span> (L.HasNaNs()) &#123;</span><br><span class="line">                        LOG(ERROR) &lt;&lt; StringPrintf(</span><br><span class="line">                            <span class="string">"Not-a-number radiance value returned "</span></span><br><span class="line">                            <span class="string">"for pixel (%d, %d), sample %d. Setting to black."</span>,</span><br><span class="line">                            pixel.x, pixel.y,</span><br><span class="line">                            (<span class="keyword">int</span>)tileSampler-&gt;CurrentSampleNumber());</span><br><span class="line">                        L = Spectrum(<span class="number">0.f</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (L.y() &lt; <span class="number">-1e-5</span>) &#123;</span><br><span class="line">                        LOG(ERROR) &lt;&lt; StringPrintf(</span><br><span class="line">                            <span class="string">"Negative luminance value, %f, returned "</span></span><br><span class="line">                            <span class="string">"for pixel (%d, %d), sample %d. Setting to black."</span>,</span><br><span class="line">                            L.y(), pixel.x, pixel.y,</span><br><span class="line">                            (<span class="keyword">int</span>)tileSampler-&gt;CurrentSampleNumber());</span><br><span class="line">                        L = Spectrum(<span class="number">0.f</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">std</span>::isinf(L.y())) &#123;</span><br><span class="line">                          LOG(ERROR) &lt;&lt; StringPrintf(</span><br><span class="line">                            <span class="string">"Infinite luminance value returned "</span></span><br><span class="line">                            <span class="string">"for pixel (%d, %d), sample %d. Setting to black."</span>,</span><br><span class="line">                            pixel.x, pixel.y,</span><br><span class="line">                            (<span class="keyword">int</span>)tileSampler-&gt;CurrentSampleNumber());</span><br><span class="line">                        L = Spectrum(<span class="number">0.f</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    VLOG(<span class="number">1</span>) &lt;&lt; <span class="string">"Camera sample: "</span> &lt;&lt; cameraSample &lt;&lt; <span class="string">" -&gt; ray: "</span> &lt;&lt;</span><br><span class="line">                        ray &lt;&lt; <span class="string">" -&gt; L = "</span> &lt;&lt; L;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// Add camera ray's contribution to image</span></span><br><span class="line">                    filmTile-&gt;AddSample(cameraSample.pFilm, L, rayWeight);</span><br><span class="line"></span><br><span class="line">                   <span class="comment">//释放内存池</span></span><br><span class="line">                    arena.Reset();</span><br><span class="line">                &#125; <span class="keyword">while</span> (tileSampler-&gt;StartNextSample());</span><br><span class="line">            &#125;</span><br><span class="line">            LOG(INFO) &lt;&lt; <span class="string">"Finished image tile "</span> &lt;&lt; tileBounds;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//将图片块合并到图片上去</span></span><br><span class="line">            camera-&gt;film-&gt;MergeFilmTile(<span class="built_in">std</span>::<span class="built_in">move</span>(filmTile));</span><br><span class="line">            reporter.Update();</span><br><span class="line">        &#125;, nTiles);</span><br><span class="line">        reporter.Done();</span><br><span class="line">    &#125;</span><br><span class="line">    LOG(INFO) &lt;&lt; <span class="string">"Rendering finished"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保存图片到文件</span></span><br><span class="line">    camera-&gt;film-&gt;WriteImage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-3-5-An-Integrator-for-Whitted-Ray-Tracing"><a href="#1-3-5-An-Integrator-for-Whitted-Ray-Tracing" class="headerlink" title="1.3.5 An Integrator for Whitted Ray Tracing"></a>1.3.5 An Integrator for Whitted Ray Tracing</h3><ul>
-<li></li>
-</ul>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=501468332&auto=1&height=32"></iframe>
+<p>在有监督学习中，数据是有标注的，以(x, t)的形式出现，其中x是输入数据，t是标注.正确的t标注是ground truth，错误的标记则不是。（也有人将所有标注数据都叫做ground truth）</p>
+<p>模型函数的数据则是由(x, y)的形式出现的。其中x为之前的输入数据，y为模型预测的值。<br>标注会和模型预测的结果作比较。在损耗函数(loss function / error function)中会将y 和 t 作比较，从而计算损耗(loss / error)。</p>
+<p>使用错误的数据，对模型的估计会比实际要糟糕。另外，标记数据还被用来更新权重，错误标记的数据会导致权重更新错误。因此使用高质量的数据是很有必要的。</p>
+<p>在半监督学习中，对标记数据也要进行比较</p>
+<hr>
 ]]></content>
       
         <categories>
             
             <category> Computer-Science </category>
             
-            <category> RayTracing </category>
+            <category> Machine-Learning </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> RayTracing </tag>
-            
-            <tag> PBRT </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[开发工具推荐及相关使用]]></title>
-      <url>/2019/11/04/Basic_Software_Use/</url>
-      <content type="html"><![CDATA[<h1 id="开发工具及使用"><a href="#开发工具及使用" class="headerlink" title="开发工具及使用"></a>开发工具及使用</h1><p>+++</p>
-<h3 id="1-listary"><a href="#1-listary" class="headerlink" title="1. listary"></a>1. listary</h3><ul>
-<li>双击Ctrl全局搜索</li>
-<li>在文件管理器中双击空白处进行列表呼出</li>
-</ul>
-<h3 id="2-cmd"><a href="#2-cmd" class="headerlink" title="2.cmd"></a>2.cmd</h3><ul>
-<li>在当前文件目录的显示栏下输入 cmd ,即可在当前路径下打开命令行</li>
-</ul>
-<h3 id="3-stb-image简单图像库"><a href="#3-stb-image简单图像库" class="headerlink" title="3,stb_image简单图像库"></a>3,stb_image简单图像库</h3><ul>
-<li><p>重点关注三个头文件</p>
-</li>
-<li><figure class="image-box">
-                <img src="1570780034511.png.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-</li>
-</ul>
-<h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
-<li>Shift+F10:鼠标右键快捷键</li>
-<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
-</ul>
-<h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
-<li>可集成到VS或者Unity3D中</li>
-</ul>
-<h3 id="6-Typora"><a href="#6-Typora" class="headerlink" title="6. Typora"></a>6. Typora</h3><ul>
-<li>Ctrl+/：源代码模式进入或者退出</li>
-</ul>
-<h3 id="7-Visual-Studio-Code"><a href="#7-Visual-Studio-Code" class="headerlink" title="7. Visual Studio Code"></a>7. Visual Studio Code</h3><ul>
-<li>Ctrl+Shift+P:调出主命令框</li>
-<li>Ctrl +K选中后，再按V：预览markdown效果</li>
-</ul>
-<h3 id="8-Scons"><a href="#8-Scons" class="headerlink" title="8. Scons"></a>8. Scons</h3><ul>
-<li>基于python的软件构建工具</li>
-</ul>
-<h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发工具 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Tips </tag>
-            
-            <tag> 开发工具 </tag>
+            <tag> ML </tag>
             
         </tags>
         
@@ -1104,6 +1109,64 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
             <tag> 开发工具 </tag>
             
             <tag> Visual Studio </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[开发工具推荐及相关使用]]></title>
+      <url>/2019/11/04/Basic_Software_Use/</url>
+      <content type="html"><![CDATA[<h1 id="开发工具及使用"><a href="#开发工具及使用" class="headerlink" title="开发工具及使用"></a>开发工具及使用</h1><p>+++</p>
+<h3 id="1-listary"><a href="#1-listary" class="headerlink" title="1. listary"></a>1. listary</h3><ul>
+<li>双击Ctrl全局搜索</li>
+<li>在文件管理器中双击空白处进行列表呼出</li>
+</ul>
+<h3 id="2-cmd"><a href="#2-cmd" class="headerlink" title="2.cmd"></a>2.cmd</h3><ul>
+<li>在当前文件目录的显示栏下输入 cmd ,即可在当前路径下打开命令行</li>
+</ul>
+<h3 id="3-stb-image简单图像库"><a href="#3-stb-image简单图像库" class="headerlink" title="3,stb_image简单图像库"></a>3,stb_image简单图像库</h3><ul>
+<li><p>重点关注三个头文件</p>
+</li>
+<li><figure class="image-box">
+                <img src="1570780034511.png.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
+<li>Shift+F10:鼠标右键快捷键</li>
+<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
+</ul>
+<h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
+<li>可集成到VS或者Unity3D中</li>
+</ul>
+<h3 id="6-Typora"><a href="#6-Typora" class="headerlink" title="6. Typora"></a>6. Typora</h3><ul>
+<li>Ctrl+/：源代码模式进入或者退出</li>
+</ul>
+<h3 id="7-Visual-Studio-Code"><a href="#7-Visual-Studio-Code" class="headerlink" title="7. Visual Studio Code"></a>7. Visual Studio Code</h3><ul>
+<li>Ctrl+Shift+P:调出主命令框</li>
+<li>Ctrl +K选中后，再按V：预览markdown效果</li>
+</ul>
+<h3 id="8-Scons"><a href="#8-Scons" class="headerlink" title="8. Scons"></a>8. Scons</h3><ul>
+<li>基于python的软件构建工具</li>
+</ul>
+<h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发工具 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Tips </tag>
+            
+            <tag> 开发工具 </tag>
             
         </tags>
         
