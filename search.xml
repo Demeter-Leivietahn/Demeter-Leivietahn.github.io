@@ -310,6 +310,111 @@
     </entry>
     
     <entry>
+      <title><![CDATA[C++学习（二）]]></title>
+      <url>/2019/11/05/C++_Learning_2/</url>
+      <content type="html"><![CDATA[<p>参考资料：CSDN 图形跟班 相关博客</p>
+<h1 id="C-重载操作符operator"><a href="#C-重载操作符operator" class="headerlink" title="C++重载操作符operator"></a>C++重载操作符operator</h1><h2 id="what："><a href="#what：" class="headerlink" title="what："></a>what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
+<h2 id="why"><a href="#why" class="headerlink" title="why:"></a>why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
+<h2 id="how-两种方式："><a href="#how-两种方式：" class="headerlink" title="how:两种方式："></a>how:两种方式：</h2><h3 id="将操作符重载实现为类的成员函数"><a href="#将操作符重载实现为类的成员函数" class="headerlink" title="将操作符重载实现为类的成员函数"></a>将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类结构中被声明的函数</span></span><br><span class="line"> <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> person&amp; ps) <span class="comment">//person为自己定义的类</span></span><br><span class="line"> ｛</span><br><span class="line"> 		If（<span class="keyword">this</span>-&gt;age == ps.age）&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"> ｝</span><br></pre></td></tr></table></figure>
+<h3 id="将操作符重载为非类的成员函数（即：全局函数）"><a href="#将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="将操作符重载为非类的成员函数（即：全局函数）"></a>将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **<br>即必须指明A==B中A的取值，而不能直接使用this关键字</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//全局函数</span></span><br><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span>==(person <span class="keyword">const</span> &amp; p1,person <span class="keyword">const</span> &amp; p2);</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(p1.age==p2.age)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>‘ 其中person的定义如下：’</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">person</span>&#123;</span></span><br><span class="line">	<span class="keyword">public</span> :</span><br><span class="line">		<span class="keyword">int</span> age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="C-中修饰符-inline-表示内联函数"><a href="#C-中修饰符-inline-表示内联函数" class="headerlink" title="C++中修饰符 inline,表示内联函数"></a>C++中修饰符 inline,表示内联函数</h1><h2 id="what"><a href="#what" class="headerlink" title="what:"></a>what:</h2><p>修饰为内联函数</p>
+<h2 id="why-1"><a href="#why-1" class="headerlink" title="why:"></a>why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
+<h2 id="how"><a href="#how" class="headerlink" title="how:"></a>how:</h2><figure class="image-box">
+                <img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+<p>inline使用限制：inline修饰的函数只适合于函数内部简单，没有包含复杂的逻辑结构，例如：while,switch，同时inline修饰的函数还不能自己调用自己。 </p>
+<p>建议inline函数的定义放置于头文件中</p>
+<p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="comment">//定义于类结构之内的函数默认为内联函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Foo</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果需要定义于类结构之外的内联函数</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span>  A::Foo(<span class="keyword">int</span> x,<span class="keyword">int</span> y)&#123;&#125;</span><br><span class="line"><span class="comment">//同时需要注意的是，inline必须于函数定义放置一起</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="C-头文件和实现函数分别写什么："><a href="#C-头文件和实现函数分别写什么：" class="headerlink" title="C++头文件和实现函数分别写什么："></a>C++头文件和实现函数分别写什么：</h1><h2 id="概览："><a href="#概览：" class="headerlink" title="概览："></a>概览：</h2><figure class="image-box">
+                <img src="image-20191110133905131.png" alt="[sorry,图片挂了]" title="[图表]" class="[samll]">
+                <p>[图表]</p>
+            </figure>
+<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><p>头文件的所有内容，都必须包含在<br>#ifndef {Filename}<br>#define {Filename}<br>//{Content of head file}<br>#endif<br><em>这样才能保证头文件被多个其他文件引用(include)时，内部的数据不会被多次定义而造成错误</em></p>
+<h2 id="inline限定符"><a href="#inline限定符" class="headerlink" title="inline限定符"></a>inline限定符</h2><ul>
+<li>在头文件中，可以对函数用inline限定符来告知编译器，这段函数非常的简单，可以直接嵌入到调用定义之处。</li>
+<li>当然inline的函数并不一定会被编译器作为inline来实现，如果函数过于复杂，编译器也会拒绝inline。</li>
+<li>因此简单说来，代码最好短到只有3-5行的才作为inline。有循环，分支，递归的函数都不要用做inline。</li>
+<li>对于在类定义内定义实现的函数，编译器自动当做有inline请求（也是不一定inline的）。因此在下边，我把带有inline限定符的函数成员和写在类定义体内的函数成员统称为“要inline的函数成员”</li>
+</ul>
+<h2 id="非模版类型"><a href="#非模版类型" class="headerlink" title="非模版类型"></a>非模版类型</h2><h3 id="全局类型"><a href="#全局类型" class="headerlink" title="全局类型"></a>全局类型</h3><p>就像前面笼统的话讲的：声明写在.h文件。<br>对于函数来讲，没有实现体的函数，就相当于是声明；而对于数据类型（包括基本类型和自定义类型）来说，其声明就需要用extern来修饰。<br>然后在.cpp文件里定义、实现或初始化这些全局函数和全局变量。</p>
+<h3 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h3><p>对于自定义类型，包括类（class）和结构体（struct），它们的定义都是放在.h文件中。<br>函数成员：<br>函数成员无论是否带有static限定符，其申明都放在.h文件的类定义内部。<br>对于要inline的函数成员其定义放在.h文件；其他函数的实现都放在.cpp文件中。<br>数据成员：<br>数据成员的申明与定义都是放在.h文件的类定义内部。对于数据类型，关键问题是其初始化要放在什么地方进行。</p>
+<ul>
+<li>对于只含有static限定符的数据成员，它的初始化要放在.cpp文件中。因为它是所有类对象共有的，因此必须对它做合适的初始化。</li>
+<li>对于只含有const限定符的数据成员，它的初始化只能在构造函数的初始化列表中完成。因为它是一经初始化就不能重新赋值，因此它也必须进行合适的初始化。</li>
+<li>对于既含有static限定符，又含有const限定符的数据成员，它的初始化和定义同时进行。它也是必须进行合适的初始化</li>
+<li>对于既没有static限定符，又没有const限定符的数据成员，它的值只针对本对象可以随意修改，因此我们并不在意它的初始化什么时候进行。</li>
+</ul>
+<h2 id="模版类型"><a href="#模版类型" class="headerlink" title="模版类型"></a>模版类型</h2><p>对于模板，最重要的一点，就是在定义它的时候，编译器并不会对它进行编译，因为它没有一个实体可用。<br>只有模板被具体化（specialization）之后（用在特定的类型上），编译器才会根据具体的类型对模板进行编译。所以定义模板的时候，会发现编译器基本不会报错<br>因为模板的这种特殊性，它并没有自己的准确定义，因此我们不能把它放在.cpp文件中，而要把他们全部放在.h文件中进行书写。这也是为了在模板具体化的时候，能够让编译器可以找到模板的所有定义在哪里，以便真正的定义方法。</p>
+<hr>
+<h1 id="4-C-中的const修饰符"><a href="#4-C-中的const修饰符" class="headerlink" title="4.C++中的const修饰符"></a>4.C++中的const修饰符</h1><h2 id="const-修饰函数"><a href="#const-修饰函数" class="headerlink" title="const 修饰函数"></a>const 修饰函数</h2><p>表明该函数<strong>不修改类对象</strong>（不改变对象的非const成员变量. 也不能调用类中任何非const成员函数）。<br>格式：<strong>关键字const被放在成员函数的参数表（即“()”）和函数体（即“{}”）之间。</strong></p>
+<ul>
+<li>如下代码，const修饰的是函数x()。表示该函数的函数体中的操作不会修改当前这个类的类对象。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">float</span> <span class="title">x</span><span class="params">()</span><span class="keyword">const</span></span>&#123;<span class="keyword">return</span> e[<span class="number">0</span>];&#125;</span><br></pre></td></tr></table></figure></li>
+<li>又如如下代码，const修饰的是函数operator+()。表示该函数的函数体中的操作不会修改当前这个类的类对象。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">const</span> vec3&amp; <span class="keyword">operator</span>+()<span class="keyword">const</span>&#123;<span class="keyword">return</span> *<span class="keyword">this</span>;&#125;</span><br></pre></td></tr></table></figure></li>
+<li>另外，对于在类体之外定义的const成员函数，我们必须在它的定义和声明中同时指定关键字const。比如：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">float</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span></span>; <span class="comment">//declaration</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">float</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span></span>&#123; <span class="comment">//definition </span></span><br><span class="line">	<span class="keyword">return</span> e[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="const-修饰函数参数"><a href="#const-修饰函数参数" class="headerlink" title="const 修饰函数参数"></a>const 修饰函数参数</h2>表示函数体中不能修改参数的值（包括参数本身的值或者参数其中包含的值）。比如如下代码：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> vec3&amp; vec3::<span class="keyword">operator</span>+=(<span class="keyword">const</span> vec3 &amp;v)&#123;</span><br><span class="line">	e[<span class="number">0</span>]+=v.e[<span class="number">0</span>];</span><br><span class="line">	e[<span class="number">1</span>]+=v.e[<span class="number">1</span>];</span><br><span class="line">	e[<span class="number">2</span>]+=v.e[<span class="number">2</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="const-修饰函数返回值"><a href="#const-修饰函数返回值" class="headerlink" title="const 修饰函数返回值"></a>const 修饰函数返回值</h2><ul>
+<li>const修饰函数返回值：<br>其实用的并不是很多，它的含义和const修饰普通变量以及指针的含义基本相同。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>  .<span class="function"><span class="keyword">const</span> <span class="keyword">int</span> <span class="title">fun1</span><span class="params">()</span><span class="comment">//函数返回的是值</span></span></span><br><span class="line">2.  const int* fun2()//函数返回的是指针，调用时:const int* pValue=fun2();</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>  <span class="function"><span class="keyword">int</span>* <span class="keyword">const</span> <span class="title">fun3</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">//函数返回的是指针（不是值）：调用时 int* const pValue = fun3();</span></span></span><br><span class="line"><span class="function"><span class="comment">//我们可以把fun3()看作成一个变量，即指针本身不可变。</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>结合《RayTracing in One-Weekend》的源码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">const</span> vec3&amp; <span class="keyword">operator</span>+()&#123;<span class="keyword">return</span> *<span class="keyword">this</span>;&#125;</span><br></pre></td></tr></table></figure>
+<p>这个就属于上面第二种情况，即函数operator+()返回的是一个vec3类型的对象的指针/引用。此处const表示该指针所指向的vec3类型的对象不可变。 </p>
+<h1 id="C-中this指针"><a href="#C-中this指针" class="headerlink" title="C++中this指针"></a>C++中this指针</h1><p>每个类成员函数都含有一个指向被调用对象的指针，这个指针被称为this指针。<br>this表示被调用对象的指针；<br>*this表示被调用对象本身；<br>例如如下代码中，</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> Screen::<span class="built_in">home</span>()&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;<span class="built_in">cursor</span>=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//this表示被调用对象的指针</span></span><br><span class="line"><span class="comment">//this-&gt;cursor表示被调用对象的成员变量cursor，此处对该成员变量赋值。</span></span><br></pre></td></tr></table></figure>
+<p>又如之前多次引用的《RayTracing-OneWeekend》中的code:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> vec3&amp; vec3::<span class="keyword">operator</span>+=(<span class="keyword">const</span> vec3&amp;v)&#123;</span><br><span class="line">	e[<span class="number">0</span>]=v.e[<span class="number">0</span>];</span><br><span class="line">	e[<span class="number">1</span>]=v.e[<span class="number">1</span>];</span><br><span class="line">	e[<span class="number">2</span>]=v.e[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于函数定义的函数返回是引用类型，即返回的不是值或者指针，而是对象本身。所以，此处需要return *this来返回对象本身，而不是return this（返回的是指针）。</p>
+<h1 id="C-中使用初始化列表的构造函数"><a href="#C-中使用初始化列表的构造函数" class="headerlink" title="C++中使用初始化列表的构造函数"></a>C++中使用初始化列表的构造函数</h1><h2 id="代码实例："><a href="#代码实例：" class="headerlink" title="代码实例："></a>代码实例：</h2><p>结合《RayTracing One Weekend》中代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sphere</span>:</span><span class="keyword">public</span> hitable&#123;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">	sphere()&#123;&#125;</span><br><span class="line">	<span class="comment">//使用初始化列表的构造函数</span></span><br><span class="line">	sphere(vec3 cen,<span class="keyword">float</span> r):center(cen),radius(r)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">hit</span><span class="params">(<span class="keyword">const</span> ray&amp;r,<span class="keyword">float</span> tmin,<span class="keyword">float</span> tmax,hit_record &amp;rec)</span><span class="keyword">const</span></span>;</span><br><span class="line">	vec3 center;</span><br><span class="line">	<span class="keyword">float</span> radius;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="讲解"><a href="#讲解" class="headerlink" title="讲解"></a>讲解</h2><p>构造函数初始化列表以一个冒号开始，接着是以逗号分隔的数据成员列表，每个数据成员后面跟一个放在括号中的初始化式。<br>上面这条语句做的事情是：将center初始化为cen；将radius初始化为r。特别注意这里是初始化，<br>不是赋值，<br>不是赋值，<br>不是赋值。</p>
+<p>其等效的使用函数体的构造函数是：（函数体中是赋值）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sphere(vec3 cen,<span class="keyword">float</span> r)&#123;</span><br><span class="line">	center=cen;</span><br><span class="line">	radius=r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="与使用函数体的构造函数区别"><a href="#与使用函数体的构造函数区别" class="headerlink" title="与使用函数体的构造函数区别"></a>与使用函数体的构造函数区别</h2><p>根本区别可以归结于“初始化”和“赋值”的区别<br>其一，“赋值”是属于计算。所以，时序上，初始化早于赋值<br>其二，有些类型的变量是只能初始化，不能赋值的。比如 const和引用。</p>
+<p>构造函数可以分两个阶段进行：（1）初始化阶段；（2）普通计算阶段。</p>
+<p>构造函数初始化列表是对类的成员做初始化，而在构造函数体内只是对类的数据成员进行了一次赋值操作。</p>
+<p>因此我们需要注意的是：<br>一、若类的数据成员是const和引用类型，必须用初始化列表。<br>const的数据成员只能初始化而不能赋值，同样引用类型也是只可以被初始化，那么只有用初始化列表。<br>二、构造函数体内赋值会带来额外的开销，效率会低于构造函数初始化列表。</p>
+<h1 id="C-中添加log开关"><a href="#C-中添加log开关" class="headerlink" title="C++中添加log开关"></a>C++中添加log开关</h1><p>用宏进行控制<br>创建一个log.h文件：<br>在文件中定义宏：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> LOG_H_INCLUDED</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAIN_LOG1 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAIN_LOG2 0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="comment">//此时MAIN_LOG1 开启状态，MAIN_LOG2关闭状态</span></span><br></pre></td></tr></table></figure>
+<p>然后在需要的地方，引入上述log.h文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"log.h"</span></span></span><br></pre></td></tr></table></figure>
+<p>然后在程序中加入：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> MAIN_LOG1==1</span></span><br><span class="line">	XXXX</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> MAIN_LOG2==1</span></span><br><span class="line">	XXXX</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="C-中使用全局变量输出某行执行的次数"><a href="#C-中使用全局变量输出某行执行的次数" class="headerlink" title="C++中使用全局变量输出某行执行的次数"></a>C++中使用全局变量输出某行执行的次数</h1><p>具体做法是：<br>第一步：在当前文件的开头定义一个全局变量counter初始化为0（注意，是全局变脸，不是局部变量，所以不要定义在某函数内部）；<br>第二步：在目标位置使用全局变量来计数， counter ++<br>第三步：在主函数（主函数和之前的全局变量不在同一个文件）所在文件的开头extern之前定义的全局变量；<br>第四步：在主函数快结束的地方将全局变量打印出来即可。std::cout &lt;&lt; counter &lt;&lt; endl;</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Computer-Science </category>
+            
+            <category> Programming Language </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Programming Language </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C++学习（一）]]></title>
       <url>/2019/11/05/C++_Learning_1/</url>
       <content type="html"><![CDATA[<h1 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><figure class="image-box">
@@ -657,180 +762,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[C++学习（二）]]></title>
-      <url>/2019/11/05/C++_Learning_2/</url>
-      <content type="html"><![CDATA[<p>参考资料：CSDN 图形跟班 相关博客</p>
-<h1 id="C-重载操作符operator"><a href="#C-重载操作符operator" class="headerlink" title="C++重载操作符operator"></a>C++重载操作符operator</h1><h2 id="what："><a href="#what：" class="headerlink" title="what："></a>what：</h2><p>C++中的一个关键字，和运算符（例如=）一起使用，表示一个运算符重载函数，使扩展后的运算符的使用方法与重载前一致。</p>
-<h2 id="why"><a href="#why" class="headerlink" title="why:"></a>why:</h2><p>C++提供的所有运算符只能支持对于基本数据类型以及标准库中提供的类的操作，而对于用户自己定义的类，如果想要通过操作符进行一些基本操作（比如：大小比较，相等判断等），需要用户自己定义操作符的具体实现。</p>
-<h2 id="how-两种方式："><a href="#how-两种方式：" class="headerlink" title="how:两种方式："></a>how:两种方式：</h2><h3 id="将操作符重载实现为类的成员函数"><a href="#将操作符重载实现为类的成员函数" class="headerlink" title="将操作符重载实现为类的成员函数"></a>将操作符重载实现为类的成员函数</h3><p><strong>在类体中声明需要重载的操作符时，声明方式跟普通的成员函数一样</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类结构中被声明的函数</span></span><br><span class="line"> <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> person&amp; ps) <span class="comment">//person为自己定义的类</span></span><br><span class="line"> ｛</span><br><span class="line"> 		If（<span class="keyword">this</span>-&gt;age == ps.age）&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"> ｝</span><br></pre></td></tr></table></figure>
-<h3 id="将操作符重载为非类的成员函数（即：全局函数）"><a href="#将操作符重载为非类的成员函数（即：全局函数）" class="headerlink" title="将操作符重载为非类的成员函数（即：全局函数）"></a>将操作符重载为非类的成员函数（即：全局函数）</h3><p>** 对于全局重载操作符，代表左操作数的参数必须被显式指定  **<br>即必须指明A==B中A的取值，而不能直接使用this关键字</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//全局函数</span></span><br><span class="line"><span class="keyword">bool</span> <span class="keyword">operator</span>==(person <span class="keyword">const</span> &amp; p1,person <span class="keyword">const</span> &amp; p2);</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(p1.age==p2.age)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>‘ 其中person的定义如下：’</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">person</span>&#123;</span></span><br><span class="line">	<span class="keyword">public</span> :</span><br><span class="line">		<span class="keyword">int</span> age;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h1 id="C-中修饰符-inline-表示内联函数"><a href="#C-中修饰符-inline-表示内联函数" class="headerlink" title="C++中修饰符 inline,表示内联函数"></a>C++中修饰符 inline,表示内联函数</h1><h2 id="what"><a href="#what" class="headerlink" title="what:"></a>what:</h2><p>修饰为内联函数</p>
-<h2 id="why-1"><a href="#why-1" class="headerlink" title="why:"></a>why:</h2><p>为了解决<strong>频繁调用</strong>的小函数大量消耗栈空间的问题<br>（栈空间：放置程序的局部数据的内存空间）<br>避免频繁调用函数对栈空间重复开辟所带来的消耗</p>
-<h2 id="how"><a href="#how" class="headerlink" title="how:"></a>how:</h2><figure class="image-box">
-                <img src="wps1.jpg" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
-            </figure>
-
-<p>inline使用限制：inline修饰的函数只适合于函数内部简单，没有包含复杂的逻辑结构，例如：while,switch，同时inline修饰的函数还不能自己调用自己。 </p>
-<p>建议inline函数的定义放置于头文件中</p>
-<p>定义在类中的函数都是默认内联的，如果需要将类中的方法写于类结构之外，而又想为内联函数，则需要显式声明为inline</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="comment">//定义于类结构之内的函数默认为内联函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Foo</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果需要定义于类结构之外的内联函数</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span>  A::Foo(<span class="keyword">int</span> x,<span class="keyword">int</span> y)&#123;&#125;</span><br><span class="line"><span class="comment">//同时需要注意的是，inline必须于函数定义放置一起</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="C-头文件和实现函数分别写什么："><a href="#C-头文件和实现函数分别写什么：" class="headerlink" title="C++头文件和实现函数分别写什么："></a>C++头文件和实现函数分别写什么：</h1><h2 id="概览："><a href="#概览：" class="headerlink" title="概览："></a>概览：</h2><figure class="image-box">
-                <img src="image-20191110133905131.png" alt="[sorry,图片挂了]" title="[图表]" class="[samll]">
-                <p>[图表]</p>
-            </figure>
-<h2 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h2><p>头文件的所有内容，都必须包含在<br>#ifndef {Filename}<br>#define {Filename}<br>//{Content of head file}<br>#endif<br><em>这样才能保证头文件被多个其他文件引用(include)时，内部的数据不会被多次定义而造成错误</em></p>
-<h2 id="inline限定符"><a href="#inline限定符" class="headerlink" title="inline限定符"></a>inline限定符</h2><ul>
-<li>在头文件中，可以对函数用inline限定符来告知编译器，这段函数非常的简单，可以直接嵌入到调用定义之处。</li>
-<li>当然inline的函数并不一定会被编译器作为inline来实现，如果函数过于复杂，编译器也会拒绝inline。</li>
-<li>因此简单说来，代码最好短到只有3-5行的才作为inline。有循环，分支，递归的函数都不要用做inline。</li>
-<li>对于在类定义内定义实现的函数，编译器自动当做有inline请求（也是不一定inline的）。因此在下边，我把带有inline限定符的函数成员和写在类定义体内的函数成员统称为“要inline的函数成员”</li>
-</ul>
-<h2 id="非模版类型"><a href="#非模版类型" class="headerlink" title="非模版类型"></a>非模版类型</h2><h3 id="全局类型"><a href="#全局类型" class="headerlink" title="全局类型"></a>全局类型</h3><p>就像前面笼统的话讲的：声明写在.h文件。<br>对于函数来讲，没有实现体的函数，就相当于是声明；而对于数据类型（包括基本类型和自定义类型）来说，其声明就需要用extern来修饰。<br>然后在.cpp文件里定义、实现或初始化这些全局函数和全局变量。</p>
-<h3 id="自定义类型"><a href="#自定义类型" class="headerlink" title="自定义类型"></a>自定义类型</h3><p>对于自定义类型，包括类（class）和结构体（struct），它们的定义都是放在.h文件中。<br>函数成员：<br>函数成员无论是否带有static限定符，其申明都放在.h文件的类定义内部。<br>对于要inline的函数成员其定义放在.h文件；其他函数的实现都放在.cpp文件中。<br>数据成员：<br>数据成员的申明与定义都是放在.h文件的类定义内部。对于数据类型，关键问题是其初始化要放在什么地方进行。</p>
-<ul>
-<li>对于只含有static限定符的数据成员，它的初始化要放在.cpp文件中。因为它是所有类对象共有的，因此必须对它做合适的初始化。</li>
-<li>对于只含有const限定符的数据成员，它的初始化只能在构造函数的初始化列表中完成。因为它是一经初始化就不能重新赋值，因此它也必须进行合适的初始化。</li>
-<li>对于既含有static限定符，又含有const限定符的数据成员，它的初始化和定义同时进行。它也是必须进行合适的初始化</li>
-<li>对于既没有static限定符，又没有const限定符的数据成员，它的值只针对本对象可以随意修改，因此我们并不在意它的初始化什么时候进行。</li>
-</ul>
-<h2 id="模版类型"><a href="#模版类型" class="headerlink" title="模版类型"></a>模版类型</h2><p>对于模板，最重要的一点，就是在定义它的时候，编译器并不会对它进行编译，因为它没有一个实体可用。<br>只有模板被具体化（specialization）之后（用在特定的类型上），编译器才会根据具体的类型对模板进行编译。所以定义模板的时候，会发现编译器基本不会报错<br>因为模板的这种特殊性，它并没有自己的准确定义，因此我们不能把它放在.cpp文件中，而要把他们全部放在.h文件中进行书写。这也是为了在模板具体化的时候，能够让编译器可以找到模板的所有定义在哪里，以便真正的定义方法。</p>
-<hr>
-<h1 id="4-C-中的const修饰符"><a href="#4-C-中的const修饰符" class="headerlink" title="4.C++中的const修饰符"></a>4.C++中的const修饰符</h1><h2 id="const-修饰函数"><a href="#const-修饰函数" class="headerlink" title="const 修饰函数"></a>const 修饰函数</h2><p>表明该函数<strong>不修改类对象</strong>（不改变对象的非const成员变量. 也不能调用类中任何非const成员函数）。<br>格式：<strong>关键字const被放在成员函数的参数表（即“()”）和函数体（即“{}”）之间。</strong></p>
-<ul>
-<li>如下代码，const修饰的是函数x()。表示该函数的函数体中的操作不会修改当前这个类的类对象。 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">float</span> <span class="title">x</span><span class="params">()</span><span class="keyword">const</span></span>&#123;<span class="keyword">return</span> e[<span class="number">0</span>];&#125;</span><br></pre></td></tr></table></figure></li>
-<li>又如如下代码，const修饰的是函数operator+()。表示该函数的函数体中的操作不会修改当前这个类的类对象。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">const</span> vec3&amp; <span class="keyword">operator</span>+()<span class="keyword">const</span>&#123;<span class="keyword">return</span> *<span class="keyword">this</span>;&#125;</span><br></pre></td></tr></table></figure></li>
-<li>另外，对于在类体之外定义的const成员函数，我们必须在它的定义和声明中同时指定关键字const。比如：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">float</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span></span>; <span class="comment">//declaration</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">float</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span></span>&#123; <span class="comment">//definition </span></span><br><span class="line">	<span class="keyword">return</span> e[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="const-修饰函数参数"><a href="#const-修饰函数参数" class="headerlink" title="const 修饰函数参数"></a>const 修饰函数参数</h2>表示函数体中不能修改参数的值（包括参数本身的值或者参数其中包含的值）。比如如下代码：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> vec3&amp; vec3::<span class="keyword">operator</span>+=(<span class="keyword">const</span> vec3 &amp;v)&#123;</span><br><span class="line">	e[<span class="number">0</span>]+=v.e[<span class="number">0</span>];</span><br><span class="line">	e[<span class="number">1</span>]+=v.e[<span class="number">1</span>];</span><br><span class="line">	e[<span class="number">2</span>]+=v.e[<span class="number">2</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="const-修饰函数返回值"><a href="#const-修饰函数返回值" class="headerlink" title="const 修饰函数返回值"></a>const 修饰函数返回值</h2><ul>
-<li>const修饰函数返回值：<br>其实用的并不是很多，它的含义和const修饰普通变量以及指针的含义基本相同。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>  .<span class="function"><span class="keyword">const</span> <span class="keyword">int</span> <span class="title">fun1</span><span class="params">()</span><span class="comment">//函数返回的是值</span></span></span><br><span class="line">2.  const int* fun2()//函数返回的是指针，调用时:const int* pValue=fun2();</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>  <span class="function"><span class="keyword">int</span>* <span class="keyword">const</span> <span class="title">fun3</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="comment">//函数返回的是指针（不是值）：调用时 int* const pValue = fun3();</span></span></span><br><span class="line"><span class="function"><span class="comment">//我们可以把fun3()看作成一个变量，即指针本身不可变。</span></span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>结合《RayTracing in One-Weekend》的源码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">const</span> vec3&amp; <span class="keyword">operator</span>+()&#123;<span class="keyword">return</span> *<span class="keyword">this</span>;&#125;</span><br></pre></td></tr></table></figure>
-<p>这个就属于上面第二种情况，即函数operator+()返回的是一个vec3类型的对象的指针/引用。此处const表示该指针所指向的vec3类型的对象不可变。 </p>
-<h1 id="C-中this指针"><a href="#C-中this指针" class="headerlink" title="C++中this指针"></a>C++中this指针</h1><p>每个类成员函数都含有一个指向被调用对象的指针，这个指针被称为this指针。<br>this表示被调用对象的指针；<br>*this表示被调用对象本身；<br>例如如下代码中，</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> Screen::<span class="built_in">home</span>()&#123;</span><br><span class="line">	<span class="keyword">this</span>-&gt;<span class="built_in">cursor</span>=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//this表示被调用对象的指针</span></span><br><span class="line"><span class="comment">//this-&gt;cursor表示被调用对象的成员变量cursor，此处对该成员变量赋值。</span></span><br></pre></td></tr></table></figure>
-<p>又如之前多次引用的《RayTracing-OneWeekend》中的code:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> vec3&amp; vec3::<span class="keyword">operator</span>+=(<span class="keyword">const</span> vec3&amp;v)&#123;</span><br><span class="line">	e[<span class="number">0</span>]=v.e[<span class="number">0</span>];</span><br><span class="line">	e[<span class="number">1</span>]=v.e[<span class="number">1</span>];</span><br><span class="line">	e[<span class="number">2</span>]=v.e[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由于函数定义的函数返回是引用类型，即返回的不是值或者指针，而是对象本身。所以，此处需要return *this来返回对象本身，而不是return this（返回的是指针）。</p>
-<h1 id="C-中使用初始化列表的构造函数"><a href="#C-中使用初始化列表的构造函数" class="headerlink" title="C++中使用初始化列表的构造函数"></a>C++中使用初始化列表的构造函数</h1><h2 id="代码实例："><a href="#代码实例：" class="headerlink" title="代码实例："></a>代码实例：</h2><p>结合《RayTracing One Weekend》中代码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sphere</span>:</span><span class="keyword">public</span> hitable&#123;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">	sphere()&#123;&#125;</span><br><span class="line">	<span class="comment">//使用初始化列表的构造函数</span></span><br><span class="line">	sphere(vec3 cen,<span class="keyword">float</span> r):center(cen),radius(r)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">hit</span><span class="params">(<span class="keyword">const</span> ray&amp;r,<span class="keyword">float</span> tmin,<span class="keyword">float</span> tmax,hit_record &amp;rec)</span><span class="keyword">const</span></span>;</span><br><span class="line">	vec3 center;</span><br><span class="line">	<span class="keyword">float</span> radius;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="讲解"><a href="#讲解" class="headerlink" title="讲解"></a>讲解</h2><p>构造函数初始化列表以一个冒号开始，接着是以逗号分隔的数据成员列表，每个数据成员后面跟一个放在括号中的初始化式。<br>上面这条语句做的事情是：将center初始化为cen；将radius初始化为r。特别注意这里是初始化，<br>不是赋值，<br>不是赋值，<br>不是赋值。</p>
-<p>其等效的使用函数体的构造函数是：（函数体中是赋值）</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sphere(vec3 cen,<span class="keyword">float</span> r)&#123;</span><br><span class="line">	center=cen;</span><br><span class="line">	radius=r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="与使用函数体的构造函数区别"><a href="#与使用函数体的构造函数区别" class="headerlink" title="与使用函数体的构造函数区别"></a>与使用函数体的构造函数区别</h2><p>根本区别可以归结于“初始化”和“赋值”的区别<br>其一，“赋值”是属于计算。所以，时序上，初始化早于赋值<br>其二，有些类型的变量是只能初始化，不能赋值的。比如 const和引用。</p>
-<p>构造函数可以分两个阶段进行：（1）初始化阶段；（2）普通计算阶段。</p>
-<p>构造函数初始化列表是对类的成员做初始化，而在构造函数体内只是对类的数据成员进行了一次赋值操作。</p>
-<p>因此我们需要注意的是：<br>一、若类的数据成员是const和引用类型，必须用初始化列表。<br>const的数据成员只能初始化而不能赋值，同样引用类型也是只可以被初始化，那么只有用初始化列表。<br>二、构造函数体内赋值会带来额外的开销，效率会低于构造函数初始化列表。</p>
-<h1 id="C-中添加log开关"><a href="#C-中添加log开关" class="headerlink" title="C++中添加log开关"></a>C++中添加log开关</h1><p>用宏进行控制<br>创建一个log.h文件：<br>在文件中定义宏：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> LOG_H_INCLUDED</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAIN_LOG1 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAIN_LOG2 0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="comment">//此时MAIN_LOG1 开启状态，MAIN_LOG2关闭状态</span></span><br></pre></td></tr></table></figure>
-<p>然后在需要的地方，引入上述log.h文件</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"log.h"</span></span></span><br></pre></td></tr></table></figure>
-<p>然后在程序中加入：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> MAIN_LOG1==1</span></span><br><span class="line">	XXXX</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> MAIN_LOG2==1</span></span><br><span class="line">	XXXX</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="C-中使用全局变量输出某行执行的次数"><a href="#C-中使用全局变量输出某行执行的次数" class="headerlink" title="C++中使用全局变量输出某行执行的次数"></a>C++中使用全局变量输出某行执行的次数</h1><p>具体做法是：<br>第一步：在当前文件的开头定义一个全局变量counter初始化为0（注意，是全局变脸，不是局部变量，所以不要定义在某函数内部）；<br>第二步：在目标位置使用全局变量来计数， counter ++<br>第三步：在主函数（主函数和之前的全局变量不在同一个文件）所在文件的开头extern之前定义的全局变量；<br>第四步：在主函数快结束的地方将全局变量打印出来即可。std::cout &lt;&lt; counter &lt;&lt; endl;</p>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> Programming Language </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Programming Language </tag>
-            
-            <tag> C++ </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[全局光照（总览）]]></title>
-      <url>/2019/11/05/GI_1/</url>
-      <content type="html"><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><ul>
-<li>全局光照，(Global Illumination,简称 GI), 或被称为Indirect Illumination, 间接光照，是指既考虑场景中直接来自光源的光照（Direct Light）又考虑经过场景中其他物体反射后的光照（Indirect Light）的一种渲染技术。使用全局光照能够有效地增强场景的真实感。</li>
-</ul>
-<p>即可以理解为：全局光照 = 直接光照(Direct Light) + 间接光照(Indirect Light)<br>下面是直接光照和全局光照的对比</p>
-<p>@column-2{</p>
-<p>@card{</p>
-<figure class="image-box">
-                <img src="1.jpg" alt="[sorry,图片挂了]" title="[直接光照]" class="justify-small">
-                <p>[直接光照]</p>
-            </figure>
-
-<p>}</p>
-<p>@card{</p>
-<figure class="image-box">
-                <img src="2.jpg" alt="[sorry,图片挂了]" title="[全局光照]" class="justify-small">
-                <p>[全局光照]</p>
-            </figure>
-
-<p>}</p>
-<p>}</p>
-<p><strong>全局光照技术历程</strong></p>
-<ul>
-<li><p>光线投射 Ray Casting<br>其具体思路是从每一个像素射出一条射线，然后找到最接近的物体挡住射线的路径，而视平面上每个像素的颜色取决于从可见光表面产生的亮度。</p>
-</li>
-<li><p>光线追踪 Ray Tracing<br>Turner Whitted在光线投射的基础上，加入光与物体表面的交互，让光线在物体表面沿着反射，折射以及散射方式上继续传播，直到与光源相交。<br>这一方法后来也被称为经典光线跟踪方法、递归式光线追踪（Recursive Ray Tracing）方法，或 Whitted-style 光线跟踪方法。</p>
-</li>
-<li><p>分布式光线追踪 Distributed Ray Tracing<br>Cook于1984年引入蒙特卡洛方法（Monte Carlo method）到光线跟踪领域，将经典的光线跟踪方法扩展为分布式光线跟踪算法，又称为随机光线追踪。<br>可以模拟更多的效果，如金属光泽、软阴影、景深（ Depthof Field）、运动模糊等等。</p>
-</li>
-<li><p>渲染方程 The Rendering Equation<br>Kajiya于1986年建立了渲染方程的相关理论，使用它来解释光能传输的产生的各种现象。这一方程描述了场景中光能传输达到稳定状态以后，物体表面某个点在某个方向上的辐射率（Radiance）与入射辐射亮度等的关系。<br>可以将渲染方程理解为全局光照算法的基础，随后出现的很多全局光照的算法，都是以渲染方程为基础，对其进行简化的求解，以达到优化性能的目的。渲染方程根据光的物理学原理，以及能量守恒定律，完美地描述了光能在场景中的传播。很多真实感渲染技术都是对它的一个近似。</p>
-</li>
-<li><p>路径追踪 Path Tracing<br>根据渲染方程， Kajiya 提出的路径追踪方法是第一个无偏（Unbiased）的渲染方法。<br>路径追踪的基本思想是从视点发出一条光线，光线与物体表面相交时根据表面的材质属性继续采样一个方向，发出另一条光线，如此迭代，直到光线打到光源上（或逃逸出场景），然后用蒙特卡洛的方法，计算其贡献，作为像素的颜色值。而使用蒙特卡洛方法对积分的求解是无偏的，只要时间足够长，最终图像能收敛到一个正确的结果。</p>
-</li>
-<li><p>双向路径追踪 Bidirectional Path Tracing<br>基本思想是同时从视点、光源打出射线，经过若干次反弹后，将视点子路径（ eye path） 和光源子路径（ light path） 上的顶点连接起来（连接时需要测试可见性），以快速产生很多路径。<br>这种方法能够产生一些传统路径追踪难以采样到的光路，所以能够很有效地降低噪声。<br>进一步的， [Veach 1997]将渲染方程改写成对路径积分的形式，允许多种路径采样的方法来求解该积分。</p>
-</li>
-<li><p>梅特波利斯光照传输 Metropolis Light Transport 简称MLT<br>路径追踪（ Path Tracing）中一个核心问题就是怎样去尽可能多的采样一些贡献大的路径，而该方法可以自适应的生成贡献大的路径，简单来说它会避开贡献小的路径，而在贡献大的路径附近做更多局部的探索，通过特殊的变异方法，生成一些新的路径，这些局部的路径的贡献往往也很高。<br>与双向路径追踪相比， MLT 更加鲁棒，能处理各种复杂的场景。<br>比如说整个场景只通过门缝透进来的间接光照亮，此时传统的路径追踪方法因为难以采样到透过门缝的这样的特殊路径而产生非常大的噪声。</p>
-</li>
-</ul>
-<p><strong>回到光线追踪（Ray Tracing）上:</strong><br>上面我们说到Ray Tracing是三维计算机图形学中的特殊渲染方法，跟踪从眼睛发出的光线而不是光源发出的光线。<br>通过这样一项技术得到的结果有着更好的光线效果，例如对于反射和折射有着更准确的模拟效果，并且效率非常高，追求高质量图像时常采用这样的方式。<br>Ray Tracing的缺点就是性能，它所需要的计算量非常巨大。<br>传统的RayTracing并不一定是真实效果图像，只有在非常近似或者完全实现渲染方程时，才能实现真正的真实效果图像。由于渲染方程描述了每个光束的物理效果，所以实现渲染方程可以得到真正的真实效果，但是，考虑到所需要的计算资源，这通常是无法实现的。于是，所有可以实现的渲染模型都必须是渲染方程的近似，而光线跟踪就不一定是最为可行的方法。包括光子映射在内的一些方法，都是依据光线跟踪实现一部分算法，但是可以得到更好的效果。</p>
-<p><strong>再讲到路径追踪（Path Tracing）上：</strong><br>简单来说，路径追踪 = 光线追踪+ 蒙特卡洛方法。</p>
-<p><strong>我们再来总结一下Ray Casting，Ray Tracing，PathTracing这三者的区别</strong></p>
-<ul>
-<li>Ray Casting：其它就是ray tracing的第一步，发射光线，与物体相交。</li>
-<li>Ray Tracing：这其实是个框架，而不是个方法。符合这个框架的都叫raytracing。这个框架就是从视点发射ray，与物体相交就根据规则反射、折射或吸收。遇到光源或者走太远就停住。一般来说运算量不小。</li>
-<li>Path Tracing：是ray tracing + 蒙特卡洛法。在相交后会选一个随机方向继续跟踪，并根据BRDF计算颜色。运算量也不小。还有一些小分类，比如Bidirectional path tracing。</li>
-</ul>
-<p><strong>最后我们来学习一下AO</strong><br>AO是Ambient Occlusion的简称，是全局光照明的一种近似替代品，<br>可以产生重要的视觉明暗效果，通过描绘物体之间由于遮挡而产生的阴影， 能够更好地捕捉到场景中的细节，可以解决漏光，阴影漂浮等问题，改善场景中角落、锯齿、裂缝等细小物体阴影不清。<br>AO最常用的方法是SSAO，UE4中的AO即是采用这种方案</p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1308281829&auto=1&height=66"></iframe>
-]]></content>
-      
-        <categories>
-            
-            <category> Computer-Science </category>
-            
-            <category> RayTracing </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> RayTracing </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Matlab相关]]></title>
       <url>/2019/11/05/Matlab_Learning/</url>
       <content type="html"><![CDATA[<h1 id="Matlab学习"><a href="#Matlab学习" class="headerlink" title="Matlab学习"></a>Matlab学习</h1><h3 id="1-dir-使用"><a href="#1-dir-使用" class="headerlink" title="1. dir()使用"></a>1. dir()使用</h3><p>dir函数可以有调用方式</p>
@@ -1028,58 +959,69 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
     </entry>
     
     <entry>
-      <title><![CDATA[开发工具推荐及相关使用]]></title>
-      <url>/2019/11/04/Basic_Software_Use/</url>
-      <content type="html"><![CDATA[<h1 id="开发工具及使用"><a href="#开发工具及使用" class="headerlink" title="开发工具及使用"></a>开发工具及使用</h1><p>+++</p>
-<h3 id="1-listary"><a href="#1-listary" class="headerlink" title="1. listary"></a>1. listary</h3><ul>
-<li>双击Ctrl全局搜索</li>
-<li>在文件管理器中双击空白处进行列表呼出</li>
+      <title><![CDATA[全局光照（总览）]]></title>
+      <url>/2019/11/05/GI_1/</url>
+      <content type="html"><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><ul>
+<li>全局光照，(Global Illumination,简称 GI), 或被称为Indirect Illumination, 间接光照，是指既考虑场景中直接来自光源的光照（Direct Light）又考虑经过场景中其他物体反射后的光照（Indirect Light）的一种渲染技术。使用全局光照能够有效地增强场景的真实感。</li>
 </ul>
-<h3 id="2-cmd"><a href="#2-cmd" class="headerlink" title="2.cmd"></a>2.cmd</h3><ul>
-<li>在当前文件目录的显示栏下输入 cmd ,即可在当前路径下打开命令行</li>
-</ul>
-<h3 id="3-stb-image简单图像库"><a href="#3-stb-image简单图像库" class="headerlink" title="3,stb_image简单图像库"></a>3,stb_image简单图像库</h3><ul>
-<li><p>重点关注三个头文件</p>
-</li>
-<li><figure class="image-box">
-                <img src="1570780034511.png.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
-                <p>[image]</p>
+<p>即可以理解为：全局光照 = 直接光照(Direct Light) + 间接光照(Indirect Light)<br>下面是直接光照和全局光照的对比</p>
+<p>@column-2{</p>
+<p>@card{</p>
+<figure class="image-box">
+                <img src="1.jpg" alt="[sorry,图片挂了]" title="[直接光照]" class="justify-small">
+                <p>[直接光照]</p>
             </figure>
 
+<p>}</p>
+<p>@card{</p>
+<figure class="image-box">
+                <img src="2.jpg" alt="[sorry,图片挂了]" title="[全局光照]" class="justify-small">
+                <p>[全局光照]</p>
+            </figure>
+
+<p>}</p>
+<p>}</p>
+<p><strong>全局光照技术历程</strong></p>
+<ul>
+<li><p>光线投射 Ray Casting<br>其具体思路是从每一个像素射出一条射线，然后找到最接近的物体挡住射线的路径，而视平面上每个像素的颜色取决于从可见光表面产生的亮度。</p>
+</li>
+<li><p>光线追踪 Ray Tracing<br>Turner Whitted在光线投射的基础上，加入光与物体表面的交互，让光线在物体表面沿着反射，折射以及散射方式上继续传播，直到与光源相交。<br>这一方法后来也被称为经典光线跟踪方法、递归式光线追踪（Recursive Ray Tracing）方法，或 Whitted-style 光线跟踪方法。</p>
+</li>
+<li><p>分布式光线追踪 Distributed Ray Tracing<br>Cook于1984年引入蒙特卡洛方法（Monte Carlo method）到光线跟踪领域，将经典的光线跟踪方法扩展为分布式光线跟踪算法，又称为随机光线追踪。<br>可以模拟更多的效果，如金属光泽、软阴影、景深（ Depthof Field）、运动模糊等等。</p>
+</li>
+<li><p>渲染方程 The Rendering Equation<br>Kajiya于1986年建立了渲染方程的相关理论，使用它来解释光能传输的产生的各种现象。这一方程描述了场景中光能传输达到稳定状态以后，物体表面某个点在某个方向上的辐射率（Radiance）与入射辐射亮度等的关系。<br>可以将渲染方程理解为全局光照算法的基础，随后出现的很多全局光照的算法，都是以渲染方程为基础，对其进行简化的求解，以达到优化性能的目的。渲染方程根据光的物理学原理，以及能量守恒定律，完美地描述了光能在场景中的传播。很多真实感渲染技术都是对它的一个近似。</p>
+</li>
+<li><p>路径追踪 Path Tracing<br>根据渲染方程， Kajiya 提出的路径追踪方法是第一个无偏（Unbiased）的渲染方法。<br>路径追踪的基本思想是从视点发出一条光线，光线与物体表面相交时根据表面的材质属性继续采样一个方向，发出另一条光线，如此迭代，直到光线打到光源上（或逃逸出场景），然后用蒙特卡洛的方法，计算其贡献，作为像素的颜色值。而使用蒙特卡洛方法对积分的求解是无偏的，只要时间足够长，最终图像能收敛到一个正确的结果。</p>
+</li>
+<li><p>双向路径追踪 Bidirectional Path Tracing<br>基本思想是同时从视点、光源打出射线，经过若干次反弹后，将视点子路径（ eye path） 和光源子路径（ light path） 上的顶点连接起来（连接时需要测试可见性），以快速产生很多路径。<br>这种方法能够产生一些传统路径追踪难以采样到的光路，所以能够很有效地降低噪声。<br>进一步的， [Veach 1997]将渲染方程改写成对路径积分的形式，允许多种路径采样的方法来求解该积分。</p>
+</li>
+<li><p>梅特波利斯光照传输 Metropolis Light Transport 简称MLT<br>路径追踪（ Path Tracing）中一个核心问题就是怎样去尽可能多的采样一些贡献大的路径，而该方法可以自适应的生成贡献大的路径，简单来说它会避开贡献小的路径，而在贡献大的路径附近做更多局部的探索，通过特殊的变异方法，生成一些新的路径，这些局部的路径的贡献往往也很高。<br>与双向路径追踪相比， MLT 更加鲁棒，能处理各种复杂的场景。<br>比如说整个场景只通过门缝透进来的间接光照亮，此时传统的路径追踪方法因为难以采样到透过门缝的这样的特殊路径而产生非常大的噪声。</p>
 </li>
 </ul>
-<h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
-<li>Shift+F10:鼠标右键快捷键</li>
-<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
+<p><strong>回到光线追踪（Ray Tracing）上:</strong><br>上面我们说到Ray Tracing是三维计算机图形学中的特殊渲染方法，跟踪从眼睛发出的光线而不是光源发出的光线。<br>通过这样一项技术得到的结果有着更好的光线效果，例如对于反射和折射有着更准确的模拟效果，并且效率非常高，追求高质量图像时常采用这样的方式。<br>Ray Tracing的缺点就是性能，它所需要的计算量非常巨大。<br>传统的RayTracing并不一定是真实效果图像，只有在非常近似或者完全实现渲染方程时，才能实现真正的真实效果图像。由于渲染方程描述了每个光束的物理效果，所以实现渲染方程可以得到真正的真实效果，但是，考虑到所需要的计算资源，这通常是无法实现的。于是，所有可以实现的渲染模型都必须是渲染方程的近似，而光线跟踪就不一定是最为可行的方法。包括光子映射在内的一些方法，都是依据光线跟踪实现一部分算法，但是可以得到更好的效果。</p>
+<p><strong>再讲到路径追踪（Path Tracing）上：</strong><br>简单来说，路径追踪 = 光线追踪+ 蒙特卡洛方法。</p>
+<p><strong>我们再来总结一下Ray Casting，Ray Tracing，PathTracing这三者的区别</strong></p>
+<ul>
+<li>Ray Casting：其它就是ray tracing的第一步，发射光线，与物体相交。</li>
+<li>Ray Tracing：这其实是个框架，而不是个方法。符合这个框架的都叫raytracing。这个框架就是从视点发射ray，与物体相交就根据规则反射、折射或吸收。遇到光源或者走太远就停住。一般来说运算量不小。</li>
+<li>Path Tracing：是ray tracing + 蒙特卡洛法。在相交后会选一个随机方向继续跟踪，并根据BRDF计算颜色。运算量也不小。还有一些小分类，比如Bidirectional path tracing。</li>
 </ul>
-<h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
-<li>可集成到VS或者Unity3D中</li>
-</ul>
-<h3 id="6-Typora"><a href="#6-Typora" class="headerlink" title="6. Typora"></a>6. Typora</h3><ul>
-<li>Ctrl+/：源代码模式进入或者退出</li>
-</ul>
-<h3 id="7-Visual-Studio-Code"><a href="#7-Visual-Studio-Code" class="headerlink" title="7. Visual Studio Code"></a>7. Visual Studio Code</h3><ul>
-<li>Ctrl+Shift+P:调出主命令框</li>
-<li>Ctrl +K选中后，再按V：预览markdown效果</li>
-</ul>
-<h3 id="8-Scons"><a href="#8-Scons" class="headerlink" title="8. Scons"></a>8. Scons</h3><ul>
-<li>基于python的软件构建工具</li>
-</ul>
-<h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
+<p><strong>最后我们来学习一下AO</strong><br>AO是Ambient Occlusion的简称，是全局光照明的一种近似替代品，<br>可以产生重要的视觉明暗效果，通过描绘物体之间由于遮挡而产生的阴影， 能够更好地捕捉到场景中的细节，可以解决漏光，阴影漂浮等问题，改善场景中角落、锯齿、裂缝等细小物体阴影不清。<br>AO最常用的方法是SSAO，UE4中的AO即是采用这种方案</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1308281829&auto=1&height=66"></iframe>
 ]]></content>
       
         <categories>
             
-            <category> 开发工具 </category>
+            <category> Computer-Science </category>
+            
+            <category> RayTracing </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> Tips </tag>
-            
-            <tag> 开发工具 </tag>
+            <tag> RayTracing </tag>
             
         </tags>
         
@@ -1145,42 +1087,69 @@ datenum -- modification date as a MATLAB serial date number</code></pre><p> 分�
         
         <tags>
             
-            <tag> 开发工具 </tag>
-            
             <tag> Visual Studio </tag>
+            
+            <tag> 开发工具 </tag>
             
         </tags>
         
     </entry>
     
     <entry>
-      <title><![CDATA[ML Basic Tips]]></title>
-      <url>/2019/11/04/ML_Tips/</url>
-      <content type="html"><![CDATA[<h1 id="Ground-Truth-GT"><a href="#Ground-Truth-GT" class="headerlink" title="Ground Truth(GT)"></a>Ground Truth(GT)</h1><p>机器学习包括</p>
-<ul>
-<li>有监督学习(supervised learning) </li>
-<li>无监督学习(unsupervised learning)</li>
-<li>半监督学习（semi-supervised learning）</li>
+      <title><![CDATA[开发工具推荐及相关使用]]></title>
+      <url>/2019/11/04/Basic_Software_Use/</url>
+      <content type="html"><![CDATA[<h1 id="开发工具及使用"><a href="#开发工具及使用" class="headerlink" title="开发工具及使用"></a>开发工具及使用</h1><p>+++</p>
+<h3 id="1-listary"><a href="#1-listary" class="headerlink" title="1. listary"></a>1. listary</h3><ul>
+<li>双击Ctrl全局搜索</li>
+<li>在文件管理器中双击空白处进行列表呼出</li>
 </ul>
-<p>在有监督学习中，数据是有标注的，以(x, t)的形式出现，其中x是输入数据，t是标注.正确的t标注是ground truth，错误的标记则不是。（也有人将所有标注数据都叫做ground truth）</p>
-<p>模型函数的数据则是由(x, y)的形式出现的。其中x为之前的输入数据，y为模型预测的值。<br>标注会和模型预测的结果作比较。在损耗函数(loss function / error function)中会将y 和 t 作比较，从而计算损耗(loss / error)。</p>
-<p>使用错误的数据，对模型的估计会比实际要糟糕。另外，标记数据还被用来更新权重，错误标记的数据会导致权重更新错误。因此使用高质量的数据是很有必要的。</p>
-<p>在半监督学习中，对标记数据也要进行比较</p>
-<hr>
+<h3 id="2-cmd"><a href="#2-cmd" class="headerlink" title="2.cmd"></a>2.cmd</h3><ul>
+<li>在当前文件目录的显示栏下输入 cmd ,即可在当前路径下打开命令行</li>
+</ul>
+<h3 id="3-stb-image简单图像库"><a href="#3-stb-image简单图像库" class="headerlink" title="3,stb_image简单图像库"></a>3,stb_image简单图像库</h3><ul>
+<li><p>重点关注三个头文件</p>
+</li>
+<li><figure class="image-box">
+                <img src="1570780034511.png.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<h3 id="4-Windows-OS"><a href="#4-Windows-OS" class="headerlink" title="4.Windows OS"></a>4.Windows OS</h3><ul>
+<li>Shift+F10:鼠标右键快捷键</li>
+<li>Win+Ctrl+←/→：窗口切换，保命技巧</li>
+</ul>
+<h3 id="5-RenderDoc"><a href="#5-RenderDoc" class="headerlink" title="5.RenderDoc"></a>5.RenderDoc</h3><ul>
+<li>可集成到VS或者Unity3D中</li>
+</ul>
+<h3 id="6-Typora"><a href="#6-Typora" class="headerlink" title="6. Typora"></a>6. Typora</h3><ul>
+<li>Ctrl+/：源代码模式进入或者退出</li>
+</ul>
+<h3 id="7-Visual-Studio-Code"><a href="#7-Visual-Studio-Code" class="headerlink" title="7. Visual Studio Code"></a>7. Visual Studio Code</h3><ul>
+<li>Ctrl+Shift+P:调出主命令框</li>
+<li>Ctrl +K选中后，再按V：预览markdown效果</li>
+</ul>
+<h3 id="8-Scons"><a href="#8-Scons" class="headerlink" title="8. Scons"></a>8. Scons</h3><ul>
+<li>基于python的软件构建工具</li>
+</ul>
+<h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
+<h3 id="10-Github"><a href="#10-Github" class="headerlink" title="10.Github"></a>10.Github</h3><p>github进行开源项目搜索时的一些技巧：<br>例如：在描述里面含有”爬虫“两个字，并且语言限定为Python,stars数大于1000的项目,最新更新时间指定<br>在搜索栏里输入  in :description 爬虫 language:python stars:&gt;1000 pushed:&gt;2019-09-01<br>还可以 in :name或者 in :readme</p>
+<h3 id="11-Snipaste"><a href="#11-Snipaste" class="headerlink" title="11.Snipaste"></a>11.Snipaste</h3><p>Snipaste 是一个简单但强大的截图工具，也可以让你将截图贴回到屏幕上<br>使用快捷键：<br> F1 :开始截图，<br> F3:将截图贴于桌面<br>Alt:显示鼠标焦点的颜色信息<br>左键双击：隐藏<br>鼠标滚轮进行图像大小的缩放<br>Ctrl + 鼠标滚轮 或者 Ctrl + +/-：设置图像的透明度<br>还可以将贴图加入分组，便于整理<br>还可以进行图像的标注，如：打马赛克，加文字批注，加箭头等</p>
 ]]></content>
       
         <categories>
             
-            <category> Computer-Science </category>
-            
-            <category> Machine-Learning </category>
+            <category> 开发工具 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> ML </tag>
+            <tag> 开发工具 </tag>
+            
+            <tag> Tips </tag>
             
         </tags>
         
