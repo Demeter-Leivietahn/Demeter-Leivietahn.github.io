@@ -213,203 +213,167 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             
-            <h1 id="PBRT-CHAPTER-1"><a href="#PBRT-CHAPTER-1" class="headerlink" title="PBRT CHAPTER_1"></a>PBRT CHAPTER_1</h1><p>*Introduction<br>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
+            <h1 id="PBRT-Chapter-1"><a href="#PBRT-Chapter-1" class="headerlink" title="PBRT_Chapter_1"></a>PBRT_Chapter_1</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>PBRT(Physically Based Rendering Toolkit)<br>基于物理渲染</p>
 <p>渲染是根据三维场景的描述生成图像的过程。显然，这是一个非常广泛的任务，有许多方法可以实现它。基于物理的技术试图模拟现实;也就是说，他们使用物理原理来模拟光和物质的相互作用。虽然基于物理的方法似乎是处理呈现的最明显的方法，但它只是在过去10年左右的实践中才被广泛采用。<br>学习基于PBRT-v3<br>友情链接：<br>（一）PBRT-v3在线电子书：<a href="http://www.pbr-book.org/3ed-2018/contents.html" target="_blank" rel="noopener">http://www.pbr-book.org/3ed-2018/contents.html</a><br>（二）实验室学长的PBRT-v3配置教程: <a href="https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/" target="_blank" rel="noopener">https://fancyvin.github.io/2019/07/13/how-to-compile-pbrt-v3-renderer/</a></p>
-<p>PBRT-v2和-v3之间的改动</p>
+<p><strong>PBRT-v2和-v3之间的改动</strong></p>
 <ul>
 <li>增加了一个功能完备的BRDF模型，支持体积光照与重要性多重路径采样。</li>
-<li>次表面散射，基于光线追踪技术，无需预处理。</li>
+<li>次表面散射，基于光线追踪技术，无需预处理。* </li>
 <li>解决浮点数四折五入的问题</li>
 <li>光子映射</li>
 <li>样本生成</li>
 </ul>
-<h2 id="1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><a href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法" class="headerlink" title="1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法"></a>1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</h2><ul>
-<li>渲染分块问题：<br>渲染任务过多的分块会影响性能。<br>过小分块也是不科学的，因为处理核心问题有一定的开销。<br>场景的复杂性会对不同CPU核心的渲染速度产生影响。所以如果是分块数等于核心数，渲染完的核心会等待没渲染完的核心。</li>
+<h2 id="Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><a href="#Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法" class="headerlink" title="Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法"></a>Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</h2><ul>
+<li>渲染分块问题：<br>渲染任务过多的分块会影响性能。<br>过小分块也是不科学的，因为处理核心问题有一定的开销。<br>场景的复杂性会对不同CPU核心的渲染速度产生影响。所以如果是分块数等于核心数，渲染完的核心会等待没渲染完的核心。<br>PBRT采用的是16*16的方案<br>浮点类型:pbrt采用了FLOAT，这样浮点格式会根据宏进行调整</li>
 </ul>
-<p>PBRT采用的是16*16的方案</p>
-<p>浮点类型<br>pbrt采用了FLOAT，这样浮点格式会根据宏进行调整</p>
-<h3 id="1-2-1-Camera相机"><a href="#1-2-1-Camera相机" class="headerlink" title="1.2.1 Camera相机"></a>1.2.1 Camera相机</h3><ul>
-<li>针孔相机<br>  胶片Film    针孔Pinhole   视见体Viewing Volume</li>
-</ul>
-<h3 id="1-2-2-Ray-Object-Intersection光线-对象相交"><a href="#1-2-2-Ray-Object-Intersection光线-对象相交" class="headerlink" title="1.2.2 Ray-Object Intersection光线-对象相交"></a>1.2.2 Ray-Object Intersection光线-对象相交</h3><ul>
-<li>当相机生成一条光线时，renderer的首要任务是：确定与光线intersect的首个对象和相交的位置。This intersection point is the visible point along the ray, and we will want to simulate the intersection of light with the object at this point. </li>
-</ul>
-<figure class="image-box">
-                <a rel=PBRT（Chapter1） href="1.png" title="[image]" data-fancybox="images"><img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+<h3 id="Camera相机"><a href="#Camera相机" class="headerlink" title="Camera相机"></a>Camera相机</h3><p>针孔相机<br>胶片Film 针孔Pinhole 视见体Viewing Volume</p>
+<h3 id="Ray-Object-Intersection光线-对象相交"><a href="#Ray-Object-Intersection光线-对象相交" class="headerlink" title="Ray-Object Intersection光线-对象相交"></a>Ray-Object Intersection光线-对象相交</h3><ul>
+<li>当相机生成一条光线时，renderer的首要任务是：确定与光线intersect的首个对象和相交的位置。This intersection point is the visible point along the ray, and we will want to simulate the intersection of light with the object at this point.<figure class="image-box">
+                <a rel=PBRT（Chapter1） href="1.png" title="[image]" data-fancybox="images"><img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
                 <p>[image]</p>
             </figure>
-
-<p> 给定光线r,o为光线源点，d表示方向向量，参数t的范围为0到无穷，通过t取不同的值可以得到光线上的任何一点。<br> 在交点的计算中，需测试光线与全部场景对象之间的相交结果，并选取与光线首次相交的对象。<br> 多数场景均由多个对象构成，蛮力进行相机计算将依次测试场景中的各个对象，并选取相交结果最小的t值，但这种方案的计算速度较为缓慢；还可以引入加速结构，并剔除一组对象，进行算法的加速。</p>
-<h3 id="1-2-3-Light-Distribution光照分布"><a href="#1-2-3-Light-Distribution光照分布" class="headerlink" title="1.2.3 Light Distribution光照分布"></a>1.2.3 Light Distribution光照分布</h3><figure class="image-box">
-                <a rel=PBRT（Chapter1） href="2.png" title="[image]" data-fancybox="images"><img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
-                <p>[image]</p>
-            </figure>
-<ul>
-<li>较大球体上某点处的能量将小于较小球体，其原因在于相同的光能分布于较大的面积上，特别的，对于半径为r的球体，其表面某点处的能量与1/r^2成比例。</li>
-<li>由于点光源采用各向均等方式辐射能量。因而两球体存储相同光能。</li>
-<li>对于球体表面面积微分dA,其上的光能能够表示为：<figure class="image-box">
-                <a rel=PBRT（Chapter1） href="3.png" title="[image]" data-fancybox="images"><img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
-                <p>[image]</p>
-            </figure><br>其中Φ表示光源能量，θ为表面点法线与表面点和光源连线的夹角<figure class="image-box">
-                <a rel=PBRT（Chapter1） href="4.png" title="[image]" data-fancybox="images"><img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
-                <p>[image]</p>
-            </figure>
-
 
 </li>
 </ul>
-<h3 id="1-2-4Visibility-可见性"><a href="#1-2-4Visibility-可见性" class="headerlink" title="1.2.4Visibility 可见性"></a>1.2.4Visibility 可见性</h3><ul>
+<p>给定光线r,o为光线源点，d表示方向向量，参数t的范围为0到无穷，通过t取不同的值可以得到光线上的任何一点。<br>在交点的计算中，需测试光线与全部场景对象之间的相交结果，并选取与光线首次相交的对象。<br>多数场景均由多个对象构成，蛮力进行相机计算将依次测试场景中的各个对象，并选取相交结果最小的t值，但这种方案的计算速度较为缓慢；还可以引入加速结构，并剔除一组对象，进行算法的加速。</p>
+<h3 id="Light-Distribution光照分布"><a href="#Light-Distribution光照分布" class="headerlink" title="Light Distribution光照分布"></a>Light Distribution光照分布</h3><figure class="image-box">
+                <a rel=PBRT（Chapter1） href="2.png" title="[image]" data-fancybox="images"><img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
+                <p>[image]</p>
+            </figure>
+<ul>
+<li>较大球体上某点处的能量将小于较小球体，其原因在于相同的光能分布于较大的面积上，特别的，* 对于半径为r的球体，其表面某点处的能量与1/r^2成比例。</li>
+<li>由于点光源采用各向均等方式辐射能量。因而两球体存储相同光能。</li>
+<li>对于球体表面面积微分dA,其上的光能能够表示为：<figure class="image-box">
+                <a rel=PBRT（Chapter1） href="3.png" title="[image]" data-fancybox="images"><img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
+                <p>[image]</p>
+            </figure>
+其中Φ表示光源能量，θ为表面点法线与表面点和光源连线的夹角<figure class="image-box">
+                <a rel=PBRT（Chapter1） href="4.png" title="[image]" data-fancybox="images"><img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
+                <p>[image]</p>
+            </figure>
+
+</li>
+</ul>
+<h3 id="Visibility-可见性"><a href="#Visibility-可见性" class="headerlink" title="Visibility 可见性"></a>Visibility 可见性</h3><ul>
 <li>确定是否被遮挡（阴影）</li>
 <li>只有当光源与点之间没有阻挡时，该光源才对点有（直接）照明作用。</li>
 </ul>
-<p>确定是否被遮挡：</p>
-<ul>
-<li>1、着色点与光源之间的连线，指向光源——阴影光线（shaow rays）</li>
-<li>2、通过交点计算，算出参数t,确定阴影光线的交点，并通过t的值，确定遮挡关系</li>
-</ul>
-<h3 id="1-2-5表面散射-Surface-Scattering"><a href="#1-2-5表面散射-Surface-Scattering" class="headerlink" title="1.2.5表面散射 Surface Scattering"></a>1.2.5表面散射 Surface Scattering</h3><p>场景中的各对象的材质属性，描述了表面各点处的外观属性，材质通过BRDF定义（双向反射分布函数），而材质决定外观（BSDF决定通用散射行为）</p>
+<p>确定是否被遮挡：<br>1、着色点与光源之间的连线，指向光源——阴影光线（shaow rays）<br>2、通过交点计算，算出参数t,确定阴影光线的交点，并通过t的值，确定遮挡关系</p>
+<h3 id="表面散射-Surface-Scattering"><a href="#表面散射-Surface-Scattering" class="headerlink" title="表面散射 Surface Scattering"></a>表面散射 Surface Scattering</h3><p>场景中的各对象的材质属性，描述了表面各点处的外观属性，材质通过BRDF定义（双向反射分布函数），而材质决定外观（BSDF决定通用散射行为）</p>
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="5.png" title="[image]" data-fancybox="images"><img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <a rel=PBRT（Chapter1） href="5.png" title="[image]" data-fancybox="images"><img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
                 <p>[image]</p>
             </figure>
-
-
 <p>参数含义：</p>
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="6.png" title="[image]" data-fancybox="images"><img src="6.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
-                <p>[image]</p>
-            </figure>    
-<h3 id="1-2-6-Indirect-Light-Transport"><a href="#1-2-6-Indirect-Light-Transport" class="headerlink" title="1.2.6 Indirect Light Transport"></a>1.2.6 Indirect Light Transport</h3><figure class="image-box">
-                <a rel=PBRT（Chapter1） href="7.png" title="[image]" data-fancybox="images"><img src="7.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <a rel=PBRT（Chapter1） href="6.png" title="[image]" data-fancybox="images"><img src="6.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
                 <p>[image]</p>
             </figure>
-<h3 id="1-2-7-Ray-Propagation-射线传播"><a href="#1-2-7-Ray-Propagation-射线传播" class="headerlink" title="1.2.7 Ray Propagation 射线传播"></a>1.2.7 Ray Propagation 射线传播</h3><p>渲染环境不一定是真空（vacuum）<br>参与介质介质影响光线传播<br>影响的两种方式：<br>（一）介质在不同的方向上吸收或散射，衰减（或消灭）光线<br>（二）如：介质自发光或者介质沿当前光线相反方向并向其他方向散射光线</p>
-<h2 id="1-3-pbrt-System-Overview-系统总览"><a href="#1-3-pbrt-System-Overview-系统总览" class="headerlink" title="1.3 pbrt:System Overview 系统总览"></a>1.3 pbrt:System Overview 系统总览</h2><p>标准的面向对象构建<br>抽象类针对重要实体进行定义<br>The majority of the system is implemented purely in terms of the interface provided by these abstract base class.(系统的主要内容根据抽象类提供的接口实现)</p>
+
+<h3 id="Indirect-Light-Transport"><a href="#Indirect-Light-Transport" class="headerlink" title="Indirect Light Transport"></a>Indirect Light Transport</h3><figure class="image-box">
+                <a rel=PBRT（Chapter1） href="7.png" title="[image]" data-fancybox="images"><img src="7.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
+                <p>[image]</p>
+            </figure>
+
+<h3 id="Ray-Propagation-射线传播"><a href="#Ray-Propagation-射线传播" class="headerlink" title="Ray Propagation 射线传播"></a>Ray Propagation 射线传播</h3><p>渲染环境不一定是真空（vacuum）<br>参与介质介质影响光线传播<br>影响的两种方式：<br>（一）介质在不同的方向上吸收或散射，衰减（或消灭）光线<br>（二）如：介质自发光或者介质沿当前光线相反方向并向其他方向散射光线</p>
+<h2 id="pbrt-System-Overview-系统总览"><a href="#pbrt-System-Overview-系统总览" class="headerlink" title="pbrt:System Overview 系统总览"></a>pbrt:System Overview 系统总览</h2><p>标准的面向对象构建<br>抽象类针对重要实体进行定义<br>The majority of the system is implemented purely in terms of the interface provided by these abstract base class.(系统的主要内容根据抽象类提供的接口实现)</p>
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="1573095588456.png" title="[pbrt-v3中的10个抽象类]" data-fancybox="images"><img src="1573095588456.png" alt="[sorry,图片挂了]" title="[pbrt-v3中的10个抽象类]" class="[samll]"></a>
+                <a rel=PBRT（Chapter1） href="8.png" title="[pbrt-v3中的10个抽象类]" data-fancybox="images"><img src="8.png" alt="[sorry,图片挂了]" title="[pbrt-v3中的10个抽象类]" class="justify-small"></a>
                 <p>[pbrt-v3中的10个抽象类]</p>
             </figure>
-
-
 <p>pbrt网站中有源码以及额外实现的图形、材质等内容的源码</p>
-<h3 id="1-3-1-Phase-of-Execution执行阶段"><a href="#1-3-1-Phase-of-Execution执行阶段" class="headerlink" title="1.3.1 Phase of Execution执行阶段"></a>1.3.1 Phase of Execution执行阶段</h3><p>PBRT程序执行：<br>① 解析用户提供的.pbrt文件（场景描述文件）<br>初始化相应的类→<code>Scene</code>类的实例和<code>Integrator</code>类（此类用于实现算法渲染Scene）的实例<br>② 整个渲染流程</p>
+<h3 id="Phase-of-Execution执行阶段"><a href="#Phase-of-Execution执行阶段" class="headerlink" title="Phase of Execution执行阶段"></a>Phase of Execution执行阶段</h3><p>PBRT程序执行：<br>① 解析用户提供的.pbrt文件（场景描述文件）<br>初始化相应的类→Scene类的实例和Integrator类（此类用于实现算法渲染Scene）的实例<br>② 整个渲染流程</p>
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="1573096051239.png" title="[pbrt-v3中的10个抽象类]" data-fancybox="images"><img src="1573096051239.png" alt="[sorry,图片挂了]" title="[pbrt-v3中的10个抽象类]" class="[samll]"></a>
-                <p>[pbrt-v3中的10个抽象类]</p>
+                <a rel=PBRT（Chapter1） href="9.png" title="[image]" data-fancybox="images"><img src="9.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
+                <p>[image]</p>
             </figure>
-
-
 <ul>
 <li>并行相关问题<br>① 读取场景文件以及创建场景都是单线程的，获取场景信息因为不涉及到修改数据，所以可以无视。我们只需要关注修改内存数据的情况。<br>② 请不要在不同步的情况下修改数据<br>③ 对应初始化可以考虑std::call_once函数<br>④ 实用程序类MemoryArena（用于高性能临时内存分配）和RNG（伪随机数生成）也不适合多线程使用; 这些类存储在调用其方法时被修改的状态，并且相互排除的保护修改到其状态的开销相对于它们执行的计算量而言过多。 因此，在上面的SamplerIntegrator :: Render()方法的代码中，实现在堆栈上分配这些类的perthread实例。<br>⑤ 每个线程需要各复制一个Sampler的实例，以保证线程安全<br>⑥ 目前的计算机架构运算除法、平方根和三角函数是最慢的。加法与乘法相比之下要快10~50倍。所以我们可以减少这种数学运算数量来提高性能。例如我们可以提前计算1/v,之后再乘。而不是重复除以v。</li>
 </ul>
-<h3 id="1-3-2-Scene-Representation-场景表达"><a href="#1-3-2-Scene-Representation-场景表达" class="headerlink" title="1.3.2 Scene Representation 场景表达"></a>1.3.2 Scene Representation 场景表达</h3><ul>
-<li>PBRT中的main函数→处理argv中提供的命令行参数<br>  → 初始化Option Structure,传给pbrtInit()进行系统内的初始化<br>  → parse（解析）Scene ,创建 Scene、Integrator对象<br>  after rendering→pbrtClaenup()，在系统退出前进行清理</li>
-<li>ParseFile()  解析Scene</li>
-<li>Light对象：场景中的光源，指定光的形状和能量分布<br>  场景使用C++标准库（std）的shared_ptr实例向量，存储所有灯光<br>  pbrt使用共享指针跟踪对象被其他实例引用的次数（当最后一个持有实例的引用被销毁时，引用次数为零）<br>  系统中很多部分需要访问光源，因此Scene使其成为公共变量。</li>
-<li>场景定义后，渲染开始前，进行预处理 Preprocess()</li>
-<li>Scene提供两个光线图元求交函数：<br>①bool Intersect(const Ray&amp;ray,SurfaceInteraction *insect)const<br>对指定光线进行求交判定，将沿光线与图元相交最近的交点信息保存到SurfaceIntersection结构中<br>②bool IntersectP(const Ray&amp;ray)const<br>仅确定沿光线是否存在交点,用于可见性测试</li>
-<li><code>aggregate</code>：加速结构</li>
-</ul>
-<h3 id="1-3-3-Integrator-Interface-and-SamplerIntegrator"><a href="#1-3-3-Integrator-Interface-and-SamplerIntegrator" class="headerlink" title="1.3.3 Integrator Interface and SamplerIntegrator"></a>1.3.3 Integrator Interface and SamplerIntegrator</h3><ul>
-<li><p>渲染场景是由实现了Integrator接口的实例完成的，这其中Integrator是一个抽象基类，提供Render()方法</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Integrator Declarations</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Integrator</span> &#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// Integrator Interface</span></span><br><span class="line">    <span class="keyword">virtual</span> ~Integrator();</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Render</span><span class="params">(<span class="keyword">const</span> Scene &amp;scene)</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Scene-Representation-场景表达"><a href="#Scene-Representation-场景表达" class="headerlink" title="Scene Representation 场景表达"></a>Scene Representation 场景表达</h3><ul>
+<li><p>PBRT中的main函数→处理argv中提供的命令行参数<br>→ 初始化Option Structure,传给pbrtInit()进行系统内的初始化<br>→ parse（解析）Scene ,创建 Scene、Integrator对象<br>after rendering→pbrtClaenup()，在系统退出前进行清理</p>
 </li>
+<li><p>ParseFile() 解析Scene</p>
+</li>
+<li><p>Light对象：场景中的光源，指定光的形状和能量分布<br>场景使用C++标准库（std）的shared_ptr实例向量，存储所有灯光<br>pbrt使用共享指针跟踪对象被其他实例引用的次数（当最后一个持有实例的引用被销毁时，引用次数为零）<br>系统中很多部分需要访问光源，因此Scene使其成为公共变量。</p>
+</li>
+<li><p>场景定义后，渲染开始前，进行预处理 Preprocess()</p>
+</li>
+<li><p>Scene提供两个光线图元求交函数：<br>①bool Intersect(const Ray&amp;ray,SurfaceInteraction *insect)const<br>对指定光线进行求交判定，将沿光线与图元相交最近的交点信息保存到SurfaceIntersection结构中<br>②bool IntersectP(const Ray&amp;ray)const<br>仅确定沿光线是否存在交点,用于可见性测试</p>
+</li>
+<li><p>aggregate：加速结构</p>
+<h3 id="Integrator-Interface-and-SamplerIntegrator"><a href="#Integrator-Interface-and-SamplerIntegrator" class="headerlink" title="Integrator Interface and SamplerIntegrator"></a>Integrator Interface and SamplerIntegrator</h3></li>
+<li><p>渲染场景是由实现了Integrator接口的实例完成的，这其中Integrator是一个抽象基类，提供Render()方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Integrator Declarations</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Integrator</span> &#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// Integrator Interface</span></span><br><span class="line">    <span class="keyword">virtual</span> ~Integrator();</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Render</span><span class="params">(<span class="keyword">const</span> Scene &amp;scene)</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
 <li><p>Integrator接口定义在：core/integrator.h中<br>Integrator实用方法定义在：core/integrator.cpp中<br>各类积分器的实现位于Integrator文件目录中</p>
 </li>
-<li><p>Integrator<br> ↓继承<br>SamplerIntegrator (Create in RenderOptions::MakeIntegrator)<br> ↓实现（也是通过继承的方式）<br>WhittedIntegrator</p>
+<li><p>Integrator<br>↓继承<br>SamplerIntegrator (Create in RenderOptions::MakeIntegrator)<br>↓实现（也是通过继承的方式）<br>WhittedIntegrator</p>
 </li>
 </ul>
-<p>在SamplerIntegrator中，存储了指向Sampler的指针</p>
-<p>内含</p>
+<p>在SamplerIntegrator中，存储了指向Sampler的指针<br>内含</p>
 <ul>
-<li><p><code>Sampler</code></p>
-<ul>
-<li>在成像平面上产生一个点来追踪</li>
-<li>为计算光传输积分提供采样位置</li>
-</ul>
-<blockquote>
-<p>内含大量的函数来获取各种各样的样本</p>
-</blockquote>
+<li><p>Sampler<br>在成像平面上产生一个点来追踪<br>为计算光传输积分提供采样位置</p>
 </li>
-<li><p><code>Camera</code></p>
-<ul>
-<li><p>控制了观察和透镜的参数，如位置position，朝向orientation，焦距focus，视域field of view等</p>
+<li><p><em>内含大量的函数来获取各种各样的样本*</em></p>
 </li>
-<li><p>包含 <code>Film</code>，负责存储图像</p>
+<li><p>Cmera<br>控制了观察和透镜的参数，如位置position，朝向orientation，焦距focus，视域field of view等<br>包含 Film，负责存储图像</p>
 </li>
 </ul>
-</li>
-</ul>
-<h3 id="1-3-4-The-Main-Rendering-Loop"><a href="#1-3-4-The-Main-Rendering-Loop" class="headerlink" title="1.3.4 The Main Rendering Loop"></a>1.3.4 The Main Rendering Loop</h3><ul>
-<li>当Scene、Integrator被指定后，Invoke(调用)Render()开启main rendering loop</li>
-</ul>
-<p>实现：at each of a series of positions on the image plane, the method uses the Camera and the Sampler to generate a ray into the scene and then uses the Li() method to determine the amount of  <strong>light</strong> arriving at the image plane along that <strong>ray</strong>. This value is passed to the Film, which records the light’s contribution.<br>Note ：此处可将ray译作射线，将light译作光线。<br>主循环源代码：</p>
+<h3 id="The-Main-Rendering-Loop"><a href="#The-Main-Rendering-Loop" class="headerlink" title="The Main Rendering Loop"></a>The Main Rendering Loop</h3><ul>
+<li><p>当Scene、Integrator被指定后，Invoke(调用)Render()开启main rendering loop<br>实现：at each of a series of positions on the image plane, the method uses the Camera and the Sampler to generate a ray into the scene and then uses the Li() method to determine the amount of light arriving at the image plane along that ray. This value is passed to the Film, which records the light’s contribution.<br>Note ：此处可将ray译作射线，将light译作光线。<br>主循环源代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> SamplerIntegrator::Render(<span class="keyword">const</span> Scene &amp;scene) &#123;</span><br><span class="line">    Preprocess(scene, *sampler);<span class="comment">//预处理</span></span><br><span class="line">    <span class="comment">//分块并行渲染图片</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算tiles, _nTiles_,用于并行运算</span></span><br><span class="line">    Bounds2i sampleBounds = camera-&gt;film-&gt;GetSampleBounds();</span><br><span class="line">    Vector2i sampleExtent = sampleBounds.Diagonal();</span><br><span class="line">    <span class="comment">//书中说16*16分块可以解决大部分情况</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> tileSize = <span class="number">16</span>;</span><br><span class="line">    <span class="comment">//sampleExtent.x + tileSize - 1 整除考虑</span></span><br><span class="line">    <span class="function">Point2i <span class="title">nTiles</span><span class="params">((sampleExtent.x + tileSize - <span class="number">1</span>) / tileSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                   (sampleExtent.y + tileSize - <span class="number">1</span>) / tileSize)</span></span>;</span><br><span class="line">    <span class="function">ProgressReporter <span class="title">reporter</span><span class="params">(nTiles.x * nTiles.y, <span class="string">"Rendering"</span>)</span></span>;</span><br><span class="line">    &#123;</span><br><span class="line">        ParallelFor2D([&amp;](Point2i tile) &#123;</span><br><span class="line">            <span class="comment">// Render section of image corresponding to _tile_</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//内存池，之后会给Li函数</span></span><br><span class="line">            MemoryArena arena;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//给每个块分配一个Samper实例</span></span><br><span class="line">            <span class="keyword">int</span> seed = tile.y * nTiles.x + tile.x;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;Sampler&gt; tileSampler = sampler-&gt;Clone(seed);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//计算块的采样边界</span></span><br><span class="line">            <span class="keyword">int</span> x0 = sampleBounds.pMin.x + tile.x * tileSize;</span><br><span class="line">            <span class="keyword">int</span> x1 = <span class="built_in">std</span>::<span class="built_in">min</span>(x0 + tileSize, sampleBounds.pMax.x);</span><br><span class="line">            <span class="keyword">int</span> y0 = sampleBounds.pMin.y + tile.y * tileSize;</span><br><span class="line">            <span class="keyword">int</span> y1 = <span class="built_in">std</span>::<span class="built_in">min</span>(y0 + tileSize, sampleBounds.pMax.y);</span><br><span class="line">            Bounds2i tileBounds(Point2i(x0, y0), Point2i(x1, y1));</span><br><span class="line">            LOG(INFO) &lt;&lt; <span class="string">"Starting image tile "</span> &lt;&lt; tileBounds;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//取得指定范围的图片块</span></span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;FilmTile&gt; filmTile =</span><br><span class="line">                camera-&gt;film-&gt;GetFilmTile(tileBounds);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//开始指定区域的渲染循环</span></span><br><span class="line">            <span class="keyword">for</span> (Point2i pixel : tileBounds) &#123;</span><br><span class="line">                &#123;</span><br><span class="line">                    ProfilePhase pp(Prof::StartPixel);</span><br><span class="line">                    tileSampler-&gt;StartPixel(pixel);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Do this check after the StartPixel() call; this keeps</span></span><br><span class="line">                <span class="comment">// the usage of RNG values from (most) Samplers that use</span></span><br><span class="line">                <span class="comment">// RNGs consistent, which improves reproducability /</span></span><br><span class="line">                <span class="comment">// debugging.</span></span><br><span class="line">                <span class="keyword">if</span> (!InsideExclusive(pixel, pixelBounds))</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">do</span> &#123;</span><br><span class="line">                    <span class="comment">//初始化相机采样，存储了时间以及镜头位置的采样值</span></span><br><span class="line">                    CameraSample cameraSample =</span><br><span class="line">                        tileSampler-&gt;GetCameraSample(pixel);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//生成相机光线</span></span><br><span class="line">                    <span class="comment">//以及光线的pdf</span></span><br><span class="line">                    RayDifferential ray;</span><br><span class="line">                    Float rayWeight =</span><br><span class="line">                        camera-&gt;GenerateRayDifferential(cameraSample, &amp;ray);</span><br><span class="line">                    ray.ScaleDifferentials(</span><br><span class="line">                        <span class="number">1</span> / <span class="built_in">std</span>::<span class="built_in">sqrt</span>((Float)tileSampler-&gt;samplesPerPixel));</span><br><span class="line">                    ++nCameraRays;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//估算当前相机光线辐射度</span></span><br><span class="line">                    Spectrum L(<span class="number">0.f</span>);</span><br><span class="line">                    <span class="keyword">if</span> (rayWeight &gt; <span class="number">0</span>) L = Li(ray, scene, *tileSampler, arena);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">//对渲染出错误结果的处理，log相应信息</span></span><br><span class="line">                    <span class="keyword">if</span> (L.HasNaNs()) &#123;</span><br><span class="line">                        LOG(ERROR) &lt;&lt; StringPrintf(</span><br><span class="line">                            <span class="string">"Not-a-number radiance value returned "</span></span><br><span class="line">                            <span class="string">"for pixel (%d, %d), sample %d. Setting to black."</span>,</span><br><span class="line">                            pixel.x, pixel.y,</span><br><span class="line">                            (<span class="keyword">int</span>)tileSampler-&gt;CurrentSampleNumber());</span><br><span class="line">                        L = Spectrum(<span class="number">0.f</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (L.y() &lt; <span class="number">-1e-5</span>) &#123;</span><br><span class="line">                        LOG(ERROR) &lt;&lt; StringPrintf(</span><br><span class="line">                            <span class="string">"Negative luminance value, %f, returned "</span></span><br><span class="line">                            <span class="string">"for pixel (%d, %d), sample %d. Setting to black."</span>,</span><br><span class="line">                            L.y(), pixel.x, pixel.y,</span><br><span class="line">                            (<span class="keyword">int</span>)tileSampler-&gt;CurrentSampleNumber());</span><br><span class="line">                        L = Spectrum(<span class="number">0.f</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">std</span>::isinf(L.y())) &#123;</span><br><span class="line">                          LOG(ERROR) &lt;&lt; StringPrintf(</span><br><span class="line">                            <span class="string">"Infinite luminance value returned "</span></span><br><span class="line">                            <span class="string">"for pixel (%d, %d), sample %d. Setting to black."</span>,</span><br><span class="line">                            pixel.x, pixel.y,</span><br><span class="line">                            (<span class="keyword">int</span>)tileSampler-&gt;CurrentSampleNumber());</span><br><span class="line">                        L = Spectrum(<span class="number">0.f</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    VLOG(<span class="number">1</span>) &lt;&lt; <span class="string">"Camera sample: "</span> &lt;&lt; cameraSample &lt;&lt; <span class="string">" -&gt; ray: "</span> &lt;&lt;</span><br><span class="line">                        ray &lt;&lt; <span class="string">" -&gt; L = "</span> &lt;&lt; L;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// Add camera ray's contribution to image</span></span><br><span class="line">                    filmTile-&gt;AddSample(cameraSample.pFilm, L, rayWeight);</span><br><span class="line"></span><br><span class="line">                   <span class="comment">//释放内存池</span></span><br><span class="line">                    arena.Reset();</span><br><span class="line">                &#125; <span class="keyword">while</span> (tileSampler-&gt;StartNextSample());</span><br><span class="line">            &#125;</span><br><span class="line">            LOG(INFO) &lt;&lt; <span class="string">"Finished image tile "</span> &lt;&lt; tileBounds;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//将图片块合并到图片上去</span></span><br><span class="line">            camera-&gt;film-&gt;MergeFilmTile(<span class="built_in">std</span>::<span class="built_in">move</span>(filmTile));</span><br><span class="line">            reporter.Update();</span><br><span class="line">        &#125;, nTiles);</span><br><span class="line">        reporter.Done();</span><br><span class="line">    &#125;</span><br><span class="line">    LOG(INFO) &lt;&lt; <span class="string">"Rendering finished"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//保存图片到文件</span></span><br><span class="line">    camera-&gt;film-&gt;WriteImage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Render()可以表示为：</p>
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="image-20191201104040484.png" title="[iamge]" data-fancybox="images"><img src="image-20191201104040484.png" alt="[sorry,图片挂了]" title="[iamge]" class="[samll]"></a>
-                <p>[iamge]</p>
+                <a rel=PBRT（Chapter1） href="11.png" title="[image]" data-fancybox="images"><img src="11.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
+                <p>[image]</p>
             </figure>
-
-
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="image-20191201104047972.png" title="image]" data-fancybox="images"><img src="image-20191201104047972.png" alt="[sorry,图片挂了]" title="image]" class="[samll]"></a>
-                <p>image]</p>
+                <a rel=PBRT（Chapter1） href="12.png" title="[image]" data-fancybox="images"><img src="12.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
+                <p>[image]</p>
             </figure>
-
 <p>这里很关键的点是 tile。决定 tile 大小的因素有两点</p>
-<ul>
-<li><p>负载平衡</p>
-<p>因为<strong>不同 tile 的渲染难度不同</strong>，过少的 tile 时，部分 thread 过早结束后要等待未完成的 thread，从而浪费了计算资源。</p>
 </li>
-<li><p>per-tile 开销</p>
-<p>因为每个 tile 会有一个小的固定开销，过多的 tile 会导致低效。</p>
+<li><p>负载平衡<br>因为<strong>不同 tile 的渲染难度不同</strong>，过少的 tile 时，部分 thread 过早结束后要等待未完成的 thread，从而浪费了计算资源。</p>
 </li>
-</ul>
-<p>其中：</p>
+<li><p>per-tile 开销<br>因为每个 tile 会有一个小的固定开销，过多的 tile 会导致低效。<br>其中：</p>
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="image-20191201104453833.png" title="[image]" data-fancybox="images"><img src="image-20191201104453833.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <a rel=PBRT（Chapter1） href="13.png" title="[image]" data-fancybox="images"><img src="13.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
                 <p>[image]</p>
             </figure>
-<p><code>MemoryArena</code> 负责管理内存池，比标准库更加高效。只允许用于单线程。</p>
-<p><code>Sampler</code> 包含一些状态，这意味着不能用于多线程。因此含有 <code>Clone</code> 方法来创建实例。</p>
-<p><code>FilmTile</code> 用来提供一个小的内存缓冲给当前的 tile，这样可以不用担心同像素的竞争问题。</p>
-<p>其中：</p>
+<p>MemoryArena 负责管理内存池，比标准库更加高效。只允许用于单线程。<br>Sampler 包含一些状态，这意味着不能用于多线程。因此含有 Clone 方法来创建实例。<br>FilmTile 用来提供一个小的内存缓冲给当前的 tile，这样可以不用担心同像素的竞争问题。<br>其中：</p>
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="image-20191201104648399.png" title="[image]" data-fancybox="images"><img src="image-20191201104648399.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <a rel=PBRT（Chapter1） href="14.png" title="[image]" data-fancybox="images"><img src="14.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
                 <p>[image]</p>
             </figure>
-<p><code>Camera::GenerateRayDifferential()</code> 返回 <code>RayDifferential</code>，包含了 x 和 y 方向距离 1 像素的射线，用于纹理反走样。该函数返回了一个 <code>weight</code>，用以模拟在不同位置到达光线的多少（如边上较少）。之后调用 <code>ScaleDifferentials()</code> 对其缩放（根据每像素样本数）。</p>
+<p>Camera::GenerateRayDifferential() 返回 RayDifferential，包含了 x 和 y 方向距离 1 像素的射线，用于纹理反走样。该函数返回了一个 weight，用以模拟在不同位置到达光线的多少（如边上较少）。之后调用 ScaleDifferentials() 对其缩放（根据每像素样本数）。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> Spectrum <span class="title">Li</span><span class="params">(<span class="keyword">const</span> RayDifferential &amp;ray, <span class="keyword">const</span> Scene &amp;scene,</span></span></span><br><span class="line"><span class="function"><span class="params">                        Sampler &amp;sampler, MemoryArena &amp;arena,</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">int</span> depth = <span class="number">0</span>)</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
 
-<h3 id="1-3-5-An-Integrator-for-Whitted-Ray-Tracing"><a href="#1-3-5-An-Integrator-for-Whitted-Ray-Tracing" class="headerlink" title="1.3.5 An Integrator for Whitted Ray Tracing"></a>1.3.5 An Integrator for Whitted Ray Tracing</h3><figure class="image-box">
-                <a rel=PBRT（Chapter1） href="image-20191130164858305.png" title="[image]" data-fancybox="images"><img src="image-20191130164858305.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+</li>
+</ul>
+<h3 id="An-Integrator-for-Whitted-Ray-Tracing"><a href="#An-Integrator-for-Whitted-Ray-Tracing" class="headerlink" title="An Integrator for Whitted Ray Tracing"></a>An Integrator for Whitted Ray Tracing</h3><figure class="image-box">
+                <a rel=PBRT（Chapter1） href="10.png" title="[image]" data-fancybox="images"><img src="10.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
                 <p>[image]</p>
             </figure>
-
 <p>准确的计算了在镜面（如玻璃，镜子，水等）上的反射和穿透的光，但没有考虑间接光照</p>
-<p>Whitted Ray Tracing Integrator的实现可以表示为： </p>
+<p>Whitted Ray Tracing Integrator的实现可以表示为：</p>
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="image-20191201105503119.png" title="[image]" data-fancybox="images"><img src="image-20191201105503119.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <a rel=PBRT（Chapter1） href="15.png" title="[image]" data-fancybox="images"><img src="15.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
                 <p>[image]</p>
             </figure>
-
 
 <p>其中：（这里的 lights 没有与几何体相关联）</p>
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="image-20191201105841008.png" title="[image]" data-fancybox="images"><img src="image-20191201105841008.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <a rel=PBRT（Chapter1） href="16.png" title="[image]" data-fancybox="images"><img src="16.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
                 <p>[image]</p>
             </figure>
 
 <p>在这其中：（通过镜面反射的性质找到发射方向，通过Snell定律找到折射的方向）</p>
 <figure class="image-box">
-                <a rel=PBRT（Chapter1） href="image-20191201110029735.png" title="[image]" data-fancybox="images"><img src="image-20191201110029735.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]"></a>
+                <a rel=PBRT（Chapter1） href="17.png" title="[image]" data-fancybox="images"><img src="17.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small"></a>
                 <p>[image]</p>
             </figure>
-
-
 <p>The main rendering loop in the SamplerIntegrator computes a camera ray and passes it to the Li() method, which returns the radiance along that ray arriving at the ray’s origin. After finding the closest intersection, it computes the material properties at the intersection point, representing them in the form of a BSDF. It then uses the Lights in the Scene to determine the illumination there. Together, these give the information needed to compute the radiance reflected back along the ray at the intersection point.<br>译：SamplerIntegrator中的主要渲染循环计算Camera射线并将其传递给Li（）方法，该方法返回沿射线到达射线原点的辐射。找到最接近的交点后，它将计算交点处的材料特性，并以BSDF的形式表示它们。然后，它使用“场景中的灯光”来确定场景中的照明。这些共同提供了计算在相交点沿射线反射回的辐射所需的信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Initialize common variables for Whitted integrator</span><br><span class="line">    const Normal3f &amp;n = isect.shading.n;</span><br><span class="line">    Vector3f wo = isect.wo;</span><br><span class="line">``</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Initialize common variables for Whitted integrator</span></span><br><span class="line">    <span class="keyword">const</span> Normal3f &amp;n = isect.shading.n;</span><br><span class="line">    Vector3f wo = isect.wo;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>在Li()方法的实现的第一步需要：找到射线与场景中的物体的交点，采用Interset()方法确定是否有交点，并返回一个bool值。</p>
 </li>
@@ -420,22 +384,17 @@
 <li><p>在Whitted 积分器中忽略了参与介质的影响，例如：smoke, fog…离开交点的辐射和arriving at the ray’s origin辐射相同。<br>（Tips 1.3.5未总结完全）</p>
 </li>
 </ul>
-<hr>
-<h2 id="Note："><a href="#Note：" class="headerlink" title="Note："></a>Note：</h2><p>C++提供了指针和引用两种不同的方式将数据结构的地址传给函数。<br>PBRT使用指针和引用等的约定（By Convention）：</p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2><p>C++提供了指针和引用两种不同的方式将数据结构的地址传给函数。<br>PBRT使用指针和引用等的约定（By Convention）：</p>
 <ul>
-<li>当参数将在函数中被完成更改，PBRT将使用指针。</li>
-<li>当某些参数的内部状态将被改变，但是不会被完全初始化时，使用引用。而当参数完全不会被更改时，使用const修饰的引用。</li>
-<li>在PBRT中当通过传递nullptr来指示参数不可用或是不应使用时，将始终使用指针。</li>
+<li><p>当参数将在函数中被完成更改，PBRT将使用指针。</p>
+</li>
+<li><p>当某些参数的内部状态将被改变，但是不会被完全初始化时，使用引用。而当参数完全不会被更改时，使用const修饰的引用。</p>
+</li>
+<li><p>在PBRT中当通过传递nullptr来指示参数不可用或是不应使用时，将始终使用指针。</p>
+</li>
+<li><p>全书可分为5个部分：<br>几何功能：C2 - C4<br>图像形成：C5 - C7<br>光，散射，介质：C8-C12<br>光传输算法：C13 - C16<br>回顾讨论系统：C17</p>
+</li>
 </ul>
-<p>全书可分为5个部分：</p>
-<ul>
-<li>几何功能：C2 - C4</li>
-<li>图像形成：C5 - C7</li>
-<li>光，散射，介质：C8-C12</li>
-<li>光传输算法：C13 - C16</li>
-<li>回顾讨论系统：C17</li>
-</ul>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=501468332&auto=1&height=32"></iframe>
 
         </div>
         
@@ -443,7 +402,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-12-01T03:11:31.482Z" itemprop="dateUpdated">2019-12-01 11:11:31</time>
+    Last updated: <time datetime="2019-12-22T09:24:04.102Z" itemprop="dateUpdated">2019-12-22 17:24:04</time>
 </span><br>
 
 
@@ -511,9 +470,9 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="prev">
-      <a href="/2019/11/05/Matlab_Learning/" id="post-prev" class="post-nav-link">
+      <a href="/2019/11/05/C++_Learning_1/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Matlab相关</h4>
+        <h4 class="title">C++学习（一）</h4>
       </a>
     </div>
   
@@ -534,7 +493,7 @@
         <aside class="post-widget">
             <nav class="post-toc-wrap" id="post-toc">
                 <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PBRT-CHAPTER-1"><span class="post-toc-number">1.</span> <span class="post-toc-text">PBRT CHAPTER_1</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.2 Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-1-Camera相机"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">1.2.1 Camera相机</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-2-Ray-Object-Intersection光线-对象相交"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">1.2.2 Ray-Object Intersection光线-对象相交</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-3-Light-Distribution光照分布"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">1.2.3 Light Distribution光照分布</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-4Visibility-可见性"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">1.2.4Visibility 可见性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-5表面散射-Surface-Scattering"><span class="post-toc-number">1.1.5.</span> <span class="post-toc-text">1.2.5表面散射 Surface Scattering</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-6-Indirect-Light-Transport"><span class="post-toc-number">1.1.6.</span> <span class="post-toc-text">1.2.6 Indirect Light Transport</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-7-Ray-Propagation-射线传播"><span class="post-toc-number">1.1.7.</span> <span class="post-toc-text">1.2.7 Ray Propagation 射线传播</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3-pbrt-System-Overview-系统总览"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">1.3 pbrt:System Overview 系统总览</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-1-Phase-of-Execution执行阶段"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">1.3.1 Phase of Execution执行阶段</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-2-Scene-Representation-场景表达"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">1.3.2 Scene Representation 场景表达</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-3-Integrator-Interface-and-SamplerIntegrator"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">1.3.3 Integrator Interface and SamplerIntegrator</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-4-The-Main-Rendering-Loop"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">1.3.4 The Main Rendering Loop</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-5-An-Integrator-for-Whitted-Ray-Tracing"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">1.3.5 An Integrator for Whitted Ray Tracing</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Note："><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Note：</span></a></li></ol></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PBRT-Chapter-1"><span class="post-toc-number">1.</span> <span class="post-toc-text">PBRT_Chapter_1</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Introduction"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Introduction</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Photorealistic-Rendering-and-the-Ray-Tracing-Algorithm-照片级渲染及光线跟踪算法"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Photorealistic Rendering and the Ray-Tracing Algorithm 照片级渲染及光线跟踪算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Camera相机"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">Camera相机</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Ray-Object-Intersection光线-对象相交"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">Ray-Object Intersection光线-对象相交</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Light-Distribution光照分布"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">Light Distribution光照分布</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Visibility-可见性"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">Visibility 可见性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#表面散射-Surface-Scattering"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">表面散射 Surface Scattering</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Indirect-Light-Transport"><span class="post-toc-number">1.2.6.</span> <span class="post-toc-text">Indirect Light Transport</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Ray-Propagation-射线传播"><span class="post-toc-number">1.2.7.</span> <span class="post-toc-text">Ray Propagation 射线传播</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#pbrt-System-Overview-系统总览"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">pbrt:System Overview 系统总览</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Phase-of-Execution执行阶段"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">Phase of Execution执行阶段</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Scene-Representation-场景表达"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">Scene Representation 场景表达</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Integrator-Interface-and-SamplerIntegrator"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">Integrator Interface and SamplerIntegrator</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#The-Main-Rendering-Loop"><span class="post-toc-number">1.3.4.</span> <span class="post-toc-text">The Main Rendering Loop</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#An-Integrator-for-Whitted-Ray-Tracing"><span class="post-toc-number">1.3.5.</span> <span class="post-toc-text">An Integrator for Whitted Ray Tracing</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Note"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Note:</span></a></li></ol></li></ol>
             </nav>
             <div class="toc-bar"><div>
         </aside>

@@ -7,7 +7,7 @@
     <title>开发工具推荐及相关使用 | Tan桑のBlog | 见证一个图形程序员的成长！</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="开发工具,Tips">
+    <meta name="keywords" content="Tips,开发工具">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css" />
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
@@ -251,6 +251,12 @@
 <h3 id="9-Python"><a href="#9-Python" class="headerlink" title="9.Python"></a>9.Python</h3><p>在同一计算机上同时配置两个不同版本的Python时，例如Python2.7以及Python3.6两个版本，可以在Python27文件夹下将python.exe文件更名为python27.exe，然后在用户环境变量下的Path下维护两个版本的Python地址，每个版本两个地址（一个Python文件夹地址，一个Script地址）</p>
 <h3 id="10-Github"><a href="#10-Github" class="headerlink" title="10.Github"></a>10.Github</h3><p>github进行开源项目搜索时的一些技巧：<br>例如：在描述里面含有”爬虫“两个字，并且语言限定为Python,stars数大于1000的项目,最新更新时间指定<br>在搜索栏里输入  in :description 爬虫 language:python stars:&gt;1000 pushed:&gt;2019-09-01<br>还可以 in :name或者 in :readme</p>
 <h3 id="11-Snipaste"><a href="#11-Snipaste" class="headerlink" title="11.Snipaste"></a>11.Snipaste</h3><p>Snipaste 是一个简单但强大的截图工具，也可以让你将截图贴回到屏幕上<br>使用快捷键：<br> F1 :开始截图，<br> F3:将截图贴于桌面<br>Alt:显示鼠标焦点的颜色信息<br>左键双击：隐藏<br>鼠标滚轮进行图像大小的缩放<br>Ctrl + 鼠标滚轮 或者 Ctrl + +/-：设置图像的透明度<br>还可以将贴图加入分组，便于整理<br>还可以进行图像的标注，如：打马赛克，加文字批注，加箭头等</p>
+<h3 id="12-Git"><a href="#12-Git" class="headerlink" title="12.Git"></a>12.Git</h3><ul>
+<li>stage:暂存区</li>
+<li>Git自动创建的第一个分支master，指向master的一个指针HEAD</li>
+<li>GitHub、码云等是Git的服务器</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Git进行本地控制：</span><br><span class="line">git init:将当前文件夹初始化为git仓库</span><br><span class="line">git status:查看工作区的状态</span><br><span class="line">git add fileName:添加追踪文件，将其暂存在git版本库中</span><br><span class="line">git rm --cache FileName: 将文件从暂存区删除（这并不会删除你创建的文件，只是删除git版本库中的暂存）</span><br><span class="line">git diff fileName:查看修改了哪些东西</span><br><span class="line">git checkout --fileName: 将文件返回到修改前的状态（这个修改前的状态是指的上一次提交之后版本库的文件状态）</span><br><span class="line">git checkout 提交版本号：回退到当前版本，可以使用desktop的GUI操作</span><br><span class="line"></span><br><span class="line">git reset --hard HEAD^^^^^:将版本回退到一个特定的版本</span><br><span class="line">其中 HEAD 表示的是当前版本库中的最新版本，HEAD^表示的是上一个版本，HEAD^^或者HEAD~2 表示的是上上个版本，以此类推</span><br><span class="line"></span><br><span class="line">git commit -m &quot;注释&quot;：将暂存区的内容提交到master分支上</span><br><span class="line"></span><br><span class="line">git log:查看每一次提交的commitid、Author、Date</span><br><span class="line">git reflog:纪录每一次使用的命令</span><br><span class="line"></span><br><span class="line">Git进行远程控制：</span><br><span class="line">git pull :从服务器更新代码</span><br><span class="line">git commit -m &quot;message&quot;:提交代码</span><br><span class="line">git push 仓库URL ：推送文件到服务器</span><br></pre></td></tr></table></figure></li>
+</ul>
 
         </div>
         
@@ -258,7 +264,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-11-25T13:37:52.791Z" itemprop="dateUpdated">2019-11-25 21:37:52</time>
+    Last updated: <time datetime="2019-12-01T11:40:17.039Z" itemprop="dateUpdated">2019-12-01 19:40:17</time>
 </span><br>
 
 
@@ -320,18 +326,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="prev">
-      <a href="/2019/11/04/Basic_Software_Use_VS/" id="post-prev" class="post-nav-link">
+      <a href="/2019/11/05/Optix_Learning/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">VS使用及错误合集</h4>
+        <h4 class="title">NVIDIA Optix学习</h4>
       </a>
     </div>
   
 
   
     <div class="next">
-      <a href="/2019/11/04/Tips/" id="post-next" class="post-nav-link">
+      <a href="/2019/11/04/Basic_Software_Use_VS/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Basic Tips about CS or SE</h4>
+        <h4 class="title">VS使用及错误合集</h4>
       </a>
     </div>
   
@@ -343,7 +349,7 @@
         <aside class="post-widget">
             <nav class="post-toc-wrap" id="post-toc">
                 <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#开发工具及使用"><span class="post-toc-number">1.</span> <span class="post-toc-text">开发工具及使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-listary"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">1. listary</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-cmd"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">2.cmd</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-stb-image简单图像库"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">3,stb_image简单图像库</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-Windows-OS"><span class="post-toc-number">1.0.4.</span> <span class="post-toc-text">4.Windows OS</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-RenderDoc"><span class="post-toc-number">1.0.5.</span> <span class="post-toc-text">5.RenderDoc</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-Typora"><span class="post-toc-number">1.0.6.</span> <span class="post-toc-text">6. Typora</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#7-Visual-Studio-Code"><span class="post-toc-number">1.0.7.</span> <span class="post-toc-text">7. Visual Studio Code</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#8-Scons"><span class="post-toc-number">1.0.8.</span> <span class="post-toc-text">8. Scons</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#9-Python"><span class="post-toc-number">1.0.9.</span> <span class="post-toc-text">9.Python</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#10-Github"><span class="post-toc-number">1.0.10.</span> <span class="post-toc-text">10.Github</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#11-Snipaste"><span class="post-toc-number">1.0.11.</span> <span class="post-toc-text">11.Snipaste</span></a></li></ol></li></ol></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#开发工具及使用"><span class="post-toc-number">1.</span> <span class="post-toc-text">开发工具及使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-listary"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">1. listary</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-cmd"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">2.cmd</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-stb-image简单图像库"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">3,stb_image简单图像库</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-Windows-OS"><span class="post-toc-number">1.0.4.</span> <span class="post-toc-text">4.Windows OS</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-RenderDoc"><span class="post-toc-number">1.0.5.</span> <span class="post-toc-text">5.RenderDoc</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-Typora"><span class="post-toc-number">1.0.6.</span> <span class="post-toc-text">6. Typora</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#7-Visual-Studio-Code"><span class="post-toc-number">1.0.7.</span> <span class="post-toc-text">7. Visual Studio Code</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#8-Scons"><span class="post-toc-number">1.0.8.</span> <span class="post-toc-text">8. Scons</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#9-Python"><span class="post-toc-number">1.0.9.</span> <span class="post-toc-text">9.Python</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#10-Github"><span class="post-toc-number">1.0.10.</span> <span class="post-toc-text">10.Github</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#11-Snipaste"><span class="post-toc-number">1.0.11.</span> <span class="post-toc-text">11.Snipaste</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#12-Git"><span class="post-toc-number">1.0.12.</span> <span class="post-toc-text">12.Git</span></a></li></ol></li></ol></li></ol>
             </nav>
             <div class="toc-bar"><div>
         </aside>
