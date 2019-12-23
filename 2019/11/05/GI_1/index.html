@@ -252,7 +252,7 @@
 </li>
 <li><p>渲染方程 The Rendering Equation<br>Kajiya于1986年建立了渲染方程的相关理论，使用它来解释光能传输的产生的各种现象。这一方程描述了场景中光能传输达到稳定状态以后，物体表面某个点在某个方向上的辐射率（Radiance）与入射辐射亮度等的关系。<br>可以将渲染方程理解为全局光照算法的基础，随后出现的很多全局光照的算法，都是以渲染方程为基础，对其进行简化的求解，以达到优化性能的目的。渲染方程根据光的物理学原理，以及能量守恒定律，完美地描述了光能在场景中的传播。很多真实感渲染技术都是对它的一个近似。</p>
 </li>
-<li><p>路径追踪 Path Tracing<br>根据渲染方程， Kajiya 提出的路径追踪方法是第一个无偏（Unbiased）的渲染方法。<br>路径追踪的基本思想是从视点发出一条光线，光线与物体表面相交时根据表面的材质属性继续采样一个方向，发出另一条光线，如此迭代，直到光线打到光源上（或逃逸出场景），然后用蒙特卡洛的方法，计算其贡献，作为像素的颜色值。而使用蒙特卡洛方法对积分的求解是<strong>无偏的</strong>，只要时间足够长，最终图像能收敛到一个正确的结果。</p>
+<li><p>路径追踪 Path Tracing<br>根据渲染方程， Kajiya 提出的路径追踪方法是第一个无偏（Unbiased）的渲染方法。<br>路径追踪的基本思想是<strong>从视点发出</strong>一条光线，光线与物体表面相交时根据表面的材质属性继续采样一个方向，发出另一条光线，如此迭代，<strong>直到光线打到光源上（或逃逸出场景）</strong>，然后用蒙特卡洛的方法，计算其贡献，作为像素的颜色值。而使用蒙特卡洛方法对积分的求解是<strong>无偏的</strong>，只要时间足够长，最终图像能收敛到一个正确的结果。</p>
 </li>
 <li><p>双向路径追踪 Bidirectional Path Tracing<br>基本思想是同时从视点、光源打出射线，经过若干次反弹后，将视点子路径（ eye path） 和光源子路径（ light path） 上的顶点连接起来（连接时需要测试可见性），以快速产生很多路径。<br>这种方法能够产生一些传统路径追踪难以采样到的光路，所以能够很有效地降低噪声。<br>进一步的， [Veach 1997]将渲染方程改写成对路径积分的形式，允许多种路径采样的方法来求解该积分。</p>
 </li>
@@ -276,7 +276,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-12-22T08:33:54.040Z" itemprop="dateUpdated">2019-12-22 16:33:54</time>
+    Last updated: <time datetime="2019-12-22T12:48:27.700Z" itemprop="dateUpdated">2019-12-22 20:48:27</time>
 </span><br>
 
 
@@ -344,18 +344,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="prev">
-      <a href="/2019/11/05/PBRT_Learning_8/" id="post-prev" class="post-nav-link">
+      <a href="/2019/11/05/C++_Learning_2/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">PBRT（Chapter8）</h4>
+        <h4 class="title">C++学习（二）</h4>
       </a>
     </div>
   
 
   
     <div class="next">
-      <a href="/2019/11/05/Optix_Learning/" id="post-next" class="post-nav-link">
+      <a href="/2019/11/05/Monte_Carlo_Method/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">NVIDIA Optix学习</h4>
+        <h4 class="title">蒙特卡洛方法（包含重要性采样）</h4>
       </a>
     </div>
   
