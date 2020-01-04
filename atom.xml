@@ -105,6 +105,34 @@
   </entry>
   
   <entry>
+    <title>蒙特卡洛方法（包含重要性采样）</title>
+    <link href="http://yoursite.com/2019/11/05/Monte_Carlo_Method/"/>
+    <id>http://yoursite.com/2019/11/05/Monte_Carlo_Method/</id>
+    <published>2019-11-05T01:56:27.000Z</published>
+    <updated>2019-12-23T02:17:19.024Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Monte-Carlo-Method"><a href="#Monte-Carlo-Method" class="headerlink" title="Monte Carlo Method"></a>Monte Carlo Method</h1><h2 id="Basic-Math"><a href="#Basic-Math" class="headerlink" title="Basic Math"></a>Basic Math</h2><p>几个基础分布：<br>PDF（概率密度函数）：描述了随机变量在某个取值点取值的概率<br>CDF（累计分布函数）：描述了随机变量在（负无穷到x） 范围内取值的概率，是<strong>概率密度函数的积分</strong>。<br>数学期望：一个离散性随机变量的期望值（或数学期望）是试验中每次可能的结果乘以其结果概率的总和。</p><hr><p>若 f(x) 连续，则存在一个相应的概率密度函数 p(x)，若等号右边的积分绝对收敛，则 f(x) 的期望值为：</p><figure class="image-box">                <img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small">                <p>[image]</p>            </figure><p>同理， f(x)/p(x) 的期望值为：</p><figure class="image-box">                <img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small">                <p>[image]</p>            </figure><p>积分内两个 p(x) 抵消：</p><figure class="image-box">                <img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small">                <p>[image]</p>            </figure><figure class="image-box">                <img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small">                <p>[image]</p>            </figure><p>等号右边可以看作是 估计量（ f(x)/p(x) 样本平均值 ）的期望值；<br>等号左边的 ∫f(x)dx 是估计参数的真实值。<br>由于<strong>估计量的数学期望等于被估计参数的真实值</strong>，所以这种估计是<strong>无偏</strong>的<br>这样就可以把求 ∫f(x)dx 的问题转换成构造成求一个估计量的问题</p><hr><h2 id="What"><a href="#What" class="headerlink" title="What:"></a>What:</h2><p>蒙特卡罗方法也称统计模拟方法，是1940年代中期由于科学技术的发展和电子计算机的发明，而提出的一种以概率统计理论为指导的数值计算方法。<br>是指使用随机数（或更常见的伪随机数）来解决很多计算问题的方法。 </p><h2 id="Basic-Idea"><a href="#Basic-Idea" class="headerlink" title="Basic Idea"></a>Basic Idea</h2><p>基本思想：<br>Monte Carlo Method大致可分为两类：<br>一：所求解的问题本身具有内在的随机性<br>二：所求解的问题可以转化为某种随机分布的特征数，例如随机事件的概率、随机变量的期望值等。</p><h2 id="使用Monte-Carlo-Methond求解Integral-解定积分"><a href="#使用Monte-Carlo-Methond求解Integral-解定积分" class="headerlink" title="使用Monte Carlo Methond求解Integral(解定积分)"></a>使用Monte Carlo Methond求解Integral(解定积分)</h2><figure class="image-box">                <img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small">                <p>[image]</p>            </figure><h1 id="重要性采样"><a href="#重要性采样" class="headerlink" title="重要性采样"></a>重要性采样</h1><p>重要性采样是蒙特卡洛积分的一种 ‘采样策略’ ，即是：<strong>选择与被积函数 f(x) 相似的密度函数 p(x) **的原则。也就是说，</strong>在 f(x) 越大的地方，采样点选取的概率越大。**<br>上述介绍的使用蒙特卡洛方法求解定积分，随着采样数的增长精确度会随着上升</p><ul><li><strong>我们需要一种方法人为地对抽样的分布</strong>（之前的抽样分布呈现出均匀分布 Uniform Distribution）<strong>进行干预，在一定的抽样数量的基础上，增加准确度，而减少方差</strong></li></ul><p><strong>如果能找到与 f(x) 分布相似的 p(x) ，则方差会减小，收敛速度更快。这就是重要性采样。</strong></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Monte-Carlo-Method&quot;&gt;&lt;a href=&quot;#Monte-Carlo-Method&quot; class=&quot;headerlink&quot; title=&quot;Monte Carlo Method&quot;&gt;&lt;/a&gt;Monte Carlo Method&lt;/h1&gt;&lt;h2 id=&quot;B
+      
+    
+    </summary>
+    
+    
+      <category term="Computer-Science" scheme="http://yoursite.com/categories/Computer-Science/"/>
+    
+      <category term="Basic-Tips" scheme="http://yoursite.com/categories/Computer-Science/Basic-Tips/"/>
+    
+    
+      <category term="Tips" scheme="http://yoursite.com/tags/Tips/"/>
+    
+  </entry>
+  
+  <entry>
     <title>C++学习（二）</title>
     <link href="http://yoursite.com/2019/11/05/C++_Learning_2/"/>
     <id>http://yoursite.com/2019/11/05/C++_Learning_2/</id>
@@ -140,9 +168,9 @@
     <link href="http://yoursite.com/2019/11/05/GI_1/"/>
     <id>http://yoursite.com/2019/11/05/GI_1/</id>
     <published>2019-11-05T01:56:27.000Z</published>
-    <updated>2019-12-22T12:48:27.700Z</updated>
+    <updated>2019-12-26T09:07:13.645Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><ul><li>全局光照，(Global Illumination,简称 GI), 或被称为Indirect Illumination, 间接光照，是指既考虑场景中直接来自光源的光照（Direct Light）又考虑经过场景中其他物体反射后的光照（Indirect Light）的一种渲染技术。使用全局光照能够有效地增强场景的真实感。</li></ul><p>即可以理解为：全局光照 = 直接光照(Direct Light) + 间接光照(Indirect Light)<br>下面是直接光照和全局光照的对比</p><p>@column-2{</p><p>@card{</p><figure class="image-box">                <img src="1.jpg" alt="[sorry,图片挂了]" title="[直接光照]" class="justify-small">                <p>[直接光照]</p>            </figure><p>}</p><p>@card{</p><figure class="image-box">                <img src="2.jpg" alt="[sorry,图片挂了]" title="[全局光照]" class="justify-small">                <p>[全局光照]</p>            </figure><p>}</p><p>}</p><p><strong>全局光照技术历程</strong></p><ul><li>光线投射 Ray Casting<br>其具体思路是从每一个像素射出一条射线，然后找到最接近的物体挡住射线的路径，而视平面上每个像素的颜色取决于从可见光表面产生的亮度。<figure class="image-box">                <img src="3.png" alt="[sorry,图片挂了]" title="[光线投射]" class="justify-small">                <p>[光线投射]</p>            </figure></li><li>光线追踪 Ray Tracing<br>Turner Whitted在光线投射的基础上，加入光与物体表面的交互，让光线在物体表面沿着反射，折射以及散射方式上继续传播，直到与光源相交。<br>从视点向成像平面上的像素发射光线，求交，若交点是散射面，则直接计算光源照射该点产生的颜色；如果该点处的表面是镜面或折射面，则继续追踪反射或折射光线，直到光线逃逸场景或者达到之前设定的递归最大深度（max_depth）<br>这一方法后来也被称为经典光线跟踪方法、递归式光线追踪（Recursive Ray Tracing）方法，或 Whitted-style 光线跟踪方法。<figure class="image-box">                <img src="4.png" alt="[sorry,图片挂了]" title="[光线追踪]" class="justify-small">                <p>[光线追踪]</p>            </figure></li></ul><p><strong>RayTracing中跟踪的是眼球发出的光线而不是光源发出的光源</strong></p><ul><li><p>分布式光线追踪 Distributed Ray Tracing<br>Cook于1984年引入蒙特卡洛方法（Monte Carlo method）到光线跟踪领域，将经典的光线跟踪方法扩展为分布式光线跟踪算法，又称为随机光线追踪。<br>可以模拟更多的效果，如金属光泽、软阴影、景深（ Depthof Field）、运动模糊等等。</p></li><li><p>渲染方程 The Rendering Equation<br>Kajiya于1986年建立了渲染方程的相关理论，使用它来解释光能传输的产生的各种现象。这一方程描述了场景中光能传输达到稳定状态以后，物体表面某个点在某个方向上的辐射率（Radiance）与入射辐射亮度等的关系。<br>可以将渲染方程理解为全局光照算法的基础，随后出现的很多全局光照的算法，都是以渲染方程为基础，对其进行简化的求解，以达到优化性能的目的。渲染方程根据光的物理学原理，以及能量守恒定律，完美地描述了光能在场景中的传播。很多真实感渲染技术都是对它的一个近似。</p></li><li><p>路径追踪 Path Tracing<br>根据渲染方程， Kajiya 提出的路径追踪方法是第一个无偏（Unbiased）的渲染方法。<br>路径追踪的基本思想是<strong>从视点发出</strong>一条光线，光线与物体表面相交时根据表面的材质属性继续采样一个方向，发出另一条光线，如此迭代，<strong>直到光线打到光源上（或逃逸出场景）</strong>，然后用蒙特卡洛的方法，计算其贡献，作为像素的颜色值。而使用蒙特卡洛方法对积分的求解是<strong>无偏的</strong>，只要时间足够长，最终图像能收敛到一个正确的结果。</p></li><li><p>双向路径追踪 Bidirectional Path Tracing<br>基本思想是同时从视点、光源打出射线，经过若干次反弹后，将视点子路径（ eye path） 和光源子路径（ light path） 上的顶点连接起来（连接时需要测试可见性），以快速产生很多路径。<br>这种方法能够产生一些传统路径追踪难以采样到的光路，所以能够很有效地降低噪声。<br>进一步的， [Veach 1997]将渲染方程改写成对路径积分的形式，允许多种路径采样的方法来求解该积分。</p></li><li><p>梅特波利斯光照传输 Metropolis Light Transport 简称MLT<br>路径追踪（ Path Tracing）中一个核心问题就是怎样去尽可能多的采样一些贡献大的路径，而该方法可以自适应的生成贡献大的路径，简单来说它会避开贡献小的路径，而在贡献大的路径附近做更多局部的探索，通过特殊的变异方法，生成一些新的路径，这些局部的路径的贡献往往也很高。<br>与双向路径追踪相比， MLT 更加鲁棒，能处理各种复杂的场景。<br>比如说整个场景只通过门缝透进来的间接光照亮，此时传统的路径追踪方法因为难以采样到透过门缝的这样的特殊路径而产生非常大的噪声。</p></li></ul><p><strong>回到光线追踪（Ray Tracing）上:</strong><br>上面我们说到Ray Tracing是三维计算机图形学中的特殊渲染方法，跟踪从眼睛发出的光线而不是光源发出的光线。<br>通过这样一项技术得到的结果有着更好的光线效果，例如对于反射和折射有着更准确的模拟效果，并且效率非常高，追求高质量图像时常采用这样的方式。<br>Ray Tracing的缺点就是性能，它所需要的计算量非常巨大。<br>传统的RayTracing并不一定是真实效果图像，只有在非常近似或者完全实现渲染方程时，才能实现真正的真实效果图像。由于渲染方程描述了每个光束的物理效果，所以实现渲染方程可以得到真正的真实效果，但是，考虑到所需要的计算资源，这通常是无法实现的。于是，所有可以实现的渲染模型都必须是渲染方程的近似，而光线跟踪就不一定是最为可行的方法。包括光子映射在内的一些方法，都是依据光线跟踪实现一部分算法，但是可以得到更好的效果。</p><p><strong>再讲到路径追踪（Path Tracing）上：</strong><br>简单来说，路径追踪 = 光线追踪+ 蒙特卡洛方法。</p><p><strong>我们再来总结一下Ray Casting，Ray Tracing，PathTracing这三者的区别</strong></p><ul><li>Ray Casting：其它就是<strong>ray tracing的第一步</strong>，发射光线，与物体相交。</li><li>Ray Tracing：这其实是个框架，而不是个方法。符合这个框架的都叫raytracing。这个框架就是从视点发射ray，与物体相交就根据规则反射、折射或吸收。遇到光源或者走太远就停住。一般来说运算量不小。</li><li>Path Tracing：<strong>是ray tracing + 蒙特卡洛法</strong>。在相交后会选一个随机方向继续跟踪，并根据BRDF计算颜色。运算量也不小。还有一些小分类，比如Bidirectional path tracing。</li></ul><p><strong>最后我们来学习一下AO</strong><br>AO是Ambient Occlusion的简称，是全局光照明的一种近似替代品，<br>可以产生重要的视觉明暗效果，通过描绘物体之间由于遮挡而产生的阴影， 能够更好地捕捉到场景中的细节，可以解决漏光，阴影漂浮等问题，改善场景中角落、锯齿、裂缝等细小物体阴影不清。<br>AO最常用的方法是SSAO，UE4中的AO即是采用这种方案</p><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1308281829&auto=1&height=66"></iframe>]]></content>
+    <content type="html"><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><ul><li>全局光照，(Global Illumination,简称 GI), 或被称为Indirect Illumination, 间接光照，是指既考虑场景中直接来自光源的光照（Direct Light）又考虑经过场景中其他物体反射后的光照（Indirect Light）的一种渲染技术。使用全局光照能够有效地增强场景的真实感。</li></ul><p>即可以理解为：全局光照 = 直接光照(Direct Light) + 间接光照(Indirect Light)<br>下面是直接光照和全局光照的对比</p><p>@column-2{</p><p>@card{</p><figure class="image-box">                <img src="1.jpg" alt="[sorry,图片挂了]" title="[直接光照]" class="justify-small">                <p>[直接光照]</p>            </figure><p>}</p><p>@card{</p><figure class="image-box">                <img src="2.jpg" alt="[sorry,图片挂了]" title="[全局光照]" class="justify-small">                <p>[全局光照]</p>            </figure><p>}</p><p>}</p><p><strong>全局光照技术历程</strong></p><ul><li>光线投射 Ray Casting<br>其具体思路是从每一个像素射出一条射线，然后找到最接近的物体挡住射线的路径，而视平面上每个像素的颜色取决于从可见光表面产生的亮度。<figure class="image-box">                <img src="3.png" alt="[sorry,图片挂了]" title="[光线投射]" class="justify-small">                <p>[光线投射]</p>            </figure></li><li>光线追踪 Ray Tracing<br>Turner Whitted在光线投射的基础上，加入光与物体表面的交互，让光线在物体表面沿着反射，折射以及散射方式上继续传播，直到与光源相交。<br>从视点向成像平面上的像素发射光线，求交，若交点是散射面，则直接计算光源照射该点产生的颜色；如果该点处的表面是镜面或折射面，则继续追踪反射或折射光线，直到光线逃逸场景或者达到之前设定的递归最大深度（max_depth）<br>这一方法后来也被称为经典光线跟踪方法、递归式光线追踪（Recursive Ray Tracing）方法，或 Whitted-style 光线跟踪方法。<figure class="image-box">                <img src="4.png" alt="[sorry,图片挂了]" title="[光线追踪]" class="justify-small">                <p>[光线追踪]</p>            </figure></li></ul><p><strong>RayTracing中跟踪的是眼球发出的光线而不是光源发出的光源</strong></p><ul><li><p>分布式光线追踪 Distributed Ray Tracing<br>Cook于1984年引入蒙特卡洛方法（Monte Carlo method）到光线跟踪领域，将经典的光线跟踪方法扩展为分布式光线跟踪算法，又称为随机光线追踪。<br>可以模拟更多的效果，如金属光泽、软阴影、景深（ Depthof Field）、运动模糊等等。</p></li><li><p>渲染方程 The Rendering Equation<br>Kajiya于1986年建立了渲染方程的相关理论，使用它来解释光能传输的产生的各种现象。这一方程描述了场景中光能传输达到稳定状态以后，物体表面某个点在某个方向上的辐射率（Radiance）与入射辐射亮度等的关系。<br>可以将渲染方程理解为全局光照算法的基础，随后出现的很多全局光照的算法，都是以渲染方程为基础，对其进行简化的求解，以达到优化性能的目的。渲染方程根据光的物理学原理，以及能量守恒定律，完美地描述了光能在场景中的传播。很多真实感渲染技术都是对它的一个近似。</p></li><li><p>路径追踪 Path Tracing<br>根据渲染方程， Kajiya 提出的路径追踪方法是第一个无偏（Unbiased）的渲染方法。<br>路径追踪的基本思想是<strong>从视点发出</strong>一条光线，光线与物体表面相交时根据表面的材质属性继续采样一个方向，发出另一条光线，如此迭代，<strong>直到光线打到光源上（或逃逸出场景）</strong>，然后用蒙特卡洛的方法，计算其贡献，作为像素的颜色值。而使用蒙特卡洛方法对积分的求解是<strong>无偏的</strong>，只要时间足够长，最终图像能收敛到一个正确的结果。</p></li><li><p>双向路径追踪 Bidirectional Path Tracing<br>基本思想是同时从视点、光源打出射线，经过若干次反弹后，将视点子路径（ eye path） 和光源子路径（ light path） 上的顶点连接起来（连接时需要测试可见性），以快速产生很多路径。<br>这种方法能够产生一些传统路径追踪难以采样到的光路，所以能够很有效地降低噪声。<br>进一步的， [Veach 1997]将渲染方程改写成对路径积分的形式，允许多种路径采样的方法来求解该积分。</p></li><li><p>梅特波利斯光照传输 Metropolis Light Transport 简称MLT<br>路径追踪（ Path Tracing）中一个核心问题就是怎样去尽可能多的采样一些贡献大的路径，而该方法可以自适应的生成贡献大的路径，简单来说它会避开贡献小的路径，而在贡献大的路径附近做更多局部的探索，通过特殊的变异方法，生成一些新的路径，这些局部的路径的贡献往往也很高。<br>与双向路径追踪相比， MLT 更加鲁棒，能处理各种复杂的场景。<br>比如说整个场景只通过门缝透进来的间接光照亮，此时传统的路径追踪方法因为难以采样到透过门缝的这样的特殊路径而产生非常大的噪声。</p></li></ul><p><strong>回到光线追踪（Ray Tracing）上:</strong><br>上面我们说到Ray Tracing是三维计算机图形学中的特殊渲染方法，跟踪从眼睛发出的光线而不是光源发出的光线。<br>通过这样一项技术得到的结果有着更好的光线效果，例如对于反射和折射有着更准确的模拟效果，并且效率非常高，追求高质量图像时常采用这样的方式。<br>Ray Tracing的缺点就是性能，它所需要的计算量非常巨大。<br>传统的RayTracing并不一定是真实效果图像，只有在非常近似或者完全实现渲染方程时，才能实现真正的真实效果图像。由于渲染方程描述了每个光束的物理效果，所以实现渲染方程可以得到真正的真实效果，但是，考虑到所需要的计算资源，这通常是无法实现的。于是，所有可以实现的渲染模型都必须是渲染方程的近似，而光线跟踪就不一定是最为可行的方法。包括光子映射在内的一些方法，都是依据光线跟踪实现一部分算法，但是可以得到更好的效果。</p><p><strong>再讲到路径追踪（Path Tracing）上：</strong><br>简单来说，路径追踪 = 光线追踪+ 蒙特卡洛方法。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">路径追踪的方法把某个点的颜色值看作是若干个Path（光路）共同贡献的结果，一条光路可以看做是若干个表面点连接而成的一条线段。为了计算某个点的着色，我们只需要以该点为起点，构建若干条路径，并将每条路径上的光照贡献叠加而成。</span><br></pre></td></tr></table></figure><p>结合RayTracing的框架，可以将路径看做是：把光线以光路这种路径的形式重新组织了起来。</p><figure class="image-box">                <img src="5.png" alt="[sorry,图片挂了]" title="[Path]" class="justify-small">                <p>[Path]</p>            </figure><p><strong>我们再来总结一下Ray Casting，Ray Tracing，PathTracing这三者的区别</strong></p><ul><li>Ray Casting：其它就是<strong>ray tracing的第一步</strong>，发射光线，与物体相交。</li><li>Ray Tracing：这其实是个框架，而不是个方法。符合这个框架的都叫raytracing。这个框架就是从视点发射ray，与物体相交就根据规则反射、折射或吸收。遇到光源或者走太远就停住。一般来说运算量不小。</li><li>Path Tracing：<strong>是ray tracing + 蒙特卡洛法</strong>。在相交后会选一个随机方向继续跟踪，并根据BRDF计算颜色。运算量也不小。还有一些小分类，比如Bidirectional path tracing。</li></ul><p><strong>最后我们来学习一下AO</strong><br>AO是Ambient Occlusion的简称，是全局光照明的一种近似替代品，<br>可以产生重要的视觉明暗效果，通过描绘物体之间由于遮挡而产生的阴影， 能够更好地捕捉到场景中的细节，可以解决漏光，阴影漂浮等问题，改善场景中角落、锯齿、裂缝等细小物体阴影不清。<br>AO最常用的方法是SSAO，UE4中的AO即是采用这种方案</p><p>参考资料：<br><a href="https://zhuanlan.zhihu.com/p/41269520" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41269520</a></p><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1308281829&auto=1&height=66"></iframe>]]></content>
     
     <summary type="html">
     
@@ -165,19 +193,19 @@
   </entry>
   
   <entry>
-    <title>蒙特卡洛方法（包含重要性采样）</title>
-    <link href="http://yoursite.com/2019/11/05/Monte_Carlo_Method/"/>
-    <id>http://yoursite.com/2019/11/05/Monte_Carlo_Method/</id>
+    <title>Matlab相关</title>
+    <link href="http://yoursite.com/2019/11/05/Matlab_Learning/"/>
+    <id>http://yoursite.com/2019/11/05/Matlab_Learning/</id>
     <published>2019-11-05T01:56:27.000Z</published>
-    <updated>2019-12-23T02:17:19.024Z</updated>
+    <updated>2019-11-12T11:39:26.862Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Monte-Carlo-Method"><a href="#Monte-Carlo-Method" class="headerlink" title="Monte Carlo Method"></a>Monte Carlo Method</h1><h2 id="Basic-Math"><a href="#Basic-Math" class="headerlink" title="Basic Math"></a>Basic Math</h2><p>几个基础分布：<br>PDF（概率密度函数）：描述了随机变量在某个取值点取值的概率<br>CDF（累计分布函数）：描述了随机变量在（负无穷到x） 范围内取值的概率，是<strong>概率密度函数的积分</strong>。<br>数学期望：一个离散性随机变量的期望值（或数学期望）是试验中每次可能的结果乘以其结果概率的总和。</p><hr><p>若 f(x) 连续，则存在一个相应的概率密度函数 p(x)，若等号右边的积分绝对收敛，则 f(x) 的期望值为：</p><figure class="image-box">                <img src="1.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small">                <p>[image]</p>            </figure><p>同理， f(x)/p(x) 的期望值为：</p><figure class="image-box">                <img src="2.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small">                <p>[image]</p>            </figure><p>积分内两个 p(x) 抵消：</p><figure class="image-box">                <img src="3.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small">                <p>[image]</p>            </figure><figure class="image-box">                <img src="4.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small">                <p>[image]</p>            </figure><p>等号右边可以看作是 估计量（ f(x)/p(x) 样本平均值 ）的期望值；<br>等号左边的 ∫f(x)dx 是估计参数的真实值。<br>由于<strong>估计量的数学期望等于被估计参数的真实值</strong>，所以这种估计是<strong>无偏</strong>的<br>这样就可以把求 ∫f(x)dx 的问题转换成构造成求一个估计量的问题</p><hr><h2 id="What"><a href="#What" class="headerlink" title="What:"></a>What:</h2><p>蒙特卡罗方法也称统计模拟方法，是1940年代中期由于科学技术的发展和电子计算机的发明，而提出的一种以概率统计理论为指导的数值计算方法。<br>是指使用随机数（或更常见的伪随机数）来解决很多计算问题的方法。 </p><h2 id="Basic-Idea"><a href="#Basic-Idea" class="headerlink" title="Basic Idea"></a>Basic Idea</h2><p>基本思想：<br>Monte Carlo Method大致可分为两类：<br>一：所求解的问题本身具有内在的随机性<br>二：所求解的问题可以转化为某种随机分布的特征数，例如随机事件的概率、随机变量的期望值等。</p><h2 id="使用Monte-Carlo-Methond求解Integral-解定积分"><a href="#使用Monte-Carlo-Methond求解Integral-解定积分" class="headerlink" title="使用Monte Carlo Methond求解Integral(解定积分)"></a>使用Monte Carlo Methond求解Integral(解定积分)</h2><figure class="image-box">                <img src="5.png" alt="[sorry,图片挂了]" title="[image]" class="justify-small">                <p>[image]</p>            </figure><h1 id="重要性采样"><a href="#重要性采样" class="headerlink" title="重要性采样"></a>重要性采样</h1><p>重要性采样是蒙特卡洛积分的一种 ‘采样策略’ ，即是：<strong>选择与被积函数 f(x) 相似的密度函数 p(x) **的原则。也就是说，</strong>在 f(x) 越大的地方，采样点选取的概率越大。**<br>上述介绍的使用蒙特卡洛方法求解定积分，随着采样数的增长精确度会随着上升</p><ul><li><strong>我们需要一种方法人为地对抽样的分布</strong>（之前的抽样分布呈现出均匀分布 Uniform Distribution）<strong>进行干预，在一定的抽样数量的基础上，增加准确度，而减少方差</strong></li></ul><p><strong>如果能找到与 f(x) 分布相似的 p(x) ，则方差会减小，收敛速度更快。这就是重要性采样。</strong></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="Matlab学习"><a href="#Matlab学习" class="headerlink" title="Matlab学习"></a>Matlab学习</h1><h3 id="1-dir-使用"><a href="#1-dir-使用" class="headerlink" title="1. dir()使用"></a>1. dir()使用</h3><p>dir函数可以有调用方式</p><ul><li><p>dir(‘.’) 列出当前目录下所有子文件夹和文件</p></li><li><p>dir(‘G:\Matlab’) 列出指定目录下所有子文件夹和文件</p></li><li><p>dir(‘*.m’) 列出当前目录下符合正则表达式的文件夹和文件</p></li><li><p>得到的为结构体数组每个元素都是如下形式的结构体</p><pre><code>name  -- filenamedate  -- modification datebytes  -- number of bytes allocated to the fileisdir  -- 1 if name is a directory and 0 if notdatenum -- modification date as a MATLAB serial date number</code></pre><p> 分别为文件名,修改日期,大小,是否为目录,Matlab特定的修改日期</p><p>可以提取出文件名以作读取和保存用.</p></li></ul><h3 id="2-exist-使用"><a href="#2-exist-使用" class="headerlink" title="2. exist()使用"></a>2. exist()使用</h3><ul><li>判断某个变量，函数，类，文件夹等参数是否存在。</li><li>A=exists(“name”,”kind”)，name可以是变量，函数，类，文件夹等</li><li>返回值的含义如下：<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> 不存在则返回值 </span><br><span class="line"><span class="number">1</span> name 可以是变量名，如果存在，返回值 </span><br><span class="line"><span class="number">2</span> 函数名、m 文件名，存在则返回值 </span><br><span class="line"><span class="number">3</span> mex 文件、dll 文件，存在则返回值</span><br><span class="line"><span class="number">4</span> 内嵌的函数，存在则返回值 <span class="number">5</span> p码文件 ， 存在则返回值 </span><br><span class="line"><span class="number">6</span> 目录，存在则返回值 </span><br><span class="line"><span class="number">7</span> 路径，存在则返回值 </span><br><span class="line"><span class="number">8</span> Java class，存在则返回值</span><br></pre></td></tr></table></figure></li></ul><h3 id="3-for循环"><a href="#3-for循环" class="headerlink" title="3. for循环"></a>3. for循环</h3><ul><li>for k=1:10  正序遍历</li><li>for k=10:-1:1 倒序遍历，从10到1，每次递减-1</li></ul><h3 id="4-strrep-使用"><a href="#4-strrep-使用" class="headerlink" title="4.strrep()使用"></a>4.strrep()使用</h3><ul><li>查找并替换函数</li><li>strrep(A,B,C); 在A中查找B并替换为C</li></ul>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;Monte-Carlo-Method&quot;&gt;&lt;a href=&quot;#Monte-Carlo-Method&quot; class=&quot;headerlink&quot; title=&quot;Monte Carlo Method&quot;&gt;&lt;/a&gt;Monte Carlo Method&lt;/h1&gt;&lt;h2 id=&quot;B
+        &lt;h1 id=&quot;Matlab学习&quot;&gt;&lt;a href=&quot;#Matlab学习&quot; class=&quot;headerlink&quot; title=&quot;Matlab学习&quot;&gt;&lt;/a&gt;Matlab学习&lt;/h1&gt;&lt;h3 id=&quot;1-dir-使用&quot;&gt;&lt;a href=&quot;#1-dir-使用&quot; class=&quot;head
       
     
     </summary>
@@ -185,40 +213,10 @@
     
       <category term="Computer-Science" scheme="http://yoursite.com/categories/Computer-Science/"/>
     
-      <category term="Basic-Tips" scheme="http://yoursite.com/categories/Computer-Science/Basic-Tips/"/>
+      <category term="Programming Language" scheme="http://yoursite.com/categories/Computer-Science/Programming-Language/"/>
     
     
-      <category term="Tips" scheme="http://yoursite.com/tags/Tips/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NVIDIA Optix学习</title>
-    <link href="http://yoursite.com/2019/11/05/Optix_Learning/"/>
-    <id>http://yoursite.com/2019/11/05/Optix_Learning/</id>
-    <published>2019-11-05T01:56:27.000Z</published>
-    <updated>2019-12-22T08:36:01.820Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Optix安装及相关编译"><a href="#Optix安装及相关编译" class="headerlink" title="Optix安装及相关编译"></a>Optix安装及相关编译</h1><p>参考CSDN上博客：<br><a href="https://blog.csdn.net/FreeSouthS/article/details/89703252" target="_blank" rel="noopener">https://blog.csdn.net/FreeSouthS/article/details/89703252</a><br><a href="https://blog.csdn.net/FreeSouthS/article/details/89704776" target="_blank" rel="noopener">https://blog.csdn.net/FreeSouthS/article/details/89704776</a><br>Optix相关项目依赖较多，需要配置包含目录以及链接器等内容，在配置时需要注意不要漏掉</p><p>我使用的是软件版本是：<br>Optix6.5<br>CUDA10.1<br>VS2017<br>NVIDIA Driver 441.66</p><h2 id="配置安装时遇到的问题"><a href="#配置安装时遇到的问题" class="headerlink" title="配置安装时遇到的问题"></a>配置安装时遇到的问题</h2><p><u>Note:</u></p><ul><li>当在VS下试运行Optix相关项目发现缺少dll文件时，通过找到对应dll文件，并放入System32文件夹下，以此解决问题。</li><li>Windows下的文件路径为//为分隔符</li><li>在编译项目时注意在Cmake下选择X64 ，先Configure，再而Generate</li><li>当出现无法载入optix library时，有可能是NVIDIA的显卡驱动过旧，需要更新显卡驱动</li></ul><h1 id="Optix入门"><a href="#Optix入门" class="headerlink" title="Optix入门"></a>Optix入门</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rtDeclareVariable(uint2, launch_index, rtLaunchIndex, );</span><br><span class="line">rtBuffer&lt;float4, <span class="number">2</span>&gt; result_buffer;</span><br><span class="line">rtDeclareVariable(float3, draw_color, , );</span><br></pre></td></tr></table></figure><p>代码解读：</p><ul><li>rtDeclareVariable(a, b, c, d)   分别为数据类型，变量名，名称空间，注释</li><li>Optix有五个名称空间，分别在不同的渲染阶段起作用代表不同的含义。</li><li>rtBuffer&lt;float4, 2&gt; result_buffer 该行在shader中申明了一个buffer，也就是在GPU侧申请了一个buffer。且该buffer是float4类型，有二维。<br>其实这个buffer就是 输出buffer，需要向CPU端进行传递。在CPU端使用语句：rtContextDeclareVariable( context, “result_buffer”, &amp;output_buffer) 语句或者context[“result_buffer”]-&gt;set( output_buffer);与CPU端的buffer进行相连。</li><li>？申请了一个CPU与GPU端共同的变量draw_color，该变量只读，不可改变。若要改变可以创建一个临时变量拷贝后改变。这种申请的变量是全局变量，所有的shader的阶段都可读取。</li></ul><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从ptx字串中标识 "draw_solid_color"入口函数，并创建并返回光线发生器模块</span></span><br><span class="line">optix::Program ray_gen_program = context-&gt;createProgramFromPTXString(ptx, <span class="string">"draw_solid_color"</span>);</span><br><span class="line"><span class="comment">//在setEntryPointCount设置只有一个入口，即指于此</span></span><br><span class="line">context-&gt;setRayGenerationProgram(<span class="number">0</span>, ray_gen_program);</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Optix安装及相关编译&quot;&gt;&lt;a href=&quot;#Optix安装及相关编译&quot; class=&quot;headerlink&quot; title=&quot;Optix安装及相关编译&quot;&gt;&lt;/a&gt;Optix安装及相关编译&lt;/h1&gt;&lt;p&gt;参考CSDN上博客：&lt;br&gt;&lt;a href=&quot;https:/
-      
-    
-    </summary>
-    
-    
-      <category term="Computer-Science" scheme="http://yoursite.com/categories/Computer-Science/"/>
-    
-      <category term="RayTracing" scheme="http://yoursite.com/categories/Computer-Science/RayTracing/"/>
-    
-    
-      <category term="RayTracing" scheme="http://yoursite.com/tags/RayTracing/"/>
-    
-      <category term="GPU Programming" scheme="http://yoursite.com/tags/GPU-Programming/"/>
+      <category term="Programming Language" scheme="http://yoursite.com/tags/Programming-Language/"/>
     
   </entry>
   
@@ -253,19 +251,49 @@
   </entry>
   
   <entry>
-    <title>PBRT（Chapter5）</title>
-    <link href="http://yoursite.com/2019/11/05/PBRT_Learning_5/"/>
-    <id>http://yoursite.com/2019/11/05/PBRT_Learning_5/</id>
+    <title>NVIDIA Optix学习</title>
+    <link href="http://yoursite.com/2019/11/05/Optix_Learning/"/>
+    <id>http://yoursite.com/2019/11/05/Optix_Learning/</id>
     <published>2019-11-05T01:56:27.000Z</published>
-    <updated>2019-12-04T08:43:12.207Z</updated>
+    <updated>2019-12-22T08:36:01.820Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-5-Color-and-Radiometry"><a href="#PBRT-CHAPTER-5-Color-and-Radiometry" class="headerlink" title="PBRT CHAPTER_5  Color and Radiometry"></a>PBRT CHAPTER_5  Color and Radiometry</h1><p>为了精确描述光是如何表示和采样以计算图像的，我们必须首先建立radiometry（放射学）的一些背景知识，也即是研究环境中电磁辐射的传播。<br>在本章中会介绍四个关键量去描述 电磁辐射（electromagnetic radiation）:</p><ul><li>flux 通量</li><li>intensity 强度</li><li>irradiance 辐射照度</li><li>radiance 辐射度<br>这些辐射量分别由其光谱功率分布（SPD）来描述，该光谱功率分布是描述每个波长处的光量的波长分布函数，而PBRT中的Spectrum类用来表示SPD。</li></ul><h2 id="5-1-Spectral-Representation"><a href="#5-1-Spectral-Representation" class="headerlink" title="5.1 Spectral Representation"></a>5.1 Spectral Representation</h2><ul><li>实际对象的SPD可能非常的复杂</li><li>基础思想：使用basic function将可能处于无线维度的SPD映射到低维度空间。</li><li>针对光谱的表达形式，CG中出现了很多不同的basic function（基函数）</li><li>在PBRT中采用两种方法用于表达spectrum，其中RGBSpectrum遵循通常CG中表示Spectrum的方式，通过Red ,Green, Blue 三种颜色混合颜色对应的系数表示SPD。SampledSpectrum将Spectrum表示为波长范围上的采样点的集合。<h3 id="5-1-1-The-Spectrum-Type"><a href="#5-1-1-The-Spectrum-Type" class="headerlink" title="5.1.1 The Spectrum Type"></a>5.1.1 The Spectrum Type</h3></li></ul><h3 id="5-1-2-CoefficientSpectrum-Implementation"><a href="#5-1-2-CoefficientSpectrum-Implementation" class="headerlink" title="5.1.2 CoefficientSpectrum Implementation"></a>5.1.2 CoefficientSpectrum Implementation</h3><ul><li>根据给定采样数表示光谱，为RGBSpectrum、SampledSpectrum的父类。</li><li>重载大量的基础代码</li><li>该类以各种基础运算函数、重载各种操作符为主，以及一个Float c[nSpectrumSamples];用于保存SPD信息.</li><li>在CoefficientSpectrum中提供了公共常量：nSamplesm用于表示SPD的采样的次数；同时提供了[]操作符，用来访问单次采样的数据。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> nSamples = nSpectrumSamples;</span><br><span class="line"></span><br><span class="line">Float &amp;<span class="keyword">operator</span>[](<span class="keyword">int</span> i) &#123;</span><br><span class="line">    <span class="keyword">return</span> c[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul><h2 id="5-2-The-SampledSpectrum-Class"><a href="#5-2-The-SampledSpectrum-Class" class="headerlink" title="5.2 The SampledSpectrum Class"></a>5.2 The SampledSpectrum Class</h2><ul><li>SampledSpectrum则将光谱表达为波长范围上的采样点集合。（通过采样求得光谱系数）</li><li>人眼对400~700纳米波长的光最敏感，通常采样量为30即可准确地表示渲染时的SPD</li></ul><h3 id="5-2-1"><a href="#5-2-1" class="headerlink" title="5.2.1"></a>5.2.1</h3><figure class="image-box">                <img src="1573095588456.png" alt="[sorry,图片挂了]" title="[pbrt-v3中的10个抽象类]" class="[samll]">                <p>[pbrt-v3中的10个抽象类]</p>            </figure>]]></content>
+    <content type="html"><![CDATA[<h1 id="Optix安装及相关编译"><a href="#Optix安装及相关编译" class="headerlink" title="Optix安装及相关编译"></a>Optix安装及相关编译</h1><p>参考CSDN上博客：<br><a href="https://blog.csdn.net/FreeSouthS/article/details/89703252" target="_blank" rel="noopener">https://blog.csdn.net/FreeSouthS/article/details/89703252</a><br><a href="https://blog.csdn.net/FreeSouthS/article/details/89704776" target="_blank" rel="noopener">https://blog.csdn.net/FreeSouthS/article/details/89704776</a><br>Optix相关项目依赖较多，需要配置包含目录以及链接器等内容，在配置时需要注意不要漏掉</p><p>我使用的是软件版本是：<br>Optix6.5<br>CUDA10.1<br>VS2017<br>NVIDIA Driver 441.66</p><h2 id="配置安装时遇到的问题"><a href="#配置安装时遇到的问题" class="headerlink" title="配置安装时遇到的问题"></a>配置安装时遇到的问题</h2><p><u>Note:</u></p><ul><li>当在VS下试运行Optix相关项目发现缺少dll文件时，通过找到对应dll文件，并放入System32文件夹下，以此解决问题。</li><li>Windows下的文件路径为//为分隔符</li><li>在编译项目时注意在Cmake下选择X64 ，先Configure，再而Generate</li><li>当出现无法载入optix library时，有可能是NVIDIA的显卡驱动过旧，需要更新显卡驱动</li></ul><h1 id="Optix入门"><a href="#Optix入门" class="headerlink" title="Optix入门"></a>Optix入门</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rtDeclareVariable(uint2, launch_index, rtLaunchIndex, );</span><br><span class="line">rtBuffer&lt;float4, <span class="number">2</span>&gt; result_buffer;</span><br><span class="line">rtDeclareVariable(float3, draw_color, , );</span><br></pre></td></tr></table></figure><p>代码解读：</p><ul><li>rtDeclareVariable(a, b, c, d)   分别为数据类型，变量名，名称空间，注释</li><li>Optix有五个名称空间，分别在不同的渲染阶段起作用代表不同的含义。</li><li>rtBuffer&lt;float4, 2&gt; result_buffer 该行在shader中申明了一个buffer，也就是在GPU侧申请了一个buffer。且该buffer是float4类型，有二维。<br>其实这个buffer就是 输出buffer，需要向CPU端进行传递。在CPU端使用语句：rtContextDeclareVariable( context, “result_buffer”, &amp;output_buffer) 语句或者context[“result_buffer”]-&gt;set( output_buffer);与CPU端的buffer进行相连。</li><li>？申请了一个CPU与GPU端共同的变量draw_color，该变量只读，不可改变。若要改变可以创建一个临时变量拷贝后改变。这种申请的变量是全局变量，所有的shader的阶段都可读取。</li></ul><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从ptx字串中标识 "draw_solid_color"入口函数，并创建并返回光线发生器模块</span></span><br><span class="line">optix::Program ray_gen_program = context-&gt;createProgramFromPTXString(ptx, <span class="string">"draw_solid_color"</span>);</span><br><span class="line"><span class="comment">//在setEntryPointCount设置只有一个入口，即指于此</span></span><br><span class="line">context-&gt;setRayGenerationProgram(<span class="number">0</span>, ray_gen_program);</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;PBRT-CHAPTER-5-Color-and-Radiometry&quot;&gt;&lt;a href=&quot;#PBRT-CHAPTER-5-Color-and-Radiometry&quot; class=&quot;headerlink&quot; title=&quot;PBRT CHAPTER_5  Color 
+        &lt;h1 id=&quot;Optix安装及相关编译&quot;&gt;&lt;a href=&quot;#Optix安装及相关编译&quot; class=&quot;headerlink&quot; title=&quot;Optix安装及相关编译&quot;&gt;&lt;/a&gt;Optix安装及相关编译&lt;/h1&gt;&lt;p&gt;参考CSDN上博客：&lt;br&gt;&lt;a href=&quot;https:/
+      
+    
+    </summary>
+    
+    
+      <category term="Computer-Science" scheme="http://yoursite.com/categories/Computer-Science/"/>
+    
+      <category term="RayTracing" scheme="http://yoursite.com/categories/Computer-Science/RayTracing/"/>
+    
+    
+      <category term="RayTracing" scheme="http://yoursite.com/tags/RayTracing/"/>
+    
+      <category term="GPU Programming" scheme="http://yoursite.com/tags/GPU-Programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PBRT（Chapter8）</title>
+    <link href="http://yoursite.com/2019/11/05/PBRT_Learning_8/"/>
+    <id>http://yoursite.com/2019/11/05/PBRT_Learning_8/</id>
+    <published>2019-11-05T01:56:27.000Z</published>
+    <updated>2019-12-02T04:42:50.981Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-8-Reflection-Models"><a href="#PBRT-CHAPTER-8-Reflection-Models" class="headerlink" title="PBRT CHAPTER_8 Reflection Models"></a>PBRT CHAPTER_8 Reflection Models</h1><h2 id="8-1"><a href="#8-1" class="headerlink" title="8.1"></a>8.1</h2><h3 id="8-1-1"><a href="#8-1-1" class="headerlink" title="8.1.1"></a>8.1.1</h3><h3 id="8-1-2"><a href="#8-1-2" class="headerlink" title="8.1.2"></a>8.1.2</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;PBRT-CHAPTER-8-Reflection-Models&quot;&gt;&lt;a href=&quot;#PBRT-CHAPTER-8-Reflection-Models&quot; class=&quot;headerlink&quot; title=&quot;PBRT CHAPTER_8 Reflection Mo
       
     
     </summary>
@@ -313,47 +341,19 @@
   </entry>
   
   <entry>
-    <title>Matlab相关</title>
-    <link href="http://yoursite.com/2019/11/05/Matlab_Learning/"/>
-    <id>http://yoursite.com/2019/11/05/Matlab_Learning/</id>
+    <title>PBRT（Chapter5）</title>
+    <link href="http://yoursite.com/2019/11/05/PBRT_Learning_5/"/>
+    <id>http://yoursite.com/2019/11/05/PBRT_Learning_5/</id>
     <published>2019-11-05T01:56:27.000Z</published>
-    <updated>2019-11-12T11:39:26.862Z</updated>
+    <updated>2019-12-04T08:43:12.207Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Matlab学习"><a href="#Matlab学习" class="headerlink" title="Matlab学习"></a>Matlab学习</h1><h3 id="1-dir-使用"><a href="#1-dir-使用" class="headerlink" title="1. dir()使用"></a>1. dir()使用</h3><p>dir函数可以有调用方式</p><ul><li><p>dir(‘.’) 列出当前目录下所有子文件夹和文件</p></li><li><p>dir(‘G:\Matlab’) 列出指定目录下所有子文件夹和文件</p></li><li><p>dir(‘*.m’) 列出当前目录下符合正则表达式的文件夹和文件</p></li><li><p>得到的为结构体数组每个元素都是如下形式的结构体</p><pre><code>name  -- filenamedate  -- modification datebytes  -- number of bytes allocated to the fileisdir  -- 1 if name is a directory and 0 if notdatenum -- modification date as a MATLAB serial date number</code></pre><p> 分别为文件名,修改日期,大小,是否为目录,Matlab特定的修改日期</p><p>可以提取出文件名以作读取和保存用.</p></li></ul><h3 id="2-exist-使用"><a href="#2-exist-使用" class="headerlink" title="2. exist()使用"></a>2. exist()使用</h3><ul><li>判断某个变量，函数，类，文件夹等参数是否存在。</li><li>A=exists(“name”,”kind”)，name可以是变量，函数，类，文件夹等</li><li>返回值的含义如下：<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> 不存在则返回值 </span><br><span class="line"><span class="number">1</span> name 可以是变量名，如果存在，返回值 </span><br><span class="line"><span class="number">2</span> 函数名、m 文件名，存在则返回值 </span><br><span class="line"><span class="number">3</span> mex 文件、dll 文件，存在则返回值</span><br><span class="line"><span class="number">4</span> 内嵌的函数，存在则返回值 <span class="number">5</span> p码文件 ， 存在则返回值 </span><br><span class="line"><span class="number">6</span> 目录，存在则返回值 </span><br><span class="line"><span class="number">7</span> 路径，存在则返回值 </span><br><span class="line"><span class="number">8</span> Java class，存在则返回值</span><br></pre></td></tr></table></figure></li></ul><h3 id="3-for循环"><a href="#3-for循环" class="headerlink" title="3. for循环"></a>3. for循环</h3><ul><li>for k=1:10  正序遍历</li><li>for k=10:-1:1 倒序遍历，从10到1，每次递减-1</li></ul><h3 id="4-strrep-使用"><a href="#4-strrep-使用" class="headerlink" title="4.strrep()使用"></a>4.strrep()使用</h3><ul><li>查找并替换函数</li><li>strrep(A,B,C); 在A中查找B并替换为C</li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-5-Color-and-Radiometry"><a href="#PBRT-CHAPTER-5-Color-and-Radiometry" class="headerlink" title="PBRT CHAPTER_5  Color and Radiometry"></a>PBRT CHAPTER_5  Color and Radiometry</h1><p>为了精确描述光是如何表示和采样以计算图像的，我们必须首先建立radiometry（放射学）的一些背景知识，也即是研究环境中电磁辐射的传播。<br>在本章中会介绍四个关键量去描述 电磁辐射（electromagnetic radiation）:</p><ul><li>flux 通量</li><li>intensity 强度</li><li>irradiance 辐射照度</li><li>radiance 辐射度<br>这些辐射量分别由其光谱功率分布（SPD）来描述，该光谱功率分布是描述每个波长处的光量的波长分布函数，而PBRT中的Spectrum类用来表示SPD。</li></ul><h2 id="5-1-Spectral-Representation"><a href="#5-1-Spectral-Representation" class="headerlink" title="5.1 Spectral Representation"></a>5.1 Spectral Representation</h2><ul><li>实际对象的SPD可能非常的复杂</li><li>基础思想：使用basic function将可能处于无线维度的SPD映射到低维度空间。</li><li>针对光谱的表达形式，CG中出现了很多不同的basic function（基函数）</li><li>在PBRT中采用两种方法用于表达spectrum，其中RGBSpectrum遵循通常CG中表示Spectrum的方式，通过Red ,Green, Blue 三种颜色混合颜色对应的系数表示SPD。SampledSpectrum将Spectrum表示为波长范围上的采样点的集合。<h3 id="5-1-1-The-Spectrum-Type"><a href="#5-1-1-The-Spectrum-Type" class="headerlink" title="5.1.1 The Spectrum Type"></a>5.1.1 The Spectrum Type</h3></li></ul><h3 id="5-1-2-CoefficientSpectrum-Implementation"><a href="#5-1-2-CoefficientSpectrum-Implementation" class="headerlink" title="5.1.2 CoefficientSpectrum Implementation"></a>5.1.2 CoefficientSpectrum Implementation</h3><ul><li>根据给定采样数表示光谱，为RGBSpectrum、SampledSpectrum的父类。</li><li>重载大量的基础代码</li><li>该类以各种基础运算函数、重载各种操作符为主，以及一个Float c[nSpectrumSamples];用于保存SPD信息.</li><li>在CoefficientSpectrum中提供了公共常量：nSamplesm用于表示SPD的采样的次数；同时提供了[]操作符，用来访问单次采样的数据。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> nSamples = nSpectrumSamples;</span><br><span class="line"></span><br><span class="line">Float &amp;<span class="keyword">operator</span>[](<span class="keyword">int</span> i) &#123;</span><br><span class="line">    <span class="keyword">return</span> c[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul><h2 id="5-2-The-SampledSpectrum-Class"><a href="#5-2-The-SampledSpectrum-Class" class="headerlink" title="5.2 The SampledSpectrum Class"></a>5.2 The SampledSpectrum Class</h2><ul><li>SampledSpectrum则将光谱表达为波长范围上的采样点集合。（通过采样求得光谱系数）</li><li>人眼对400~700纳米波长的光最敏感，通常采样量为30即可准确地表示渲染时的SPD</li></ul><h3 id="5-2-1"><a href="#5-2-1" class="headerlink" title="5.2.1"></a>5.2.1</h3><figure class="image-box">                <img src="1573095588456.png" alt="[sorry,图片挂了]" title="[pbrt-v3中的10个抽象类]" class="[samll]">                <p>[pbrt-v3中的10个抽象类]</p>            </figure>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;Matlab学习&quot;&gt;&lt;a href=&quot;#Matlab学习&quot; class=&quot;headerlink&quot; title=&quot;Matlab学习&quot;&gt;&lt;/a&gt;Matlab学习&lt;/h1&gt;&lt;h3 id=&quot;1-dir-使用&quot;&gt;&lt;a href=&quot;#1-dir-使用&quot; class=&quot;head
-      
-    
-    </summary>
-    
-    
-      <category term="Computer-Science" scheme="http://yoursite.com/categories/Computer-Science/"/>
-    
-      <category term="Programming Language" scheme="http://yoursite.com/categories/Computer-Science/Programming-Language/"/>
-    
-    
-      <category term="Programming Language" scheme="http://yoursite.com/tags/Programming-Language/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PBRT（Chapter8）</title>
-    <link href="http://yoursite.com/2019/11/05/PBRT_Learning_8/"/>
-    <id>http://yoursite.com/2019/11/05/PBRT_Learning_8/</id>
-    <published>2019-11-05T01:56:27.000Z</published>
-    <updated>2019-12-02T04:42:50.981Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="PBRT-CHAPTER-8-Reflection-Models"><a href="#PBRT-CHAPTER-8-Reflection-Models" class="headerlink" title="PBRT CHAPTER_8 Reflection Models"></a>PBRT CHAPTER_8 Reflection Models</h1><h2 id="8-1"><a href="#8-1" class="headerlink" title="8.1"></a>8.1</h2><h3 id="8-1-1"><a href="#8-1-1" class="headerlink" title="8.1.1"></a>8.1.1</h3><h3 id="8-1-2"><a href="#8-1-2" class="headerlink" title="8.1.2"></a>8.1.2</h3>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;PBRT-CHAPTER-8-Reflection-Models&quot;&gt;&lt;a href=&quot;#PBRT-CHAPTER-8-Reflection-Models&quot; class=&quot;headerlink&quot; title=&quot;PBRT CHAPTER_8 Reflection Mo
+        &lt;h1 id=&quot;PBRT-CHAPTER-5-Color-and-Radiometry&quot;&gt;&lt;a href=&quot;#PBRT-CHAPTER-5-Color-and-Radiometry&quot; class=&quot;headerlink&quot; title=&quot;PBRT CHAPTER_5  Color 
       
     
     </summary>
@@ -367,35 +367,6 @@
       <category term="RayTracing" scheme="http://yoursite.com/tags/RayTracing/"/>
     
       <category term="PBRT" scheme="http://yoursite.com/tags/PBRT/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>VS使用及错误合集</title>
-    <link href="http://yoursite.com/2019/11/04/Basic_Software_Use_VS/"/>
-    <id>http://yoursite.com/2019/11/04/Basic_Software_Use_VS/</id>
-    <published>2019-11-04T01:56:27.000Z</published>
-    <updated>2019-11-05T08:27:28.683Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="1-错误合集"><a href="#1-错误合集" class="headerlink" title="1.错误合集"></a>1.错误合集</h1><hr><h3 id="1-1-ErrorLINK2019无法解析的外部符号-WinMain-16"><a href="#1-1-ErrorLINK2019无法解析的外部符号-WinMain-16" class="headerlink" title="1.1 .ErrorLINK2019无法解析的外部符号_WinMain@16"></a>1.1 .ErrorLINK2019无法解析的外部符号_WinMain@16</h3><ul><li>原因：无法找到适当的程序入口函数，其中Windows程序和控制台程序Console的入口程序不一致，应该在项目配置信息中选择适当预处理器以及链接器中合适的子系统。</li></ul><ul><li><figure class="image-box">                <img src="VS1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">                <p>[image]</p>            </figure></li><li><p>解决：</p></li></ul><ul><li><figure class="image-box">                <img src="VS2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">                <p>[image]</p>            </figure></li></ul><h1 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h1><hr><ul><li>Ctrl+Shift+B：生成解决方案，形成可执行文件。</li><li>生成可执行文件后有两种形式，其中一种是调试，一种是直接执行不调试</li><li>(F5或Alt+F5)在调试程序过程中，若遇到断点，会停止在断点处，等待继续运行的指令，当程序运行完毕后不会直接退出，而会暂停程序。</li><li>(Ctrl+F5)直接执行程序（不调试），完全忽略断点，程序运行完毕后直接结束程序。</li></ul><hr><h2 id="在VS2017中安装配置OpenGL教程："><a href="#在VS2017中安装配置OpenGL教程：" class="headerlink" title="在VS2017中安装配置OpenGL教程："></a>在VS2017中安装配置OpenGL教程：</h2><p><a href="http://www.cnblogs.com/flylinmu/p/7823019.html" target="_blank" rel="noopener">http://www.cnblogs.com/flylinmu/p/7823019.html</a></p><p>注意：</p><ul><li><p>（1）.在VS中对于项目进行属性配置时，右键点击解决方案中的项目名称，选择“属性配置”。</p></li><li><p>（2）.在VS2017中新建一个Windows控制台项目时，会自动生成一个pch.h文件，项目将其默认为预编译头文件，当项目较大时，可以在pch.h头文件中加入大量的宏定义，便于后期的维护更新，但是当项目较小时，可以在项目配置中，选择C/C++,将预编译头省略。</p></li><li><p>相关博客：<br><a href="http://www.blog.csdn.net/weixin_43074474/article/details/89520392" target="_blank" rel="noopener">http://www.blog.csdn.net/weixin_43074474/article/details/89520392</a></p></li></ul><hr><h2 id="VS快捷键"><a href="#VS快捷键" class="headerlink" title="VS快捷键"></a>VS快捷键</h2><ul><li>Alt+→：代码提示代码</li><li>注释代码：Ctrl+K选中后再C</li><li>取消注释代码：Ctrl+K选中后再U</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;1-错误合集&quot;&gt;&lt;a href=&quot;#1-错误合集&quot; class=&quot;headerlink&quot; title=&quot;1.错误合集&quot;&gt;&lt;/a&gt;1.错误合集&lt;/h1&gt;&lt;hr&gt;
-&lt;h3 id=&quot;1-1-ErrorLINK2019无法解析的外部符号-WinMain-16&quot;&gt;&lt;a hr
-      
-    
-    </summary>
-    
-    
-      <category term="开发工具" scheme="http://yoursite.com/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="Visual Studio" scheme="http://yoursite.com/tags/Visual-Studio/"/>
-    
-      <category term="开发工具" scheme="http://yoursite.com/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
@@ -422,9 +393,38 @@
       <category term="开发工具" scheme="http://yoursite.com/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
     
     
+      <category term="Tips" scheme="http://yoursite.com/tags/Tips/"/>
+    
       <category term="开发工具" scheme="http://yoursite.com/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
     
-      <category term="Tips" scheme="http://yoursite.com/tags/Tips/"/>
+  </entry>
+  
+  <entry>
+    <title>VS使用及错误合集</title>
+    <link href="http://yoursite.com/2019/11/04/Basic_Software_Use_VS/"/>
+    <id>http://yoursite.com/2019/11/04/Basic_Software_Use_VS/</id>
+    <published>2019-11-04T01:56:27.000Z</published>
+    <updated>2019-11-05T08:27:28.683Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-错误合集"><a href="#1-错误合集" class="headerlink" title="1.错误合集"></a>1.错误合集</h1><hr><h3 id="1-1-ErrorLINK2019无法解析的外部符号-WinMain-16"><a href="#1-1-ErrorLINK2019无法解析的外部符号-WinMain-16" class="headerlink" title="1.1 .ErrorLINK2019无法解析的外部符号_WinMain@16"></a>1.1 .ErrorLINK2019无法解析的外部符号_WinMain@16</h3><ul><li>原因：无法找到适当的程序入口函数，其中Windows程序和控制台程序Console的入口程序不一致，应该在项目配置信息中选择适当预处理器以及链接器中合适的子系统。</li></ul><ul><li><figure class="image-box">                <img src="VS1.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">                <p>[image]</p>            </figure></li><li><p>解决：</p></li></ul><ul><li><figure class="image-box">                <img src="VS2.png" alt="[sorry,图片挂了]" title="[image]" class="[samll]">                <p>[image]</p>            </figure></li></ul><h1 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h1><hr><ul><li>Ctrl+Shift+B：生成解决方案，形成可执行文件。</li><li>生成可执行文件后有两种形式，其中一种是调试，一种是直接执行不调试</li><li>(F5或Alt+F5)在调试程序过程中，若遇到断点，会停止在断点处，等待继续运行的指令，当程序运行完毕后不会直接退出，而会暂停程序。</li><li>(Ctrl+F5)直接执行程序（不调试），完全忽略断点，程序运行完毕后直接结束程序。</li></ul><hr><h2 id="在VS2017中安装配置OpenGL教程："><a href="#在VS2017中安装配置OpenGL教程：" class="headerlink" title="在VS2017中安装配置OpenGL教程："></a>在VS2017中安装配置OpenGL教程：</h2><p><a href="http://www.cnblogs.com/flylinmu/p/7823019.html" target="_blank" rel="noopener">http://www.cnblogs.com/flylinmu/p/7823019.html</a></p><p>注意：</p><ul><li><p>（1）.在VS中对于项目进行属性配置时，右键点击解决方案中的项目名称，选择“属性配置”。</p></li><li><p>（2）.在VS2017中新建一个Windows控制台项目时，会自动生成一个pch.h文件，项目将其默认为预编译头文件，当项目较大时，可以在pch.h头文件中加入大量的宏定义，便于后期的维护更新，但是当项目较小时，可以在项目配置中，选择C/C++,将预编译头省略。</p></li><li><p>相关博客：<br><a href="http://www.blog.csdn.net/weixin_43074474/article/details/89520392" target="_blank" rel="noopener">http://www.blog.csdn.net/weixin_43074474/article/details/89520392</a></p></li></ul><hr><h2 id="VS快捷键"><a href="#VS快捷键" class="headerlink" title="VS快捷键"></a>VS快捷键</h2><ul><li>Alt+→：代码提示代码</li><li>注释代码：Ctrl+K选中后再C</li><li>取消注释代码：Ctrl+K选中后再U</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;1-错误合集&quot;&gt;&lt;a href=&quot;#1-错误合集&quot; class=&quot;headerlink&quot; title=&quot;1.错误合集&quot;&gt;&lt;/a&gt;1.错误合集&lt;/h1&gt;&lt;hr&gt;
+&lt;h3 id=&quot;1-1-ErrorLINK2019无法解析的外部符号-WinMain-16&quot;&gt;&lt;a hr
+      
+    
+    </summary>
+    
+    
+      <category term="开发工具" scheme="http://yoursite.com/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="开发工具" scheme="http://yoursite.com/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="Visual Studio" scheme="http://yoursite.com/tags/Visual-Studio/"/>
     
   </entry>
   

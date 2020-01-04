@@ -261,6 +261,14 @@
 </ul>
 <p><strong>回到光线追踪（Ray Tracing）上:</strong><br>上面我们说到Ray Tracing是三维计算机图形学中的特殊渲染方法，跟踪从眼睛发出的光线而不是光源发出的光线。<br>通过这样一项技术得到的结果有着更好的光线效果，例如对于反射和折射有着更准确的模拟效果，并且效率非常高，追求高质量图像时常采用这样的方式。<br>Ray Tracing的缺点就是性能，它所需要的计算量非常巨大。<br>传统的RayTracing并不一定是真实效果图像，只有在非常近似或者完全实现渲染方程时，才能实现真正的真实效果图像。由于渲染方程描述了每个光束的物理效果，所以实现渲染方程可以得到真正的真实效果，但是，考虑到所需要的计算资源，这通常是无法实现的。于是，所有可以实现的渲染模型都必须是渲染方程的近似，而光线跟踪就不一定是最为可行的方法。包括光子映射在内的一些方法，都是依据光线跟踪实现一部分算法，但是可以得到更好的效果。</p>
 <p><strong>再讲到路径追踪（Path Tracing）上：</strong><br>简单来说，路径追踪 = 光线追踪+ 蒙特卡洛方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">路径追踪的方法把某个点的颜色值看作是若干个Path（光路）共同贡献的结果，一条光路可以看做是若干个表面点连接而成的一条线段。为了计算某个点的着色，我们只需要以该点为起点，构建若干条路径，并将每条路径上的光照贡献叠加而成。</span><br></pre></td></tr></table></figure>
+<p>结合RayTracing的框架，可以将路径看做是：把光线以光路这种路径的形式重新组织了起来。</p>
+<figure class="image-box">
+                <a rel=全局光照（总览） href="5.png" title="[Path]" data-fancybox="images"><img src="5.png" alt="[sorry,图片挂了]" title="[Path]" class="justify-small"></a>
+                <p>[Path]</p>
+            </figure>
+
+
 <p><strong>我们再来总结一下Ray Casting，Ray Tracing，PathTracing这三者的区别</strong></p>
 <ul>
 <li>Ray Casting：其它就是<strong>ray tracing的第一步</strong>，发射光线，与物体相交。</li>
@@ -268,6 +276,7 @@
 <li>Path Tracing：<strong>是ray tracing + 蒙特卡洛法</strong>。在相交后会选一个随机方向继续跟踪，并根据BRDF计算颜色。运算量也不小。还有一些小分类，比如Bidirectional path tracing。</li>
 </ul>
 <p><strong>最后我们来学习一下AO</strong><br>AO是Ambient Occlusion的简称，是全局光照明的一种近似替代品，<br>可以产生重要的视觉明暗效果，通过描绘物体之间由于遮挡而产生的阴影， 能够更好地捕捉到场景中的细节，可以解决漏光，阴影漂浮等问题，改善场景中角落、锯齿、裂缝等细小物体阴影不清。<br>AO最常用的方法是SSAO，UE4中的AO即是采用这种方案</p>
+<p>参考资料：<br><a href="https://zhuanlan.zhihu.com/p/41269520" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41269520</a></p>
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1308281829&auto=1&height=66"></iframe>
 
         </div>
@@ -276,7 +285,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-12-22T12:48:27.700Z" itemprop="dateUpdated">2019-12-22 20:48:27</time>
+    Last updated: <time datetime="2019-12-26T09:07:13.645Z" itemprop="dateUpdated">2019-12-26 17:07:13</time>
 </span><br>
 
 
@@ -353,9 +362,9 @@
 
   
     <div class="next">
-      <a href="/2019/11/05/Monte_Carlo_Method/" id="post-next" class="post-nav-link">
+      <a href="/2019/11/05/Matlab_Learning/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">蒙特卡洛方法（包含重要性采样）</h4>
+        <h4 class="title">Matlab相关</h4>
       </a>
     </div>
   
@@ -424,7 +433,7 @@
     <div class="bottom">
         <p>
             <span>
-                Leivie_Tan &copy; 2019
+                Leivie_Tan &copy; 2019 - 2020
             </span>
         		
            	
